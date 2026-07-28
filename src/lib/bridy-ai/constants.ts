@@ -1,7 +1,7 @@
 // Bridy AI — Constants & Configuration
 
 export const BRIDY_AI_CONFIG = {
-  name: "Bridy AI",
+  name: "Liquid Assistant",
   tagline: "Bridgestone Digital Intelligence",
   version: "1.0.0",
   maxHistoryMessages: 20,
@@ -11,7 +11,7 @@ export const BRIDY_AI_CONFIG = {
 } as const;
 
 export const WELCOME_MESSAGE =
-  "Hello, I'm Bridy AI — your intelligent Bridgestone assistant. I can help with tyre recommendations, dealer locations, fleet solutions, warranty support, product information, and Bridgestone services. How may I assist you today?";
+  "Hello, I'm Liquid Assistant — your official AI customer support representative for the Liquid Bridgestone Hub. I can help with tyre recommendations, authorized dealer locations, vehicle compatibility, warranty support, and service solutions. How may I assist you today?";
 
 export const SUGGESTED_PROMPTS = {
   welcome: [
