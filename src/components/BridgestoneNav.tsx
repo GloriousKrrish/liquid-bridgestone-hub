@@ -34,7 +34,7 @@ export function BridgestoneNav() {
             setOpenMenu(null);
             setMobileMenuOpen(false);
           }}
-          className="text-xs text-white/60 hover:text-white hover:translate-x-1 transition-all duration-150 block py-1 cursor-pointer"
+          className="text-xs text-[#555555] hover:text-[#E60012] hover:translate-x-1 transition-all duration-150 block py-1 cursor-pointer font-medium"
         >
           {item.text}
         </Link>
@@ -47,7 +47,7 @@ export function BridgestoneNav() {
         target={isExternal ? "_blank" : undefined}
         rel={isExternal ? "noopener noreferrer" : undefined}
         onClick={() => setOpenMenu(null)}
-        className="text-xs text-white/60 hover:text-white hover:translate-x-1 transition-all duration-150 block py-1 cursor-pointer"
+        className="text-xs text-[#555555] hover:text-[#E60012] hover:translate-x-1 transition-all duration-150 block py-1 cursor-pointer font-medium"
       >
         {item.text}
       </a>
@@ -63,14 +63,14 @@ export function BridgestoneNav() {
           target="_blank"
           rel="noopener noreferrer"
           onClick={() => setOpenMenu(null)}
-          className="text-[#D71920] text-xs font-bold uppercase tracking-wider mb-4 border-b border-white/10 pb-2 hover:text-[#E53035] transition-colors block cursor-pointer"
+          className="text-[#E60012] text-xs font-bold uppercase tracking-wider mb-4 border-b border-[#E9E1D6] pb-2 hover:text-[#C9A35D] transition-colors block cursor-pointer"
         >
           {headerText}
         </a>
       );
     }
     return (
-      <h4 className="text-[#D71920] text-xs font-bold uppercase tracking-wider mb-4 border-b border-white/10 pb-2">
+      <h4 className="text-[#E60012] text-xs font-bold uppercase tracking-wider mb-4 border-b border-[#E9E1D6] pb-2">
         {headerText}
       </h4>
     );
@@ -188,23 +188,23 @@ export function BridgestoneNav() {
         />
       )}
 
-      <nav className="fixed top-0 left-0 w-full z-50 bg-[#121212]/90 backdrop-blur-md border-b border-white/5 transition-colors duration-300 px-4 sm:px-6 py-4" aria-label="Main navigation">
+      <nav className="fixed top-0 left-0 w-full z-50 bg-[#FCFAF6]/90 backdrop-blur-md border-b border-[#E9E1D6] transition-colors duration-300 px-4 sm:px-6 py-4" aria-label="Main navigation">
         <img
           src="/bridgestone-global-logo.png"
           alt="Bridgestone Global Logo"
-          className="absolute top-4 left-8 z-50 h-10 w-auto object-contain option mix-blend-screen pointer-events-none hidden xl:block"
+          className="absolute top-4 left-8 z-50 h-10 w-auto object-contain option mix-blend-multiply opacity-80 pointer-events-none hidden xl:block"
         />
         <div className="max-w-5xl mx-auto relative">
-          <div className="liquid-glass rounded-full px-6 sm:px-8 py-4 flex items-center justify-between relative z-[100]">
+          <div className="bg-white/90 backdrop-blur-md rounded-full px-6 sm:px-8 py-3.5 flex items-center justify-between relative z-[100] border border-[#E9E1D6] shadow-sm">
             {/* Brand */}
             <Link to="/" className="flex flex-col items-start gap-0 group" aria-label="Bridgestone India Home">
               <div className="flex items-center gap-2">
-                <span className="text-xs sm:text-sm font-black tracking-[0.25em] uppercase text-white">
+                <span className="text-xs sm:text-sm font-black tracking-[0.25em] uppercase text-[#222222]">
                   BRIDGESTONE
                 </span>
-                <span className="inline-block w-1.5 h-1.5 bg-[#D71920]" />
+                <span className="inline-block w-1.5 h-1.5 bg-[#E60012]" />
               </div>
-              <span className="text-[7px] sm:text-[8px] tracking-widest text-white/50 uppercase font-medium -mt-0.5">
+              <span className="text-[7px] sm:text-[8px] tracking-widest text-[#666666] uppercase font-medium -mt-0.5">
                 Solutions for your journey
               </span>
             </Link>
@@ -222,12 +222,12 @@ export function BridgestoneNav() {
                   onClick={() => setOpenMenu(openMenu === menu.idx ? null : menu.idx)}
                   aria-expanded={openMenu === menu.idx}
                   aria-label={menu.label}
-                  className="flex items-center gap-1.5 px-4 py-2 text-xs font-semibold uppercase tracking-wider text-white/70 hover:text-white transition-colors rounded-full hover:bg-white/5 focus-visible:ring-2 focus-visible:ring-[#D71920] focus-visible:outline-none cursor-pointer relative z-[100]"
+                  className="flex items-center gap-1.5 px-4 py-2 text-xs font-semibold uppercase tracking-wider text-[#444444] hover:text-[#222222] transition-colors rounded-full hover:bg-[#F5F1EB] focus-visible:ring-2 focus-visible:ring-[#E60012] focus-visible:outline-none cursor-pointer relative z-[100]"
                 >
                   {menu.label}
                   <ChevronDown
                     size={12}
-                    className={`transition-transform duration-200 ${openMenu === menu.idx ? "rotate-180" : ""}`}
+                    className={`transition-transform duration-200 ${openMenu === menu.idx ? "rotate-180 text-[#E60012]" : ""}`}
                   />
                 </button>
               ))}
@@ -239,7 +239,7 @@ export function BridgestoneNav() {
               <button
                 type="button"
                 onClick={() => setLanguage(language === "EN" ? "HI" : "EN")}
-                className="hidden sm:block text-white/60 hover:text-white text-[11px] tracking-widest font-bold transition-colors focus-visible:ring-2 focus-visible:ring-[#D71920] focus-visible:outline-none rounded px-2 py-1 cursor-pointer"
+                className="hidden sm:block text-[#666666] hover:text-[#222222] text-[11px] tracking-widest font-bold transition-colors focus-visible:ring-2 focus-visible:ring-[#E60012] focus-visible:outline-none rounded px-2 py-1 cursor-pointer"
                 aria-label="Toggle language"
               >
                 India ({language})
@@ -249,7 +249,7 @@ export function BridgestoneNav() {
               <button
                 type="button"
                 onClick={() => setSearchOpen(!searchOpen)}
-                className="text-white/60 hover:text-white p-2 rounded-full hover:bg-white/5 transition-all focus-visible:ring-2 focus-visible:ring-[#D71920] focus-visible:outline-none cursor-pointer"
+                className="text-[#555555] hover:text-[#222222] p-2 rounded-full hover:bg-[#F5F1EB] transition-all focus-visible:ring-2 focus-visible:ring-[#E60012] focus-visible:outline-none cursor-pointer"
                 aria-label="Toggle search"
               >
                 {searchOpen ? <X size={16} /> : <Search size={16} />}
@@ -259,7 +259,7 @@ export function BridgestoneNav() {
               <button
                 type="button"
                 onClick={openPartnerLogin}
-                className="hidden sm:block liquid-glass rounded-full px-5 py-2 text-[10px] uppercase tracking-wider font-bold border border-white/10 hover:bg-white/10 transition-all text-white cursor-pointer focus-visible:ring-2 focus-visible:ring-[#D71920] focus-visible:outline-none"
+                className="hidden sm:block bg-white hover:bg-[#F5F1EB] rounded-full px-5 py-2 text-[10px] uppercase tracking-wider font-bold border border-[#E9E1D6] transition-all text-[#222222] cursor-pointer shadow-sm focus-visible:ring-2 focus-visible:ring-[#E60012] focus-visible:outline-none"
               >
                 {t("partner_portal")}
               </button>
@@ -268,7 +268,7 @@ export function BridgestoneNav() {
               <button
                 type="button"
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="lg:hidden text-white/70 hover:text-white p-2 rounded-full hover:bg-white/5 transition-all cursor-pointer"
+                className="lg:hidden text-[#444444] hover:text-[#222222] p-2 rounded-full hover:bg-[#F5F1EB] transition-all cursor-pointer"
                 aria-label="Toggle mobile menu"
               >
                 {mobileMenuOpen ? <X size={18} /> : <Menu size={18} />}
@@ -278,23 +278,20 @@ export function BridgestoneNav() {
 
           {/* Expanded search bar */}
           {searchOpen && (
-            <div className="mt-3 liquid-glass rounded-full px-6 py-3 flex items-center gap-3 max-w-2xl mx-auto animate-in fade-in slide-in-from-top-2 duration-200 relative z-[100] border border-white/10 bg-slate-950/80 backdrop-blur-xl">
-              <Search size={16} className="text-white/40" />
+            <div className="mt-3 bg-white rounded-full px-6 py-3 flex items-center gap-3 max-w-2xl mx-auto animate-in fade-in slide-in-from-top-2 duration-200 relative z-[100] border border-[#E9E1D6] shadow-lg">
+              <Search size={16} className="text-[#8A8A8A]" />
               <input
                 autoFocus
                 placeholder="Search tyres, dealers, solutions…"
-                className="flex-1 bg-transparent border-none outline-none text-sm text-white placeholder:text-white/40"
+                className="flex-1 bg-transparent border-none outline-none text-sm text-[#222222] placeholder:text-[#8A8A8A]"
               />
             </div>
           )}
         </div>
 
-        {/* Mega dropdowns moved outside max-w-5xl for full-width layout */}
-        {/* ========================================
-           MEGA-DROPDOWN MENU 1: "OUR PRODUCTS"
-           ======================================== */}
+        {/* Mega dropdowns */}
         {openMenu === 0 && (
-          <div className="absolute top-full left-0 w-full bg-[#1A1A1A]/98 text-white border-b border-white/10 shadow-2xl p-8 z-[100] pointer-events-auto animate-in fade-in slide-in-from-top-2 duration-200 rounded-b-2xl">
+          <div className="absolute top-full left-0 w-full bg-[#FCFAF6] text-[#222222] border-b border-[#E9E1D6] shadow-xl p-8 z-[100] pointer-events-auto animate-in fade-in slide-in-from-top-2 duration-200 rounded-b-2xl">
             <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-6">
               {productsColumns.map((col, cIdx) => (
                 <div key={cIdx}>
@@ -310,11 +307,8 @@ export function BridgestoneNav() {
           </div>
         )}
 
-        {/* ========================================
-           MEGA-DROPDOWN MENU 2: "OUR SOLUTIONS"
-           ======================================== */}
         {openMenu === 1 && (
-          <div className="absolute top-full left-0 w-full bg-[#1A1A1A]/98 text-white border-b border-white/10 shadow-2xl p-8 z-[100] pointer-events-auto animate-in fade-in slide-in-from-top-2 duration-200 rounded-b-2xl">
+          <div className="absolute top-full left-0 w-full bg-[#FCFAF6] text-[#222222] border-b border-[#E9E1D6] shadow-xl p-8 z-[100] pointer-events-auto animate-in fade-in slide-in-from-top-2 duration-200 rounded-b-2xl">
             <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
               {solutionsColumns.map((col, cIdx) => (
                 <div key={cIdx}>

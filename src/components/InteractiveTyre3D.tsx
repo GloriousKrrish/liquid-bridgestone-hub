@@ -55,7 +55,7 @@ function TireModel({ lastInteraction }: { lastInteraction: React.MutableRefObjec
     /* Outer group: sets the 3/4 view angle (standing tyre, angled toward camera) */
     <group rotation={[-Math.PI / 2 + 0.15, 0.4, 0.05]}>
       {/* Inner group: handles axle spin + float */}
-      <group ref={spinRef} scale={0.72}>
+      <group ref={spinRef} scale={0.58}>
         {/* Main rubber body */}
         <mesh castShadow receiveShadow material={rubberMat}>
           <torusGeometry args={[2, 0.85, 24, 48]} />
@@ -158,7 +158,7 @@ export const InteractiveTyre3D = memo(function InteractiveTyre3D() {
     >
       <Canvas
         shadows
-        camera={{ position: [0, 0.2, 7.8], fov: 36 }}
+        camera={{ position: [0, 0.3, 9.2], fov: 35 }}
         dpr={[1, 1.5]}
         gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
         style={{ background: "transparent" }}

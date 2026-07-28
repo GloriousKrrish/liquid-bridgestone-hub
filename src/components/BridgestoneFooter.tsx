@@ -6,8 +6,8 @@ export function BridgestoneFooter() {
   ];
 
   return (
-    <footer className="relative z-20 w-full mt-auto border-t border-white/5 pt-8">
-      <div className="text-[10px] text-white/30 px-6 max-w-5xl mx-auto pb-8 flex flex-col sm:flex-row gap-4 justify-between items-center text-center sm:text-left">
+    <footer className="relative z-20 w-full mt-auto border-t border-[#E9E1D6] bg-[#F5F1EB] pt-8">
+      <div className="text-[11px] text-[#666666] px-6 max-w-5xl mx-auto pb-8 flex flex-col sm:flex-row gap-4 justify-between items-center text-center sm:text-left font-medium">
         <div>
           © 2026 Bridgestone India Private Limited. Operational Headless CMS Gateway. Fully compliant with DPDP Act 2023.
         </div>
@@ -16,7 +16,7 @@ export function BridgestoneFooter() {
             <a
               key={link.label}
               href={link.href}
-              className="hover:text-white/60 transition-colors focus-visible:ring-2 focus-visible:ring-[#D71920] focus-visible:outline-none rounded px-1.5 py-0.5"
+              className="text-[#666666] hover:text-[#E60012] transition-colors focus-visible:ring-2 focus-visible:ring-[#E60012] focus-visible:outline-none rounded px-1.5 py-0.5"
             >
               {link.label}
             </a>

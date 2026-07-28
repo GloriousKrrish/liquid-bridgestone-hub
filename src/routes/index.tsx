@@ -117,7 +117,7 @@ const Tyre3DContainer = React.memo(function Tyre3DContainer({
 
   return (
     <section
-      className="absolute bottom-[3%] right-[5%] z-20 w-[340px] h-[360px] lg:w-[380px] lg:h-[400px] flex items-center justify-center pointer-events-auto"
+      className="absolute bottom-[2%] right-[4.5%] z-20 w-[22%] h-[35%] flex flex-col items-center justify-center pointer-events-auto"
       style={{
         opacity: tireOpacity,
         transform: `scale(${tireScale})`,
@@ -329,42 +329,44 @@ const VehicleSearchForm = React.memo(function VehicleSearchForm({
             setShowDropdown(false);
             onSearchSubmit(value);
           }}
-          className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-full pl-6 pr-2 py-2 flex items-center gap-3 w-full group focus-within:border-[#D71920]/60 focus-within:shadow-[0_0_25px_rgba(215,25,32,0.15)] transition-all relative z-40 shadow-[0_12px_40px_rgba(0,0,0,0.25)]"
+          className="relative flex items-center"
         >
-          <Search size={18} className="text-slate-400" />
-          <input
-            value={value}
-            onFocus={() => setShowDropdown(true)}
-            onChange={(e) => {
-              setValue(e.target.value);
-              setShowDropdown(true);
-            }}
-            placeholder="Enter vehicle model (e.g., Creta, Fortuner...)"
-            className="text-white placeholder:text-white/40 text-sm flex-1 bg-transparent border-none outline-none focus:outline-none focus:ring-0"
-          />
-          <button
-            type="submit"
-            aria-label="Search tyres"
-            className="bg-[#D71920] p-3 rounded-full hover:bg-[#B5141A] transition-colors cursor-pointer focus-visible:ring-2 focus-visible:ring-[#D71920] focus-visible:outline-none"
-          >
-            <ArrowRight size={20} className="text-white" />
-          </button>
+          <div className="relative w-full flex items-center bg-white border border-[#E9E1D6] rounded-2xl shadow-sm focus-within:border-[#E60012] focus-within:ring-2 focus-within:ring-[#E60012]/10 transition-all duration-200">
+            <Search className="absolute left-4 text-[#8A8A8A]" size={18} />
+            <input
+              type="text"
+              value={value}
+              onChange={(e) => {
+                setValue(e.target.value);
+                setShowDropdown(true);
+              }}
+              onFocus={() => setShowDropdown(true)}
+              placeholder="Search vehicle model (e.g. Creta, Fortuner, Nexon EV)..."
+              className="w-full pl-11 pr-24 py-3.5 bg-transparent border-none outline-none text-sm text-[#222222] placeholder:text-[#8A8A8A] font-medium"
+            />
+            <button
+              type="submit"
+              className="absolute right-2 px-4 py-2 bg-[#E60012] hover:bg-[#C9A35D] text-white text-xs font-bold uppercase tracking-wider rounded-xl transition-all duration-200 shadow-sm cursor-pointer"
+            >
+              Search
+            </button>
+          </div>
         </form>
 
         {showDropdown && filteredSuggestions.length > 0 && (
-          <div className="absolute left-0 right-0 mt-2 w-full z-[100] shadow-[0_16px_48px_rgba(0,0,0,0.4)] bg-[#121212]/90 backdrop-blur-2xl border border-white/10 rounded-2xl p-2 pointer-events-auto divide-y divide-white/5">
-            <div className="px-3 py-1.5 text-[9px] uppercase tracking-widest text-white/40 font-bold">
-              Select Vehicle Suggestions
+          <div className="absolute top-full left-0 right-0 mt-2 bg-white border border-[#E9E1D6] rounded-2xl shadow-xl overflow-hidden z-50 p-2 animate-in fade-in slide-in-from-top-2 duration-150">
+            <div className="px-3 py-1.5 text-[10px] uppercase tracking-wider text-[#8A8A8A] font-bold">
+              Suggested Vehicles
             </div>
             {filteredSuggestions.map((item) => (
               <button
                 key={item.name}
                 type="button"
                 onClick={() => handleSelect(item.name)}
-                className="w-full text-left px-3 py-2.5 hover:bg-white/5 rounded-xl transition-colors flex items-center justify-between text-xs text-white/70 hover:text-white cursor-pointer"
+                className="w-full text-left px-3 py-2.5 hover:bg-[#F5F1EB] rounded-xl transition-colors flex items-center justify-between text-xs text-[#444444] hover:text-[#222222] cursor-pointer font-medium"
               >
                 <span className="font-semibold">{item.name}</span>
-                <span className="text-[10px] uppercase tracking-wider text-[#D71920] font-bold bg-[#D71920]/10 px-2 py-0.5 rounded border border-[#D71920]/10">
+                <span className="text-[10px] uppercase tracking-wider text-[#E60012] font-bold bg-[#E60012]/10 px-2 py-0.5 rounded border border-[#E60012]/15">
                   {item.category}
                 </span>
               </button>
