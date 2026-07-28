@@ -242,7 +242,7 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({
 // Helper: Extract Tyre Recommendation Cards from text
 function extractTyreCards(text: string) {
   const cards = [];
-  if (text.includes("Turanza") || text.toLowerCase().includes("sedan") || text.toLowerCase().includes("recommend")) {
+  if (text.includes("Turanza") || (text.toLowerCase().includes("sedan") && text.toLowerCase().includes("recommend"))) {
     cards.push({
       name: "Bridgestone Turanza 6i",
       category: "Premium Touring",
@@ -252,7 +252,7 @@ function extractTyreCards(text: string) {
       price: "₹8,450",
     });
   }
-  if (text.includes("Dueler") || text.toLowerCase().includes("suv") || text.toLowerCase().includes("creta")) {
+  if (text.includes("Dueler") || (text.toLowerCase().includes("suv") && text.toLowerCase().includes("recommend"))) {
     cards.push({
       name: "Bridgestone Dueler A/T002",
       category: "All-Terrain SUV",
@@ -265,13 +265,13 @@ function extractTyreCards(text: string) {
   return cards;
 }
 
-// Helper: Extract Booking Card details if booking is referenced
+// Helper: Extract Booking Card details if appointment/booking is explicitly confirmed
 function extractBookingCard(text: string) {
-  if (text.toLowerCase().includes("book") || text.toLowerCase().includes("appointment") || text.toLowerCase().includes("dealer")) {
+  if (text.toLowerCase().includes("appointment scheduled") || text.toLowerCase().includes("booking confirmed")) {
     return {
       status: "Confirmed",
       tyre: "Bridgestone Turanza 6i (215/55 R17)",
-      store: "Bridgestone Select Dealer — Central Hub",
+      store: "Bridgestone Select Fitment Center",
       nextSteps: "Bring vehicle to store at scheduled time",
     };
   }

@@ -52,9 +52,19 @@ export interface Dealer {
   name: string;
   address: string;
   distance: string;
-  stock: string;
-  nextSlot: string;
-  wait: string;
+  rating?: number;
+  userRatingsTotal?: number;
+  openNow?: boolean;
+  phoneNumber?: string;
+  website?: string;
+  mapsUrl?: string;
+  latitude?: number;
+  longitude?: number;
+  isBridgestone?: boolean;
+  category?: string;
+  stock?: string;
+  nextSlot?: string;
+  wait?: string;
 }
 
 // 1. Structured Vehicle Master Database
@@ -427,27 +437,8 @@ export const SKU_CATALOG: TyreSKU[] = [
   { productId: "g611-tipper", size: "26.5 R25", rimSize: "25", loadIndex: 190, speedRating: "J", price: 110000 },
 ];
 
-// Helper database of dealer entries
-export const DEALER_LOCATOR: Dealer[] = [
-  {
-    id: "pune-1",
-    name: "Bridgestone Select - Premium Tyres Pune",
-    address: "Wakad, Pune, MH 411057",
-    distance: "1.2 km",
-    stock: "In Stock",
-    nextSlot: "Today, 4:30 PM",
-    wait: "15 mins"
-  },
-  {
-    id: "pune-2",
-    name: "Bridgestone Select - Kothrud Hub",
-    address: "Kothrud, Pune, MH 411038",
-    distance: "4.6 km",
-    stock: "In Stock",
-    nextSlot: "Tomorrow, 10:00 AM",
-    wait: "5 mins"
-  }
-];
+// Real-time dealer discovery system (hardcoded entries completely removed)
+export const DEALER_LOCATOR: Dealer[] = [];
 
 // Speed Rating Ordering List (J lowest to Y highest)
 const SPEED_RATINGS_ORDER = ["J", "K", "L", "M", "N", "P", "Q", "R", "S", "T", "U", "H", "V", "W", "Y"];

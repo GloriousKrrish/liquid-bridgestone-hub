@@ -1,13 +1,7 @@
-import { createServerFn } from "@tanstack/react-start";
-import { z } from "zod";
-import process from "node:process";
-import { getSystemPrompt } from "../../lib/bridy-ai/system-prompt";
+import { discoverRealTimeDealers, type RealDealer } from "./dealer.functions";
 
 /**
  * Bridy AI — Enterprise Chat Server Function
- * 
- * Single provider: Google Gemini 2.5 Flash via VITE_LLM_API_KEY.
- * Returns non-streaming response (streaming handled client-side via chunked rendering).
  */
 let serverRequestCount = 0;
 
@@ -38,7 +32,32 @@ export const bridyAIChat = createServerFn({ method: "POST" })
       };
     }
 
-    const systemPrompt = getSystemPrompt();
+    let systemPrompt = getSystemPrompt();
+    let realDealersFound: RealDealer[] = [];
+
+    // Check if query is about dealer / store discovery
+    const isDealerQuery = data.message.toLowerCase().match(/dealer|store|shop|near me|locate|location|where.*buy|address|appointment/);
+    if (isDealerQuery) {
+      // Extract location hint or default
+      let locationHint = data.message.replace(/find|search|dealer|store|shop|near|me|locate|bridgestone|tyre|buy|where|show|for|in|at/gi, "").trim();
+      if (!locationHint || locationHint.length < 3) {
+        locationHint = "Pune, Maharashtra, India";
+      }
+
+      console.log(`[Bridy Chat UI] Real-time dealer search triggered for: "${locationHint}"`);
+      try {
+        const dealerResult = await discoverRealTimeDealers({
+          data: { locationQuery: locationHint },
+        });
+
+        if (dealerResult.success && dealerResult.dealers.length > 0) {
+          realDealersFound = dealerResult.dealers;
+          systemPrompt += `\n\nREAL GOOGLE PLACES API DEALER DATA:\nLocation Requested: ${dealerResult.searchLocation}\nRadius Searched: ${dealerResult.radiusKm} km\nBridgestone Exclusivity: ${dealerResult.isBridgestoneOnly ? "Bridgestone Stores Found" : "General Tyre Retailer Fallback"}\n\nReal Dealers:\n${JSON.stringify(dealerResult.dealers, null, 2)}\n\nCRITICAL INSTRUCTION: Do NOT invent or hallucinate any fake dealer names, addresses, or phone numbers. Use ONLY the real dealer data listed above to answer the user.`;
+        }
+      } catch (err) {
+        console.error("[Bridy Chat UI] Dealer discovery failed:", err);
+      }
+    }
 
     // Limit history to last 20 messages to control token usage
     const trimmedHistory = data.history.slice(-20);
@@ -122,6 +141,7 @@ export const bridyAIChat = createServerFn({ method: "POST" })
         text: responseText,
         detectedIntent,
         suggestedPrompts,
+        realDealers: realDealersFound,
       };
     } catch (error: any) {
       console.error("[Bridy AI] Server error:", error);
