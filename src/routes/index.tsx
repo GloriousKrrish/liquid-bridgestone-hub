@@ -539,9 +539,9 @@ function Index() {
         </div>
       </div>
 
-      {/* 3. LIGHT LUXURY PEARL WHITE CONTENT DRAWER */}
+      {/* 3. LIGHT LUXURY PEARL WHITE CONTENT DRAWER WITH TRANSLUCENT GLASS */}
       <main 
-        className="relative w-full min-h-screen bg-[#FCFAF6] text-[#222222] z-10 rounded-t-[48px] border-t border-[#E9E1D6] shadow-[0_-20px_50px_rgba(0,0,0,0.06)] px-6 md:px-16 py-20 mt-[85vh] transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] transform-gpu will-change-transform"
+        className="relative w-full min-h-screen bg-[#FCFAF6]/70 backdrop-blur-2xl text-[#222222] z-10 rounded-t-[48px] border-t border-[#E9E1D6] shadow-[0_-20px_50px_rgba(0,0,0,0.06)] px-6 md:px-16 py-20 mt-[85vh] transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] transform-gpu will-change-transform"
         style={{ backfaceVisibility: "hidden" }}
       >
         
