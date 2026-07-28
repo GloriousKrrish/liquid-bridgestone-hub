@@ -478,18 +478,25 @@ export function SmartSelectorWizard({
         
         {/* LEFT COLUMN: Configurator panel */}
         <div className="lg:col-span-5 flex flex-col gap-6">
-          <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-6 relative overflow-hidden shadow-2xl transition-all duration-300 hover:border-white/15">
-            <div className="absolute -left-20 -top-20 w-40 h-40 bg-[#D71920]/5 blur-[50px] rounded-full pointer-events-none" />
+          <div 
+            className="rounded-[24px] border border-[#C4A67A]/30 p-6 relative overflow-hidden shadow-[0_10px_30px_rgba(170,145,110,0.12)] transition-all duration-300 hover:border-[#C8A165]"
+            style={{
+              background: "rgba(255, 250, 245, 0.82)",
+              backdropFilter: "blur(18px)",
+              WebkitBackdropFilter: "blur(18px)",
+            }}
+          >
+            <div className="absolute -left-20 -top-20 w-40 h-40 bg-[#E8C8CF]/30 blur-[50px] rounded-full pointer-events-none" />
             
             <div className="flex items-center justify-between mb-4">
-              <span className="text-[10px] uppercase tracking-widest text-[#D71920] font-extrabold flex items-center gap-1.5">
+              <span className="text-[10px] uppercase tracking-widest text-[#9B6B43] font-extrabold flex items-center gap-1.5">
                 <SlidersHorizontal size={12} />
                 Global Vehicle Intelligence
               </span>
               {selectedVehicle && (
                 <button
                   onClick={handleReset}
-                  className="text-white/40 hover:text-white/70 text-[9px] uppercase tracking-wider font-bold flex items-center gap-1 transition-colors cursor-pointer"
+                  className="text-[#8C8C8C] hover:text-[#2A2A2A] text-[9px] uppercase tracking-wider font-bold flex items-center gap-1 transition-colors cursor-pointer"
                 >
                   <RotateCcw size={10} /> Reset Selection
                 </button>
@@ -498,14 +505,14 @@ export function SmartSelectorWizard({
 
             {/* Vehicle Search Box */}
             <div className="relative mb-4" ref={dropdownRef}>
-              <label className="text-[9px] uppercase tracking-widest text-slate-400 font-bold block mb-1.5">
+              <label className="text-[9px] uppercase tracking-widest text-[#8C8C8C] font-bold block mb-1.5">
                 Search ANY Vehicle Worldwide (AI Discovery Enabled)
               </label>
-              <div className="relative flex items-center bg-white/5 border border-white/10 rounded-xl px-3.5 py-2.5 focus-within:border-[#D71920]/60 transition-all">
+              <div className="relative flex items-center bg-[#F5EFE6] border border-[#C4A67A]/25 rounded-xl px-3.5 py-2.5 focus-within:border-[#C8A165] focus-within:ring-2 focus-within:ring-[#C8A165]/15 transition-all">
                 {loadingSearch ? (
-                  <Loader2 className="animate-spin text-[#D71920] mr-2.5" size={16} />
+                  <Loader2 className="animate-spin text-[#E60012] mr-2.5" size={16} />
                 ) : (
-                  <Search size={16} className="text-white/40 mr-2.5" />
+                  <Search size={16} className="text-[#8C8C8C] mr-2.5" />
                 )}
                 <input
                   type="text"
@@ -518,12 +525,12 @@ export function SmartSelectorWizard({
                     setFocusedSuggestionIndex(-1);
                   }}
                   onKeyDown={handleKeyDown}
-                  className="bg-transparent text-xs text-white border-none outline-none w-full placeholder:text-white/30 focus:outline-none focus:ring-0"
+                  className="bg-transparent text-xs text-[#2A2A2A] border-none outline-none w-full placeholder:text-[#8C8C8C] focus:outline-none focus:ring-0 font-medium"
                 />
                 <button
                   type="button"
                   onClick={() => handleSearchSubmit(searchQuery)}
-                  className="text-[#D71920] text-[10px] font-bold uppercase tracking-wider hover:text-white transition-colors"
+                  className="text-[#E60012] text-[10px] font-bold uppercase tracking-wider hover:text-[#C8A165] transition-colors cursor-pointer"
                 >
                   Find
                 </button>
@@ -789,14 +796,21 @@ export function SmartSelectorWizard({
                   const availability = getAvailability(primary.seriesName);
                   const patternType = getTreadPatternType(primary.seriesName);
                   return (
-                    <div className="bg-gradient-to-br from-[#0f142d]/95 via-[#060916]/95 to-[#1d0e2c]/95 border border-white/10 rounded-3xl p-6 md:p-8 relative overflow-hidden shadow-2xl hover:border-[#D71920]/30 transition-all duration-300 group">
-                      <div className="absolute -right-20 -top-20 w-44 h-44 bg-gradient-to-tr from-[#00E5FF]/20 to-[#FF007A]/20 blur-[60px] rounded-full pointer-events-none group-hover:scale-125 transition-transform duration-500" />
+                    <div 
+                      className="rounded-[24px] border border-[#C4A67A]/30 p-6 md:p-8 relative overflow-hidden shadow-[0_10px_30px_rgba(170,145,110,0.12)] hover:shadow-[0_15px_35px_rgba(170,145,110,0.22)] hover:border-[#C8A165] hover:scale-[1.005] transition-all duration-250 ease-out group"
+                      style={{
+                        background: "rgba(255, 250, 245, 0.82)",
+                        backdropFilter: "blur(18px)",
+                        WebkitBackdropFilter: "blur(18px)",
+                      }}
+                    >
+                      <div className="absolute -right-20 -top-20 w-44 h-44 bg-gradient-to-tr from-[#E8C8CF]/30 to-[#C8A165]/20 blur-[60px] rounded-full pointer-events-none group-hover:scale-125 transition-transform duration-500" />
                       
                       <div className="flex items-center justify-between mb-5">
-                        <span className="bg-[#D71920]/25 border border-[#D71920]/40 text-white text-[10px] font-extrabold uppercase tracking-widest px-3 py-1 rounded-full flex items-center gap-1.5">
-                          <Sparkles size={11} className="text-[#D71920]" /> Primary Fitment Recommendation
+                        <span className="bg-[#C8A165]/15 border border-[#C8A165]/35 text-[#9B6B43] text-[10px] font-extrabold uppercase tracking-widest px-3 py-1 rounded-full flex items-center gap-1.5 shadow-xs">
+                          <Sparkles size={11} className="text-[#9B6B43]" /> Primary Fitment Recommendation
                         </span>
-                        <span className="bg-emerald-500/20 border border-emerald-500/40 text-emerald-400 text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full">
+                        <span className="bg-[#5B8C5A]/15 border border-[#5B8C5A]/35 text-[#3B663A] text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full">
                           {primary.displayScore}% Compatibility Score
                         </span>
                       </div>
@@ -804,45 +818,45 @@ export function SmartSelectorWizard({
                       <div className="grid md:grid-cols-12 gap-6 items-center">
                         <div className="md:col-span-8 space-y-4">
                           <div>
-                            <h3 className="text-3xl font-extrabold text-white tracking-tight">
+                            <h3 className="text-3xl font-extrabold text-[#2A2A2A] tracking-tight">
                               {primary.seriesName}
                             </h3>
-                            <span className="text-[10px] uppercase tracking-widest text-[#D71920] font-bold block mt-1">
+                            <span className="text-[10px] uppercase tracking-widest text-[#9B6B43] font-bold block mt-1">
                               {primary.sizeString} • Width {primary.dimensions.width} • Aspect {primary.dimensions.aspectRatio}% • Rim {primary.dimensions.rimDiameter}"
                             </span>
                           </div>
 
                           {/* Structured explanations bulleted list */}
-                          <div className="bg-white/5 border border-white/10 rounded-xl p-4 space-y-3">
-                            <span className="text-[9px] uppercase tracking-widest text-slate-400 font-extrabold block">
+                          <div className="bg-[#F5EFE6]/70 border border-[#C4A67A]/25 rounded-xl p-4 space-y-3">
+                            <span className="text-[9px] uppercase tracking-widest text-[#8C8C8C] font-extrabold block">
                               Recommendation Rationale
                             </span>
-                            <ul className="space-y-2 text-[11px] text-slate-300 list-none pl-0">
+                            <ul className="space-y-2 text-[11px] text-[#666666] list-none pl-0">
                               <li className="flex items-start gap-2">
-                                <span className="text-[#D71920] font-bold">✓</span>
+                                <span className="text-[#C8A165] font-bold">✓</span>
                                 <div>
-                                  <span className="font-bold text-white">Compound Fitment: </span>
+                                  <span className="font-bold text-[#2A2A2A]">Compound Fitment: </span>
                                   {primary.reasoning}
                                 </div>
                               </li>
                               <li className="flex items-start gap-2">
-                                <span className="text-[#D71920] font-bold">✓</span>
+                                <span className="text-[#C8A165] font-bold">✓</span>
                                 <div>
-                                  <span className="font-bold text-white">Size Compatibility: </span>
+                                  <span className="font-bold text-[#2A2A2A]">Size Compatibility: </span>
                                   {primary.explanations?.size || "Exact match for factory radial specifications."}
                                 </div>
                               </li>
                               <li className="flex items-start gap-2">
-                                <span className="text-[#D71920] font-bold">✓</span>
+                                <span className="text-[#C8A165] font-bold">✓</span>
                                 <div>
-                                  <span className="font-bold text-white">Safety Parameters: </span>
+                                  <span className="font-bold text-[#2A2A2A]">Safety Parameters: </span>
                                   {primary.explanations?.load || "Meets load rating requirements."} • {primary.explanations?.speed || "Meets speed index."}
                                 </div>
                               </li>
                               <li className="flex items-start gap-2">
-                                <span className="text-[#D71920] font-bold">✓</span>
+                                <span className="text-[#C8A165] font-bold">✓</span>
                                 <div>
-                                  <span className="font-bold text-white">Performance Target: </span>
+                                  <span className="font-bold text-[#2A2A2A]">Performance Target: </span>
                                   {primary.explanations?.preference || "Optimized for your usage profile."}
                                 </div>
                               </li>
@@ -851,16 +865,16 @@ export function SmartSelectorWizard({
                         </div>
 
                         {/* Right part: vector tread illustration and price */}
-                        <div className="md:col-span-4 flex flex-col items-center justify-center text-center gap-4 bg-white/5 border border-white/10 rounded-2xl p-4">
+                        <div className="md:col-span-4 flex flex-col items-center justify-center text-center gap-4 bg-[#F5EFE6]/70 border border-[#C4A67A]/25 rounded-2xl p-4">
                           <TyreTreadIllustration type={patternType} />
                           <div>
-                            <span className="text-[9px] uppercase tracking-widest text-slate-400 font-bold block">
+                            <span className="text-[9px] uppercase tracking-widest text-[#8C8C8C] font-bold block">
                               Estimated Price
                             </span>
-                            <span className="text-white font-black text-2xl">
+                            <span className="text-[#2A2A2A] font-black text-2xl">
                               ₹{primary.priceINR.toLocaleString('en-IN')}
                             </span>
-                            <span className="text-[8px] text-slate-400 block mt-0.5">
+                            <span className="text-[8px] text-[#8C8C8C] block mt-0.5 font-medium">
                               *Inclusive of GST per unit
                             </span>
                           </div>
@@ -910,8 +924,15 @@ export function SmartSelectorWizard({
 
                 {/* Alternative Recommendations Rank 2 & Rank 3 */}
                 {recommendationList.length > 1 && (
-                  <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-6 shadow-2xl">
-                    <span className="text-[10px] uppercase tracking-widest text-[#D71920] font-extrabold block mb-4">
+                  <div 
+                    className="rounded-[24px] border border-[#C4A67A]/30 p-6 shadow-[0_10px_30px_rgba(170,145,110,0.12)]"
+                    style={{
+                      background: "rgba(255, 250, 245, 0.82)",
+                      backdropFilter: "blur(18px)",
+                      WebkitBackdropFilter: "blur(18px)",
+                    }}
+                  >
+                    <span className="text-[10px] uppercase tracking-widest text-[#9B6B43] font-extrabold block mb-4">
                       Other OEM Compatible Alternative Options
                     </span>
                     
@@ -921,40 +942,40 @@ export function SmartSelectorWizard({
                         return (
                           <div
                             key={alt.seriesName + alt.sizeString}
-                            className="bg-[#0b0c16]/70 border border-white/15 hover:border-white/25 rounded-2xl p-4 flex flex-col justify-between transition-all animate-in fade-in"
+                            className="bg-[#F5EFE6]/80 border border-[#C4A67A]/28 hover:border-[#C8A165] hover:shadow-[0_10px_25px_rgba(170,145,110,0.15)] rounded-2xl p-4 flex flex-col justify-between transition-all duration-250 animate-in fade-in"
                           >
                             <div className="space-y-3">
                               <div className="flex justify-between items-center">
-                                <span className="text-[8px] uppercase font-bold text-slate-400 bg-white/5 border border-white/10 px-2 py-0.5 rounded">
+                                <span className="text-[8px] uppercase font-bold text-[#9B6B43] bg-[#C8A165]/15 border border-[#C8A165]/30 px-2 py-0.5 rounded">
                                   Rank #{index + 2} Alternative
                                 </span>
-                                <span className="text-[9px] font-bold text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded">
+                                <span className="text-[9px] font-bold text-[#3B663A] bg-[#5B8C5A]/15 px-2 py-0.5 rounded">
                                   {alt.displayScore}% Score
                                 </span>
                               </div>
 
                               <div>
-                                <h4 className="text-sm font-bold text-white truncate">{alt.seriesName}</h4>
-                                <span className="text-[9px] text-[#D71920] font-bold block mt-0.5">
+                                <h4 className="text-sm font-bold text-[#2A2A2A] truncate">{alt.seriesName}</h4>
+                                <span className="text-[9px] text-[#9B6B43] font-bold block mt-0.5">
                                   {alt.sizeString}
                                 </span>
                               </div>
 
-                              <p className="text-[10px] text-slate-300 leading-relaxed line-clamp-2">
+                              <p className="text-[10px] text-[#666666] leading-relaxed line-clamp-2">
                                 {alt.reasoning}
                               </p>
 
-                              <div className="text-[9px] text-slate-400 space-y-1 pt-1.5 border-t border-white/5">
-                                <div><span className="text-white">Width:</span> {alt.dimensions.width} mm</div>
-                                <div><span className="text-white">Profile:</span> {alt.dimensions.aspectRatio}%</div>
-                                <div><span className="text-white">Rim:</span> {alt.dimensions.rimDiameter}"</div>
+                              <div className="text-[9px] text-[#8C8C8C] space-y-1 pt-1.5 border-t border-[#C4A67A]/20">
+                                <div><span className="text-[#2A2A2A] font-medium">Width:</span> {alt.dimensions.width} mm</div>
+                                <div><span className="text-[#2A2A2A] font-medium">Profile:</span> {alt.dimensions.aspectRatio}%</div>
+                                <div><span className="text-[#2A2A2A] font-medium">Rim:</span> {alt.dimensions.rimDiameter}"</div>
                               </div>
                             </div>
 
-                            <div className="mt-4 pt-3 border-t border-white/5 flex items-center justify-between">
+                            <div className="mt-4 pt-3 border-t border-[#C4A67A]/20 flex items-center justify-between">
                               <div>
-                                <span className="text-[8px] text-slate-400 block">Estimated Price</span>
-                                <span className="text-white text-xs font-extrabold">₹{alt.priceINR.toLocaleString('en-IN')}</span>
+                                <span className="text-[8px] text-[#8C8C8C] block">Estimated Price</span>
+                                <span className="text-[#2A2A2A] text-xs font-extrabold">₹{alt.priceINR.toLocaleString('en-IN')}</span>
                               </div>
                               
                               <button
@@ -967,7 +988,7 @@ export function SmartSelectorWizard({
                                     });
                                   }
                                 }}
-                                className="bg-[#D71920] hover:bg-[#B5141A] rounded-full px-4 py-1.5 text-white uppercase text-[8px] font-extrabold transition-all cursor-pointer"
+                                className="bg-[#E60012] hover:bg-[#C8A165] rounded-xl px-4 py-1.5 text-white uppercase text-[8px] font-extrabold transition-all cursor-pointer shadow-sm"
                               >
                                 Book Slots
                               </button>
@@ -981,19 +1002,33 @@ export function SmartSelectorWizard({
 
               </div>
             ) : (
-              <div className="h-full min-h-[300px] bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-8 flex flex-col items-center justify-center text-center text-white/40 shadow-2xl">
-                <Loader2 className="animate-spin text-[#D71920] mb-4" size={48} strokeWidth={1.5} />
-                <h3 className="text-lg font-bold text-white mb-2">Generating Live Recommendations...</h3>
-                <p className="text-xs max-w-sm leading-relaxed text-slate-300/60">
+              <div 
+                className="h-full min-h-[300px] border border-[#C4A67A]/30 rounded-[24px] p-8 flex flex-col items-center justify-center text-center shadow-[0_10px_30px_rgba(170,145,110,0.12)]"
+                style={{
+                  background: "rgba(255, 250, 245, 0.82)",
+                  backdropFilter: "blur(18px)",
+                  WebkitBackdropFilter: "blur(18px)",
+                }}
+              >
+                <Loader2 className="animate-spin text-[#E60012] mb-4" size={48} strokeWidth={1.5} />
+                <h3 className="text-lg font-bold text-[#2A2A2A] mb-2">Generating Live Recommendations...</h3>
+                <p className="text-xs max-w-sm leading-relaxed text-[#666666]">
                   Retrieving compatibility scoring vectors and final alternative fitments.
                 </p>
               </div>
             )
           ) : (
-            <div className="h-full min-h-[300px] bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-8 flex flex-col items-center justify-center text-center text-white/40 shadow-2xl">
-              <Compass size={48} className="text-white/20 mb-4 animate-pulse" />
-              <h3 className="text-lg font-bold text-white mb-2">No Active Recommendation</h3>
-              <p className="text-xs max-w-sm leading-relaxed text-slate-300/60">
+            <div 
+              className="h-full min-h-[300px] border border-[#C4A67A]/30 rounded-[24px] p-8 flex flex-col items-center justify-center text-center shadow-[0_10px_30px_rgba(170,145,110,0.12)]"
+              style={{
+                background: "rgba(255, 250, 245, 0.82)",
+                backdropFilter: "blur(18px)",
+                WebkitBackdropFilter: "blur(18px)",
+              }}
+            >
+              <Compass size={48} className="text-[#8C8C8C]/40 mb-4 animate-pulse" />
+              <h3 className="text-lg font-bold text-[#2A2A2A] mb-2">No Active Recommendation</h3>
+              <p className="text-xs max-w-sm leading-relaxed text-[#666666]">
                 Please search and select your vehicle from the configurator panel to generate live tyre fitting recommendations instantly.
               </p>
             </div>

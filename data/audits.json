@@ -229,5 +229,54 @@
     "resolvedTo": "tata-altroz-2024-xz-",
     "method": "learned",
     "confidenceScore": 0.95
+  },
+  {
+    "query": "tata siera",
+    "timestamp": "2026-07-28T10:56:38.292Z",
+    "resolvedTo": null,
+    "method": "not_found",
+    "confidenceScore": 0
+  },
+  {
+    "query": "fortuner",
+    "timestamp": "2026-07-28T10:56:54.649Z",
+    "resolvedTo": "toyota-fortuner-2021-standard-2-7-petrol-2-8-diesel",
+    "method": "static",
+    "confidenceScore": 1
+  },
+  {
+    "query": "TATA siera",
+    "timestamp": "2026-07-28T10:57:18.145Z",
+    "resolvedTo": "tata-sierra-1997-standard-turbo",
+    "method": "gemini_discovered",
+    "confidenceScore": 0.92
+  },
+  {
+    "query": "Tata Sierra",
+    "timestamp": "2026-07-28T10:57:18.749Z",
+    "resolvedTo": "tata-sierra-1997-standard-turbo",
+    "method": "learned",
+    "confidenceScore": 0.92
+  },
+  {
+    "query": "TATA siera",
+    "timestamp": "2026-07-28T10:57:23.066Z",
+    "resolvedTo": null,
+    "method": "not_found",
+    "confidenceScore": 0
+  },
+  {
+    "query": "TATA siera",
+    "timestamp": "2026-07-28T10:57:23.243Z",
+    "resolvedTo": "tata-sierra-1997-standard",
+    "method": "gemini_discovered",
+    "confidenceScore": 0.95
+  },
+  {
+    "query": "Tata Sierra",
+    "timestamp": "2026-07-28T10:57:25.317Z",
+    "resolvedTo": "tata-sierra-1997-standard-turbo",
+    "method": "learned",
+    "confidenceScore": 0.92
   }
 ]

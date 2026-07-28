@@ -34,14 +34,12 @@ interface Tyre3DContainerProps {
   scrollY: number;
 }
 
-// Bridgestone core values — positioned snugly around the tyre
+// Bridgestone core values — positioned snugly around the tyre with golden-brown-pink palette
 const BRAND_VALUES = [
   {
     label: "TRUST",
-    color: "#D71920",
+    color: "#E60012",
     cardStyle: { top: "2%", left: "-12%" } as React.CSSProperties,
-    dotStyle: { top: "14%", left: "32%" } as React.CSSProperties,
-    svgPath: "M 90 20 Q 140 30 160 60",
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" className="w-3.5 h-3.5">
         <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
@@ -51,10 +49,8 @@ const BRAND_VALUES = [
   },
   {
     label: "INTEGRITY",
-    color: "#00E5FF",
+    color: "#C9A35D",
     cardStyle: { top: "18%", right: "-14%" } as React.CSSProperties,
-    dotStyle: { top: "26%", right: "28%" } as React.CSSProperties,
-    svgPath: "M 310 85 Q 260 95 240 120",
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" className="w-3.5 h-3.5">
         <path d="M12 3 2 7l10 4 10-4-10-4z"/>
@@ -65,10 +61,8 @@ const BRAND_VALUES = [
   },
   {
     label: "TRACE",
-    color: "#FFD100",
+    color: "#9C6B3F",
     cardStyle: { top: "48%", left: "-18%" } as React.CSSProperties,
-    dotStyle: { top: "54%", left: "26%" } as React.CSSProperties,
-    svgPath: "M 70 195 Q 120 195 150 195",
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" className="w-3.5 h-3.5">
         <circle cx="11" cy="11" r="8"/>
@@ -78,10 +72,8 @@ const BRAND_VALUES = [
   },
   {
     label: "QUALITY",
-    color: "#22C55E",
+    color: "#C9A35D",
     cardStyle: { top: "62%", right: "-12%" } as React.CSSProperties,
-    dotStyle: { top: "68%", right: "30%" } as React.CSSProperties,
-    svgPath: "M 320 245 Q 270 245 235 220",
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" className="w-3.5 h-3.5">
         <circle cx="12" cy="8" r="6"/>
@@ -91,15 +83,13 @@ const BRAND_VALUES = [
   },
   {
     label: "TEAMWORK",
-    color: "#A855F7",
+    color: "#D4838F",
     cardStyle: { bottom: "-2%", left: "22%" } as React.CSSProperties,
-    dotStyle: { bottom: "14%", left: "48%" } as React.CSSProperties,
-    svgPath: "M 180 340 Q 190 300 190 270",
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" className="w-3.5 h-3.5">
         <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
         <circle cx="9" cy="7" r="4"/>
-        <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
+        <path d="M22 21v-2a4 4 0 0 3-3.87"/>
         <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
       </svg>
     ),
@@ -117,7 +107,7 @@ const Tyre3DContainer = React.memo(function Tyre3DContainer({
 
   return (
     <section
-      className="absolute bottom-[2%] right-[4.5%] z-20 w-[22%] h-[35%] flex flex-col items-center justify-center pointer-events-auto"
+      className="absolute bottom-[2%] right-[4%] z-20 w-[26%] h-[38%] min-w-[280px] min-h-[320px] flex flex-col items-center justify-center pointer-events-auto"
       style={{
         opacity: tireOpacity,
         transform: `scale(${tireScale})`,
@@ -129,38 +119,38 @@ const Tyre3DContainer = React.memo(function Tyre3DContainer({
       <div
         className="absolute inset-[5%] rounded-full pointer-events-none"
         style={{
-          border: "1.5px solid rgba(215,25,32,0.35)",
+          border: "1.5px solid rgba(230,0,18,0.3)",
           transform: "perspective(500px) rotateX(68deg) rotateZ(-15deg)",
-          boxShadow: "0 0 20px rgba(215,25,32,0.15), inset 0 0 20px rgba(215,25,32,0.08)",
+          boxShadow: "0 0 20px rgba(230,0,18,0.12)",
         }}
       />
       <div
         className="absolute inset-[10%] rounded-full pointer-events-none"
         style={{
-          border: "1.5px solid rgba(0,229,255,0.3)",
+          border: "1.5px solid rgba(201,163,93,0.35)",
           transform: "perspective(500px) rotateX(65deg) rotateZ(12deg)",
-          boxShadow: "0 0 16px rgba(0,229,255,0.12)",
+          boxShadow: "0 0 16px rgba(201,163,93,0.15)",
         }}
       />
       <div
         className="absolute inset-[0%] rounded-full pointer-events-none"
         style={{
-          border: "1px solid rgba(255,209,0,0.25)",
+          border: "1px solid rgba(156,107,63,0.3)",
           transform: "perspective(500px) rotateX(72deg) rotateZ(28deg)",
-          boxShadow: "0 0 14px rgba(255,209,0,0.1)",
+          boxShadow: "0 0 14px rgba(156,107,63,0.12)",
         }}
       />
       <div
         className="absolute inset-[14%] rounded-full pointer-events-none"
         style={{
-          border: "1px solid rgba(168,85,247,0.25)",
+          border: "1px solid rgba(244,215,217,0.4)",
           transform: "perspective(500px) rotateX(60deg) rotateZ(-8deg)",
-          boxShadow: "0 0 12px rgba(168,85,247,0.08)",
+          boxShadow: "0 0 12px rgba(244,215,217,0.15)",
         }}
       />
 
       {/* ─── Core Soft Glow ─── */}
-      <div className="absolute inset-[15%] rounded-full bg-gradient-to-tr from-[#D71920]/12 via-transparent to-[#00E5FF]/8 blur-[45px] pointer-events-none" />
+      <div className="absolute inset-[15%] rounded-full bg-gradient-to-tr from-[#C9A35D]/15 via-transparent to-[#F4D7D9]/15 blur-[45px] pointer-events-none" />
 
       {/* ─── Curved SVG Connector Lines ─── */}
       <svg
@@ -177,16 +167,11 @@ const Tyre3DContainer = React.memo(function Tyre3DContainer({
           </filter>
         </defs>
 
-        {/* TRUST connector curve */}
-        <path d="M 65 30 Q 110 30 145 65" stroke="#D71920" strokeWidth="1.5" fill="none" opacity="0.75" filter="url(#glow-line)" />
-        {/* INTEGRITY connector curve */}
-        <path d="M 315 85 Q 275 90 240 120" stroke="#00E5FF" strokeWidth="1.5" fill="none" opacity="0.75" filter="url(#glow-line)" />
-        {/* TRACE connector curve */}
-        <path d="M 45 190 Q 100 190 140 190" stroke="#FFD100" strokeWidth="1.5" fill="none" opacity="0.75" filter="url(#glow-line)" />
-        {/* QUALITY connector curve */}
-        <path d="M 325 245 Q 275 245 235 220" stroke="#22C55E" strokeWidth="1.5" fill="none" opacity="0.75" filter="url(#glow-line)" />
-        {/* TEAMWORK connector curve */}
-        <path d="M 190 355 Q 190 315 190 270" stroke="#A855F7" strokeWidth="1.5" fill="none" opacity="0.75" filter="url(#glow-line)" />
+        <path d="M 65 30 Q 110 30 145 65" stroke="#E60012" strokeWidth="1.5" fill="none" opacity="0.75" filter="url(#glow-line)" />
+        <path d="M 315 85 Q 275 90 240 120" stroke="#C9A35D" strokeWidth="1.5" fill="none" opacity="0.75" filter="url(#glow-line)" />
+        <path d="M 45 190 Q 100 190 140 190" stroke="#9C6B3F" strokeWidth="1.5" fill="none" opacity="0.75" filter="url(#glow-line)" />
+        <path d="M 325 245 Q 275 245 235 220" stroke="#C9A35D" strokeWidth="1.5" fill="none" opacity="0.75" filter="url(#glow-line)" />
+        <path d="M 190 355 Q 190 315 190 270" stroke="#D4838F" strokeWidth="1.5" fill="none" opacity="0.75" filter="url(#glow-line)" />
       </svg>
 
       {/* ─── Corporate Value Badge Cards ─── */}
@@ -201,30 +186,30 @@ const Tyre3DContainer = React.memo(function Tyre3DContainer({
               onMouseEnter={() => setHoveredIdx(idx)}
               onMouseLeave={() => setHoveredIdx(null)}
             >
-              {/* Glassmorphism label card */}
+              {/* Glassmorphism label card with Golden-Brown-Pink theme */}
               <div
-                className="flex items-center gap-1.5 rounded-lg px-2.5 py-1 border cursor-pointer select-none whitespace-nowrap"
+                className="flex items-center gap-1.5 rounded-xl px-3 py-1.5 border cursor-pointer select-none whitespace-nowrap"
                 style={{
-                  background: "rgba(10, 12, 22, 0.92)",
+                  background: "rgba(255, 253, 249, 0.95)",
                   backdropFilter: "blur(16px)",
                   WebkitBackdropFilter: "blur(16px)",
-                  borderColor: isHovered ? val.color : `${val.color}40`,
+                  borderColor: isHovered ? val.color : "#E9E1D6",
                   boxShadow: isHovered
-                    ? `0 0 20px ${val.color}40, 0 4px 16px rgba(0,0,0,0.6)`
-                    : `0 0 10px ${val.color}15, 0 2px 10px rgba(0,0,0,0.4)`,
+                    ? `0 0 20px ${val.color}30, 0 4px 16px rgba(0,0,0,0.08)`
+                    : `0 2px 10px rgba(0,0,0,0.04)`,
                   transform: `scale(${isHovered ? 1.08 : 1})`,
                   transition: "all 0.25s cubic-bezier(0.22, 1, 0.36, 1)",
                 }}
               >
                 <span
-                  className="flex items-center justify-center rounded p-0.5"
-                  style={{ color: val.color, background: `${val.color}20` }}
+                  className="flex items-center justify-center rounded p-1"
+                  style={{ color: val.color, background: `${val.color}15` }}
                 >
                   {val.icon}
                 </span>
                 <span
                   className="text-[10px] font-extrabold uppercase tracking-[0.14em]"
-                  style={{ color: isHovered ? "#ffffff" : "#f1f5f9" }}
+                  style={{ color: isHovered ? val.color : "#002366" }}
                 >
                   {val.label}
                 </span>
@@ -240,7 +225,7 @@ const Tyre3DContainer = React.memo(function Tyre3DContainer({
           <Suspense
             fallback={
               <div className="flex items-center justify-center h-full">
-                <Loader2 className="animate-spin text-[#D71920]" size={32} />
+                <Loader2 className="animate-spin text-[#E60012]" size={32} />
               </div>
             }
           >
@@ -248,13 +233,14 @@ const Tyre3DContainer = React.memo(function Tyre3DContainer({
           </Suspense>
         ) : (
           <div className="flex items-center justify-center h-full">
-            <Loader2 className="animate-spin text-[#D71920]" size={32} />
+            <Loader2 className="animate-spin text-[#E60012]" size={32} />
           </div>
         )}
       </div>
     </section>
   );
 });
+
 // 3. Controlled Search Input Form using dynamic database list
 interface VehicleSearchFormProps {
   initialValue: string;
@@ -486,25 +472,19 @@ function Index() {
     setWizardOpen(true);
   };
 
-  // Click handler for category navigation (with analytics hooks)
   const handleCategoryNavigation = (category: string, url: string) => {
     console.log(`[Analytics] Category Navigation Clicked - Category: ${category}, Target URL: ${url}`);
-    
-    // Future integrations can hook into:
-    // window.gtag?.('event', 'click', { 'event_category': 'showcase_navigation', 'event_label': category });
-    // window.clarity?.('event', 'showcase_navigation_clicked');
-    
     window.open(url, "_blank", "noopener,noreferrer");
   };
 
   return (
-    <div className="min-h-screen bg-[#121212] text-white overflow-x-hidden relative font-sans selection:bg-[#D71920] selection:text-white flex flex-col">
+    <div className="min-h-screen bg-[#FCFAF6] text-[#222222] overflow-x-hidden relative font-sans selection:bg-[#E60012] selection:text-white flex flex-col">
       
       {/* Bridgestone Corporate Navigation Header */}
       <BridgestoneNav />
 
-      {/* 1. IMMERSIVE NATIVE ASPECT-RATIO VIDEO & SHOWCASE WRAPPER (z-0 / z-20) */}
-      <div className="fixed inset-0 w-full h-full z-0 bg-[#121212] overflow-hidden pointer-events-none flex items-center justify-center">
+      {/* 1. IMMERSIVE HERO SHOWCASE WRAPPER */}
+      <div className="fixed inset-0 w-full h-full z-0 bg-[#FCFAF6] overflow-hidden pointer-events-none flex items-center justify-center">
         <div className="relative aspect-[16/9] w-full max-w-full max-h-full">
           <video 
             src="/hero-background.mp4" 
@@ -512,7 +492,7 @@ function Index() {
             loop 
             muted 
             playsInline 
-            className="w-full h-full object-cover mix-blend-normal opacity-100 filter-none"
+            className="w-full h-full object-cover mix-blend-normal opacity-90 filter-none"
           />
           
           {/* Reconstruct background: Seamless Gemini Watermark Removal Patch */}
@@ -523,21 +503,21 @@ function Index() {
             }}
           />
 
-          {/* 2. THE FLOATING HERO BRIDGING ENGINE (3D INTERACTIVE TIRE FLOATING OVER THE PATCH AREA - z-20) */}
+          {/* 2. 3D INTERACTIVE TIRE */}
           <Tyre3DContainer TyreComponent={TyreComponent} scrollY={scrollY} />
         </div>
       </div>
 
-      {/* Scrolling Hero Header Area (z-10) */}
+      {/* Scrolling Hero Header Area */}
       <div className="relative w-full z-10 pointer-events-none select-none">
         <div className="h-[85vh] flex flex-col justify-center items-center px-6 md:px-12 lg:px-16 text-center pt-24 relative">
-          <span className="text-xs uppercase tracking-[0.25em] text-[#D71920] font-bold mb-2">
-            Bridgestone Solution To Your Journey
+          <span className="text-xs uppercase tracking-[0.25em] text-[#E60012] font-bold mb-2">
+            Bridgestone Solutions For Your Journey
           </span>
-          <h1 className="font-heading text-fluid-h1 font-bold text-white tracking-tight leading-[1.1]">
-            Engineered to <span className="italic font-light text-white/90">control</span> the elements.
+          <h1 className="font-heading text-fluid-h1 font-bold text-[#222222] tracking-tight leading-[1.1]">
+            Engineered to <span className="italic font-light text-[#444444]">control</span> the elements.
           </h1>
-          <p className="text-[#B3B3B3] font-sans text-fluid-small leading-relaxed max-w-xl mx-auto mt-3 hidden sm:block">
+          <p className="text-[#666666] font-sans text-fluid-small leading-relaxed max-w-xl mx-auto mt-3 hidden sm:block font-medium">
             India's most advanced tyre intelligence platform — built for monsoon highways, urban grids, and untamed terrain.
           </p>
           
@@ -550,23 +530,23 @@ function Index() {
             className="absolute bottom-12 left-1/2 -translate-x-1/2 pointer-events-auto flex flex-col items-center gap-2 group cursor-pointer"
             aria-label="Scroll down to explore products"
           >
-            <span className="text-[9px] uppercase tracking-[0.25em] text-white/40 group-hover:text-white/80 transition-colors">
+            <span className="text-[9px] uppercase tracking-[0.25em] text-[#8A8A8A] group-hover:text-[#222222] transition-colors font-bold">
               Scroll Explore
             </span>
-            <div className="w-5 h-9 rounded-full border border-white/20 p-1 flex justify-center group-hover:border-white/40 transition-all duration-300">
-              <div className="w-1.5 h-1.5 bg-[#D71920] rounded-full animate-bounce" />
+            <div className="w-5 h-9 rounded-full border border-[#E9E1D6] p-1 flex justify-center group-hover:border-[#C9A35D] transition-all duration-300 bg-white/80 backdrop-blur">
+              <div className="w-1.5 h-1.5 bg-[#E60012] rounded-full animate-bounce" />
             </div>
           </button>
         </div>
       </div>
 
-      {/* 3. THE TRANSPARENT SLIDING PREMIUM GLASS CONTENT DRAWER (z-10) */}
+      {/* 3. LIGHT LUXURY PEARL WHITE CONTENT DRAWER */}
       <main 
-        className="relative w-full min-h-screen bg-[#121212]/95 backdrop-blur-md text-white z-10 rounded-t-[48px] border-t border-[#2A2A2A] shadow-[0_-30px_60px_rgba(0,0,0,0.5)] px-6 md:px-16 py-20 mt-[85vh] transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] transform-gpu will-change-transform"
+        className="relative w-full min-h-screen bg-[#FCFAF6] text-[#222222] z-10 rounded-t-[48px] border-t border-[#E9E1D6] shadow-[0_-20px_50px_rgba(0,0,0,0.06)] px-6 md:px-16 py-20 mt-[85vh] transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] transform-gpu will-change-transform"
         style={{ backfaceVisibility: "hidden" }}
       >
         
-        {/* AI Vehicle Pill Gateway */}
+        {/* AI Vehicle Search */}
         <section className="max-w-2xl w-full mx-auto space-y-4 mb-16">
           <VehicleSearchForm initialValue={vehicle} onSearchSubmit={handleSearchSubmit} />
 
@@ -576,7 +556,7 @@ function Index() {
               onClick={() => setWizardOpen((v) => !v)}
               aria-expanded={wizardOpen}
               aria-label="Toggle Live Recommendation Dashboard"
-              className="rounded-full px-8 py-3 text-xs text-white bg-[#1A1A1A] hover:bg-[#222222] tracking-widest uppercase font-bold text-center mx-auto block max-w-sm mt-4 border border-[#2A2A2A] shadow transition-all duration-150 cursor-pointer focus-visible:ring-2 focus-visible:ring-[#D71920] focus-visible:outline-none"
+              className="rounded-full px-8 py-3 text-xs text-[#222222] bg-white hover:bg-[#F5F1EB] tracking-widest uppercase font-bold text-center mx-auto block max-w-sm mt-4 border border-[#E9E1D6] shadow-sm transition-all duration-150 cursor-pointer focus-visible:ring-2 focus-visible:ring-[#E60012] focus-visible:outline-none"
             >
               {wizardOpen ? "Hide Live Recommendation Dashboard" : "Show Live Recommendation Dashboard"}
             </button>
@@ -593,16 +573,16 @@ function Index() {
         {/* Below-The-Fold Masonry Grids */}
         <ProductGrid />
 
-        {/* AUTOMOTIVE SHOWCASE LAYOUT (PREMIUM IMAGE HOLDERS) */}
-        <section className="w-full mt-20 border-t border-white/10 pt-16">
+        {/* AUTOMOTIVE SHOWCASE LAYOUT (LUXURY PEARL WHITE CARDS) */}
+        <section className="w-full mt-20 border-t border-[#E9E1D6] pt-16">
           <div className="text-center mb-10">
-            <span className="text-[10px] uppercase tracking-widest text-[#D71920] font-bold bg-[#D71920]/10 px-3 py-1 rounded-full border border-[#D71920]/20">
+            <span className="text-[10px] uppercase tracking-widest text-[#E60012] font-bold bg-[#E60012]/10 px-3 py-1 rounded-full border border-[#E60012]/15">
               Showcase & Services
             </span>
-            <h2 className="text-white font-bold tracking-tight text-3xl md:text-4xl mt-3 leading-tight">
-              Tailored Solutions for <em className="italic text-slate-300 font-normal">Every Journey</em>.
+            <h2 className="text-[#222222] font-bold tracking-tight text-3xl md:text-4xl mt-3 leading-tight">
+              Tailored Solutions for <em className="italic text-[#666666] font-normal">Every Journey</em>.
             </h2>
-            <p className="text-slate-300 text-xs md:text-sm max-w-xl mx-auto mt-2">
+            <p className="text-[#666666] text-xs md:text-sm max-w-xl mx-auto mt-2 font-medium">
               From personal luxury sedans to enterprise truck fleets and emergency assistance.
             </p>
           </div>
@@ -621,10 +601,15 @@ function Index() {
                   }
                 }}
                 aria-label={`Explore ${category.title} range`}
-                className="bg-[#1A1A1A] rounded-2xl overflow-hidden border border-[#2A2A2A] shadow-2xl hover:border-[#D71920]/40 transition-all duration-200 flex flex-col justify-between group relative cursor-pointer hover:-translate-y-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D71920] select-none"
+                className="rounded-[20px] overflow-hidden border border-[#C4A67A]/30 shadow-[0_10px_30px_rgba(170,145,110,0.12)] hover:shadow-[0_15px_35px_rgba(170,145,110,0.22)] hover:border-[#C8A165] hover:scale-[1.01] transition-all duration-250 ease-out flex flex-col justify-between group relative cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E60012] select-none"
+                style={{
+                  background: "rgba(255, 250, 245, 0.82)",
+                  backdropFilter: "blur(18px)",
+                  WebkitBackdropFilter: "blur(18px)",
+                }}
               >
-                <div className="absolute -right-20 -top-20 w-40 h-40 bg-[#D71920]/5 blur-[50px] rounded-full group-hover:scale-110 transition-transform duration-300 pointer-events-none" />
-                <div className="w-full h-48 bg-slate-800 relative overflow-hidden">
+                <div className="absolute -right-20 -top-20 w-40 h-40 bg-[#E8C8CF]/30 blur-[50px] rounded-full group-hover:scale-110 transition-transform duration-300 pointer-events-none" />
+                <div className="w-full h-48 bg-[#F5EFE6] relative overflow-hidden">
                   <img
                     src={category.image}
                     alt={category.alt}
@@ -634,15 +619,15 @@ function Index() {
                 </div>
                 <div className="p-6 flex-1 flex flex-col justify-between relative z-10">
                   <div>
-                    <h3 className="text-lg font-bold tracking-tight text-white mb-2">{category.title}</h3>
-                    <p className="text-slate-300 text-xs leading-relaxed">
+                    <h3 className="text-lg font-bold tracking-tight text-[#2A2A2A] mb-2 group-hover:text-[#9B6B43] transition-colors">{category.title}</h3>
+                    <p className="text-[#666666] text-xs leading-relaxed font-normal">
                       {category.description}
                     </p>
                   </div>
                   <button
                     type="button"
                     tabIndex={-1}
-                    className="mt-4 pt-4 border-t border-[#2A2A2A] flex items-center justify-between text-xs font-bold text-[#D71920] w-full text-left bg-transparent cursor-pointer"
+                    className="mt-4 pt-4 border-t border-[#C4A67A]/20 flex items-center justify-between text-xs font-bold text-[#E60012] group-hover:text-[#C8A165] w-full text-left bg-transparent cursor-pointer transition-colors"
                   >
                     <span>{category.buttonText}</span>
                     <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />

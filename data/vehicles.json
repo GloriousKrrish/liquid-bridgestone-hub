@@ -358,7 +358,7 @@
     "drive_type": "FWD",
     "confidence": 1,
     "isDiscovered": false,
-    "searchCount": 2
+    "searchCount": 3
   },
   {
     "id": "toyota-fortuner-2021-sigma4-legender",
@@ -1336,5 +1336,45 @@
     "isDiscovered": true,
     "discoveredAt": "2026-07-28T10:24:59.795Z",
     "searchCount": 2
+  },
+  {
+    "id": "tata-sierra-1997-standard-turbo",
+    "manufacturer": "Tata",
+    "model": "Sierra",
+    "variant": "Standard Turbo",
+    "year": "1997",
+    "vehicle_type": "Off-Road 4x4",
+    "vehicle_category": "SUV",
+    "fuel_type": "Diesel",
+    "gross_weight": "2250 kg",
+    "rim_size": "15",
+    "oem_tyre_size": "215/75 R15",
+    "load_index": "100",
+    "speed_rating": "S",
+    "drive_type": "RWD",
+    "confidence": 0.92,
+    "isDiscovered": true,
+    "discoveredAt": "2026-07-28T10:57:18.128Z",
+    "searchCount": 3
+  },
+  {
+    "id": "tata-sierra-1997-standard",
+    "manufacturer": "Tata",
+    "model": "Sierra",
+    "variant": "Standard",
+    "year": "1997",
+    "vehicle_type": "SUV",
+    "vehicle_category": "SUV",
+    "fuel_type": "Diesel",
+    "gross_weight": "2200 kg",
+    "rim_size": "15",
+    "oem_tyre_size": "215/75 R15",
+    "load_index": "100",
+    "speed_rating": "S",
+    "drive_type": "RWD",
+    "confidence": 0.95,
+    "isDiscovered": true,
+    "discoveredAt": "2026-07-28T10:57:23.235Z",
+    "searchCount": 1
   }
 ]
