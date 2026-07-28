@@ -34,17 +34,16 @@ interface Tyre3DContainerProps {
   scrollY: number;
 }
 
-// Bridgestone core values — each with fixed position, color, icon
+// Bridgestone core values — positioned snugly around the tyre
 const BRAND_VALUES = [
   {
     label: "TRUST",
     color: "#D71920",
-    // Position of the label card relative to the extended container
-    style: { top: "8%", left: "2%" } as React.CSSProperties,
-    // SVG connector: from label → tyre edge (percentage of 100×100 viewBox)
-    line: { x1: 28, y1: 18, x2: 42, y2: 35 },
+    cardStyle: { top: "2%", left: "-12%" } as React.CSSProperties,
+    dotStyle: { top: "14%", left: "32%" } as React.CSSProperties,
+    svgPath: "M 90 20 Q 140 30 160 60",
     icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" className="w-3.5 h-3.5">
         <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
         <path d="m9 12 2 2 4-4"/>
       </svg>
@@ -53,10 +52,11 @@ const BRAND_VALUES = [
   {
     label: "INTEGRITY",
     color: "#00E5FF",
-    style: { top: "25%", right: "0%" } as React.CSSProperties,
-    line: { x1: 72, y1: 33, x2: 58, y2: 40 },
+    cardStyle: { top: "18%", right: "-14%" } as React.CSSProperties,
+    dotStyle: { top: "26%", right: "28%" } as React.CSSProperties,
+    svgPath: "M 310 85 Q 260 95 240 120",
     icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" className="w-3.5 h-3.5">
         <path d="M12 3 2 7l10 4 10-4-10-4z"/>
         <path d="m2 17 10 4 10-4"/>
         <path d="m2 12 10 4 10-4"/>
@@ -66,10 +66,11 @@ const BRAND_VALUES = [
   {
     label: "TRACE",
     color: "#FFD100",
-    style: { top: "50%", left: "0%" } as React.CSSProperties,
-    line: { x1: 25, y1: 55, x2: 40, y2: 50 },
+    cardStyle: { top: "48%", left: "-18%" } as React.CSSProperties,
+    dotStyle: { top: "54%", left: "26%" } as React.CSSProperties,
+    svgPath: "M 70 195 Q 120 195 150 195",
     icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" className="w-3.5 h-3.5">
         <circle cx="11" cy="11" r="8"/>
         <path d="m21 21-4.3-4.3"/>
       </svg>
@@ -78,10 +79,11 @@ const BRAND_VALUES = [
   {
     label: "QUALITY",
     color: "#22C55E",
-    style: { top: "58%", right: "3%" } as React.CSSProperties,
-    line: { x1: 70, y1: 63, x2: 57, y2: 55 },
+    cardStyle: { top: "62%", right: "-12%" } as React.CSSProperties,
+    dotStyle: { top: "68%", right: "30%" } as React.CSSProperties,
+    svgPath: "M 320 245 Q 270 245 235 220",
     icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" className="w-3.5 h-3.5">
         <circle cx="12" cy="8" r="6"/>
         <path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/>
       </svg>
@@ -90,10 +92,11 @@ const BRAND_VALUES = [
   {
     label: "TEAMWORK",
     color: "#A855F7",
-    style: { bottom: "5%", left: "18%" } as React.CSSProperties,
-    line: { x1: 38, y1: 80, x2: 47, y2: 62 },
+    cardStyle: { bottom: "-2%", left: "22%" } as React.CSSProperties,
+    dotStyle: { bottom: "14%", left: "48%" } as React.CSSProperties,
+    svgPath: "M 180 340 Q 190 300 190 270",
     icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" className="w-3.5 h-3.5">
         <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
         <circle cx="9" cy="7" r="4"/>
         <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
@@ -114,140 +117,114 @@ const Tyre3DContainer = React.memo(function Tyre3DContainer({
 
   return (
     <section
-      className="absolute bottom-[2%] right-[4.5%] z-20 w-[22%] h-[35%] flex flex-col items-center justify-center pointer-events-auto"
+      className="absolute bottom-[3%] right-[5%] z-20 w-[340px] h-[360px] lg:w-[380px] lg:h-[400px] flex items-center justify-center pointer-events-auto"
       style={{
         opacity: tireOpacity,
         transform: `scale(${tireScale})`,
         pointerEvents: tireOpacity > 0.1 ? "auto" : "none",
         transition: "opacity 0.3s ease-out, transform 0.3s ease-out",
-        overflow: "visible",
       }}
     >
       {/* ─── 3D Perspective Orbital Rings ─── */}
-      {/* Red ring — upper tilt */}
       <div
-        className="absolute pointer-events-none"
+        className="absolute inset-[5%] rounded-full pointer-events-none"
         style={{
-          inset: "-15%",
           border: "1.5px solid rgba(215,25,32,0.35)",
-          borderRadius: "50%",
-          transform: "perspective(400px) rotateX(68deg) rotateZ(-20deg)",
-          boxShadow: "0 0 18px 2px rgba(215,25,32,0.12), inset 0 0 18px 2px rgba(215,25,32,0.06)",
-          animation: "orbitRingSpin 50s linear infinite",
+          transform: "perspective(500px) rotateX(68deg) rotateZ(-15deg)",
+          boxShadow: "0 0 20px rgba(215,25,32,0.15), inset 0 0 20px rgba(215,25,32,0.08)",
         }}
       />
-      {/* Cyan ring — mid tilt */}
       <div
-        className="absolute pointer-events-none"
+        className="absolute inset-[10%] rounded-full pointer-events-none"
         style={{
-          inset: "-8%",
-          border: "1.5px solid rgba(0,229,255,0.25)",
-          borderRadius: "50%",
-          transform: "perspective(400px) rotateX(65deg) rotateZ(10deg)",
-          boxShadow: "0 0 14px 1px rgba(0,229,255,0.1), inset 0 0 14px 1px rgba(0,229,255,0.05)",
-          animation: "orbitRingSpin 45s linear infinite reverse",
+          border: "1.5px solid rgba(0,229,255,0.3)",
+          transform: "perspective(500px) rotateX(65deg) rotateZ(12deg)",
+          boxShadow: "0 0 16px rgba(0,229,255,0.12)",
         }}
       />
-      {/* Yellow ring — lower */}
       <div
-        className="absolute pointer-events-none"
+        className="absolute inset-[0%] rounded-full pointer-events-none"
         style={{
-          inset: "-20%",
-          border: "1px solid rgba(255,209,0,0.2)",
-          borderRadius: "50%",
-          transform: "perspective(400px) rotateX(72deg) rotateZ(25deg)",
-          boxShadow: "0 0 12px 1px rgba(255,209,0,0.08)",
-          animation: "orbitRingSpin 55s linear infinite",
+          border: "1px solid rgba(255,209,0,0.25)",
+          transform: "perspective(500px) rotateX(72deg) rotateZ(28deg)",
+          boxShadow: "0 0 14px rgba(255,209,0,0.1)",
         }}
       />
-      {/* Purple ring — bottom accent */}
       <div
-        className="absolute pointer-events-none"
+        className="absolute inset-[14%] rounded-full pointer-events-none"
         style={{
-          inset: "-5%",
-          border: "1px solid rgba(168,85,247,0.18)",
-          borderRadius: "50%",
-          transform: "perspective(400px) rotateX(60deg) rotateZ(-5deg)",
-          boxShadow: "0 0 10px 1px rgba(168,85,247,0.06)",
-          animation: "orbitRingSpin 65s linear infinite reverse",
+          border: "1px solid rgba(168,85,247,0.25)",
+          transform: "perspective(500px) rotateX(60deg) rotateZ(-8deg)",
+          boxShadow: "0 0 12px rgba(168,85,247,0.08)",
         }}
       />
 
-      {/* ─── Core Tyre Glow ─── */}
-      <div className="absolute inset-[-5%] rounded-full bg-gradient-to-tr from-[#D71920]/10 via-transparent to-[#00E5FF]/5 blur-[50px] pointer-events-none" />
+      {/* ─── Core Soft Glow ─── */}
+      <div className="absolute inset-[15%] rounded-full bg-gradient-to-tr from-[#D71920]/12 via-transparent to-[#00E5FF]/8 blur-[45px] pointer-events-none" />
 
-      {/* ─── SVG Connector Lines ─── */}
+      {/* ─── Curved SVG Connector Lines ─── */}
       <svg
-        className="absolute pointer-events-none"
-        viewBox="0 0 100 100"
-        preserveAspectRatio="none"
-        style={{ inset: "-55%", width: "210%", height: "210%", zIndex: 25 }}
+        className="absolute inset-0 w-full h-full pointer-events-none z-15"
+        viewBox="0 0 380 400"
       >
-        {BRAND_VALUES.map((val) => (
-          <line
-            key={`line-${val.label}`}
-            x1={`${val.line.x1}%`}
-            y1={`${val.line.y1}%`}
-            x2={`${val.line.x2}%`}
-            y2={`${val.line.y2}%`}
-            stroke={val.color}
-            strokeWidth="0.3"
-            opacity="0.5"
-          />
-        ))}
+        <defs>
+          <filter id="glow-line" x="-20%" y="-20%" width="140%" height="140%">
+            <feGaussianBlur stdDeviation="2" result="blur" />
+            <feMerge>
+              <feMergeNode in="blur" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
+        </defs>
+
+        {/* TRUST connector curve */}
+        <path d="M 65 30 Q 110 30 145 65" stroke="#D71920" strokeWidth="1.5" fill="none" opacity="0.75" filter="url(#glow-line)" />
+        {/* INTEGRITY connector curve */}
+        <path d="M 315 85 Q 275 90 240 120" stroke="#00E5FF" strokeWidth="1.5" fill="none" opacity="0.75" filter="url(#glow-line)" />
+        {/* TRACE connector curve */}
+        <path d="M 45 190 Q 100 190 140 190" stroke="#FFD100" strokeWidth="1.5" fill="none" opacity="0.75" filter="url(#glow-line)" />
+        {/* QUALITY connector curve */}
+        <path d="M 325 245 Q 275 245 235 220" stroke="#22C55E" strokeWidth="1.5" fill="none" opacity="0.75" filter="url(#glow-line)" />
+        {/* TEAMWORK connector curve */}
+        <path d="M 190 355 Q 190 315 190 270" stroke="#A855F7" strokeWidth="1.5" fill="none" opacity="0.75" filter="url(#glow-line)" />
       </svg>
 
-      {/* ─── Fixed-Position Value Labels ─── */}
-      <div className="absolute pointer-events-none" style={{ inset: "-55%", width: "210%", height: "210%", zIndex: 30 }}>
+      {/* ─── Corporate Value Badge Cards ─── */}
+      <div className="absolute inset-0 pointer-events-none z-30">
         {BRAND_VALUES.map((val, idx) => {
           const isHovered = hoveredIdx === idx;
           return (
             <div
               key={val.label}
               className="absolute pointer-events-auto"
-              style={val.style}
+              style={val.cardStyle}
               onMouseEnter={() => setHoveredIdx(idx)}
               onMouseLeave={() => setHoveredIdx(null)}
             >
-              {/* Pulsing connector dot */}
-              <div className="absolute -right-2 top-1/2 -translate-y-1/2">
-                <span
-                  className="absolute inline-flex h-2 w-2 rounded-full opacity-60 animate-ping"
-                  style={{ backgroundColor: val.color }}
-                />
-                <span
-                  className="relative inline-flex rounded-full h-2 w-2"
-                  style={{
-                    backgroundColor: val.color,
-                    boxShadow: `0 0 8px ${val.color}80`,
-                  }}
-                />
-              </div>
-
               {/* Glassmorphism label card */}
               <div
-                className="flex items-center gap-2 rounded-xl px-3 py-1.5 border cursor-default select-none whitespace-nowrap"
+                className="flex items-center gap-1.5 rounded-lg px-2.5 py-1 border cursor-pointer select-none whitespace-nowrap"
                 style={{
-                  background: "rgba(8,10,18,0.88)",
-                  backdropFilter: "blur(20px)",
-                  WebkitBackdropFilter: "blur(20px)",
-                  borderColor: isHovered ? `${val.color}50` : "rgba(255,255,255,0.08)",
+                  background: "rgba(10, 12, 22, 0.92)",
+                  backdropFilter: "blur(16px)",
+                  WebkitBackdropFilter: "blur(16px)",
+                  borderColor: isHovered ? val.color : `${val.color}40`,
                   boxShadow: isHovered
-                    ? `0 0 24px ${val.color}25, 0 4px 20px rgba(0,0,0,0.6)`
-                    : "0 4px 16px rgba(0,0,0,0.5)",
-                  transform: `scale(${isHovered ? 1.06 : 1})`,
-                  transition: "all 0.3s cubic-bezier(0.22, 1, 0.36, 1)",
+                    ? `0 0 20px ${val.color}40, 0 4px 16px rgba(0,0,0,0.6)`
+                    : `0 0 10px ${val.color}15, 0 2px 10px rgba(0,0,0,0.4)`,
+                  transform: `scale(${isHovered ? 1.08 : 1})`,
+                  transition: "all 0.25s cubic-bezier(0.22, 1, 0.36, 1)",
                 }}
               >
                 <span
-                  className="flex items-center justify-center rounded-lg p-1"
-                  style={{ color: val.color, background: `${val.color}18` }}
+                  className="flex items-center justify-center rounded p-0.5"
+                  style={{ color: val.color, background: `${val.color}20` }}
                 >
                   {val.icon}
                 </span>
                 <span
-                  className="text-[9px] sm:text-[10px] font-extrabold uppercase tracking-[0.15em]"
-                  style={{ color: isHovered ? val.color : "#f0f0f0" }}
+                  className="text-[10px] font-extrabold uppercase tracking-[0.14em]"
+                  style={{ color: isHovered ? "#ffffff" : "#f1f5f9" }}
                 >
                   {val.label}
                 </span>
@@ -258,34 +235,23 @@ const Tyre3DContainer = React.memo(function Tyre3DContainer({
       </div>
 
       {/* ─── 3D Tyre Canvas ─── */}
-      {TyreComponent ? (
-        <Suspense
-          fallback={
-            <div className="flex items-center justify-center h-full">
-              <Loader2 className="animate-spin text-[#D71920]" size={32} />
-            </div>
-          }
-        >
-          <TyreComponent />
-        </Suspense>
-      ) : (
-        <div className="flex items-center justify-center h-full">
-          <Loader2 className="animate-spin text-[#D71920]" size={32} />
-        </div>
-      )}
-
-      {/* ─── Keyframe Animations ─── */}
-      <style>{`
-        @keyframes orbitRingSpin {
-          from { transform: perspective(400px) rotateX(var(--rx, 68deg)) rotateZ(var(--rz, 0deg)); }
-          to { transform: perspective(400px) rotateX(var(--rx, 68deg)) rotateZ(calc(var(--rz, 0deg) + 360deg)); }
-        }
-        @media (prefers-reduced-motion: reduce) {
-          .pointer-events-none[style*="orbitRingSpin"] {
-            animation: none !important;
-          }
-        }
-      `}</style>
+      <div className="w-full h-full z-10 flex items-center justify-center">
+        {TyreComponent ? (
+          <Suspense
+            fallback={
+              <div className="flex items-center justify-center h-full">
+                <Loader2 className="animate-spin text-[#D71920]" size={32} />
+              </div>
+            }
+          >
+            <TyreComponent />
+          </Suspense>
+        ) : (
+          <div className="flex items-center justify-center h-full">
+            <Loader2 className="animate-spin text-[#D71920]" size={32} />
+          </div>
+        )}
+      </div>
     </section>
   );
 });

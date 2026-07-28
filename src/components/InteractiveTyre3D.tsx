@@ -8,9 +8,9 @@ const rubberMat = new THREE.MeshStandardMaterial({ color: "#1a1c22", roughness: 
 const treadSurfaceMat = new THREE.MeshStandardMaterial({ color: "#141620", roughness: 0.6, metalness: 0.08 });
 const grooveMat = new THREE.MeshStandardMaterial({ color: "#020304", roughness: 1.0 });
 const sidewallMat = new THREE.MeshStandardMaterial({ color: "#0f1014", roughness: 0.8, metalness: 0.12, side: THREE.DoubleSide });
-const rimMat = new THREE.MeshStandardMaterial({ color: "#e5e7eb", metalness: 0.96, roughness: 0.08 });
-const rimBeadMat = new THREE.MeshStandardMaterial({ color: "#3a3d45", roughness: 0.25, metalness: 0.85 });
-const capMat = new THREE.MeshStandardMaterial({ color: "#f9fafb", metalness: 0.98, roughness: 0.04 });
+const rimMat = new THREE.MeshStandardMaterial({ color: "#14161f", metalness: 0.92, roughness: 0.18 });
+const rimBeadMat = new THREE.MeshStandardMaterial({ color: "#252830", roughness: 0.3, metalness: 0.75 });
+const capMat = new THREE.MeshStandardMaterial({ color: "#1a1d26", metalness: 0.95, roughness: 0.1 });
 
 // ── Shared Geometries ──
 const treadBlockGeo = new THREE.BoxGeometry(0.07, 0.16, 0.04);
@@ -158,7 +158,7 @@ export const InteractiveTyre3D = memo(function InteractiveTyre3D() {
     >
       <Canvas
         shadows
-        camera={{ position: [0, 0.4, 9.2], fov: 35 }}
+        camera={{ position: [0, 0.2, 7.8], fov: 36 }}
         dpr={[1, 1.5]}
         gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
         style={{ background: "transparent" }}
