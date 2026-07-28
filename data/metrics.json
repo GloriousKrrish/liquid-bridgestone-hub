@@ -1,0 +1,30 @@
+{
+  "totalVehiclesStored": 68,
+  "newVehiclesLearned": 6,
+  "mostSearchedVehicles": [
+    {
+      "name": "Honda City (2022)",
+      "count": 10
+    },
+    {
+      "name": "Land Rover Defender (2023)",
+      "count": 4
+    },
+    {
+      "name": "Toyota Fortuner (2021)",
+      "count": 2
+    },
+    {
+      "name": "Land Rover Defender (2023)",
+      "count": 2
+    },
+    {
+      "name": "Land Rover Defender (2024)",
+      "count": 2
+    }
+  ],
+  "recommendationCounts": 28,
+  "geminiDiscoverySuccessRate": 67,
+  "geminiCallsCount": 9,
+  "geminiSuccessesCount": 7
+}
