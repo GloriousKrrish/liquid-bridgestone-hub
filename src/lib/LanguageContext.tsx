@@ -301,19 +301,27 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     return "EN";
   });
 
-  const setLanguage = (lang: Language) => {
+  const setLanguage = React.useCallback((lang: Language) => {
     setLanguageState(lang);
     if (typeof window !== "undefined") {
       localStorage.setItem("bridgestone_lang", lang);
     }
-  };
+  }, []);
 
-  const t = (key: TranslationKey): string => {
-    return translations[language][key] || translations["EN"][key] || String(key);
-  };
+  const t = React.useCallback(
+    (key: TranslationKey): string => {
+      return translations[language][key] || translations["EN"][key] || String(key);
+    },
+    [language]
+  );
+
+  const value = React.useMemo(
+    () => ({ language, setLanguage, t }),
+    [language, setLanguage, t]
+  );
 
   return (
-    <LanguageContext.Provider value={{ language, setLanguage, t }}>
+    <LanguageContext.Provider value={value}>
       {children}
     </LanguageContext.Provider>
   );

@@ -23,7 +23,7 @@ interface ChatSidebarProps {
   onClose: () => void;
 }
 
-export const ChatSidebar: React.FC<ChatSidebarProps> = ({
+export const ChatSidebar: React.FC<ChatSidebarProps> = React.memo(({
   conversations,
   activeConversationId,
   isOpen,
@@ -250,7 +250,7 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
       </aside>
     </>
   );
-};
+});
 
 function groupByDate(conversations: Conversation[]): Record<string, Conversation[]> {
   const now = Date.now();

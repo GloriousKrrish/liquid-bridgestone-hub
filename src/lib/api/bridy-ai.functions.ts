@@ -9,6 +9,14 @@ import { discoverRealTimeDealers, type RealDealer } from "./dealer.functions";
  */
 let serverRequestCount = 0;
 
+// In-Memory AI Cache (5-minute TTL to reduce repetitive LLM calls)
+interface AICachedResponse {
+  timestamp: number;
+  data: any;
+}
+const aiResponseCache = new Map<string, AICachedResponse>();
+const AI_CACHE_TTL_MS = 5 * 60 * 1000;
+
 export const bridyAIChat = createServerFn({ method: "POST" })
   .inputValidator(
     z.object({
@@ -36,13 +44,20 @@ export const bridyAIChat = createServerFn({ method: "POST" })
       };
     }
 
+    // Check Cache for exact repeat queries without long history
+    const cacheKey = `${data.message.trim().toLowerCase()}_hist${data.history.length}`;
+    const cached = aiResponseCache.get(cacheKey);
+    if (cached && Date.now() - cached.timestamp < AI_CACHE_TTL_MS) {
+      console.log(`[AI Response Cache HIT] Returning cached response for query: "${data.message}"`);
+      return cached.data;
+    }
+
     let systemPrompt = getSystemPrompt();
     let realDealersFound: RealDealer[] = [];
 
     // Check if query is about dealer / store discovery
     const isDealerQuery = data.message.toLowerCase().match(/dealer|store|shop|near me|locate|location|where.*buy|address|appointment/);
     if (isDealerQuery) {
-      // Extract location hint or default
       let locationHint = data.message.replace(/find|search|dealer|store|shop|near|me|locate|bridgestone|tyre|buy|where|show|for|in|at/gi, "").trim();
       if (!locationHint || locationHint.length < 3) {
         locationHint = "Pune, Maharashtra, India";
@@ -63,13 +78,13 @@ export const bridyAIChat = createServerFn({ method: "POST" })
       }
     }
 
-    // Limit history to last 20 messages to control token usage
-    const trimmedHistory = data.history.slice(-20);
+    // Limit history to last 16 messages to reduce payload size and token overhead
+    const trimmedHistory = data.history.slice(-16);
 
     try {
       let responseText = "";
 
-      // ── Multi-Tier Fallback Cascade: 3.5-flash → 2.5-flash → 1.5-flash ──
+      // Multi-Tier Fallback Cascade: 3.5-flash → 2.5-flash → 1.5-flash
       const MODEL_FALLBACK_CASCADE = [
         process.env.GEMINI_MODEL || "gemini-3.5-flash",
         "gemini-2.5-flash",
@@ -93,11 +108,17 @@ export const bridyAIChat = createServerFn({ method: "POST" })
       for (const modelName of MODEL_FALLBACK_CASCADE) {
         try {
           console.log(`[Gemini API Request #${serverRequestCount}] Attempting model: ${modelName}`);
+
+          // Timeout AbortController after 15 seconds to prevent hanging requests
+          const controller = new AbortController();
+          const timeoutId = setTimeout(() => controller.abort(), 15000);
+
           const response = await fetch(
             `https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${apiKey}`,
             {
               method: "POST",
               headers: { "Content-Type": "application/json" },
+              signal: controller.signal,
               body: JSON.stringify({
                 contents,
                 systemInstruction: {
@@ -105,11 +126,12 @@ export const bridyAIChat = createServerFn({ method: "POST" })
                 },
                 generationConfig: {
                   temperature: 0.7,
-                  maxOutputTokens: 4096,
+                  maxOutputTokens: 2048,
                 },
               }),
             }
           );
+          clearTimeout(timeoutId);
 
           console.log(`[Gemini API Response #${serverRequestCount}] model ${modelName} status: ${response.status}`);
 
@@ -125,7 +147,7 @@ export const bridyAIChat = createServerFn({ method: "POST" })
             lastError = new Error(`Model ${modelName} error (${response.status}): ${errBody}`);
           }
         } catch (err: any) {
-          console.warn(`[Gemini Model ${modelName} Network Error]:`, err);
+          console.warn(`[Gemini Model ${modelName} Network Error/Timeout]:`, err);
           lastError = err;
         }
       }
@@ -140,124 +162,77 @@ export const bridyAIChat = createServerFn({ method: "POST" })
       // Generate contextual follow-up suggestions
       const suggestedPrompts = generateSuggestions(detectedIntent, data.message);
 
-      return {
+      const finalResult = {
         success: true,
         text: responseText,
         detectedIntent,
         suggestedPrompts,
         realDealers: realDealersFound,
       };
+
+      // Store in AI response cache
+      aiResponseCache.set(cacheKey, { timestamp: Date.now(), data: finalResult });
+
+      return finalResult;
     } catch (error: any) {
-      console.error("[Bridy AI] Server error:", error);
+      console.error(`[Gemini API Error #${serverRequestCount}]:`, error);
       return {
         success: false,
         error: "API_ERROR",
-        message: error.message || "Failed to process your request",
+        message:
+          error.message || "Failed to generate AI response. Please verify your connection or try again.",
       };
     }
   });
 
-/**
- * Intent Detection — Classify the conversation topic
- */
-function detectIntent(
-  userMessage: string,
-  _aiResponse: string
-): string | undefined {
-  const msg = userMessage.toLowerCase();
-
-  if (
-    msg.match(
-      /recommend|suggest|best tyre|which tyre|tyre for|tyres for|my car|my vehicle|driving/
-    )
-  )
-    return "tyre_recommendation";
-
-  if (msg.match(/dealer|store|shop|near me|locate|location|where.*buy/))
+function detectIntent(userMessage: string, aiResponse: string): string {
+  const query = (userMessage + " " + aiResponse).toLowerCase();
+  if (query.includes("dealer") || query.includes("store") || query.includes("location") || query.includes("pincode")) {
     return "dealer_search";
-
-  if (msg.match(/fleet|commercial|truck|bus|logistics|tco|cost/))
-    return "fleet_consultation";
-
-  if (msg.match(/warranty|claim|defect|replace|guarantee|coverage/))
-    return "warranty_support";
-
-  if (
-    msg.match(
-      /price|spec|specification|compare|feature|turanza|dueler|potenza|ecopia|alenza|sturdo/
-    )
-  )
-    return "product_inquiry";
-
-  if (msg.match(/buy|purchase|order|need tyre|want tyre|get tyre/))
-    return "lead_generation";
-
-  if (
-    msg.match(
-      /bridgestone.*company|sustainability|factory|manufacturing|history|about/
-    )
-  )
-    return "corporate_info";
-
-  return "general_support";
+  }
+  if (query.includes("turanza") || query.includes("dueler") || query.includes("ecopia") || query.includes("potenza") || query.includes("recommend")) {
+    return "tyre_recommendation";
+  }
+  if (query.includes("pressure") || query.includes("alignment") || query.includes("maintenance") || query.includes("rotation")) {
+    return "maintenance_advice";
+  }
+  if (query.includes("appointment") || query.includes("booking") || query.includes("slot")) {
+    return "appointment_booking";
+  }
+  return "general_inquiry";
 }
 
-/**
- * Generate contextual follow-up suggestions based on detected intent
- */
-function generateSuggestions(
-  intent: string | undefined,
-  _userMessage: string
-): string[] {
+function generateSuggestions(intent: string, userMessage: string): string[] {
   switch (intent) {
-    case "tyre_recommendation":
-      return [
-        "Compare this with alternatives",
-        "Where can I buy this near me?",
-        "What's the expected lifespan?",
-        "Is it good for monsoon driving?",
-      ];
     case "dealer_search":
       return [
-        "Show directions to the nearest dealer",
-        "Do they have my tyre in stock?",
-        "Can I book an appointment?",
-        "What are the service charges?",
+        "Book an appointment slot at nearest store",
+        "Check stock for Turanza 6i",
+        "Show store phone numbers & operating hours",
       ];
-    case "fleet_consultation":
+    case "tyre_recommendation":
       return [
-        "Calculate fleet TCO savings",
-        "Recommend a maintenance schedule",
-        "Compare retreading vs new tyres",
-        "What fleet tools does Bridgestone offer?",
+        "Where can I buy these tyres near me?",
+        "Compare Turanza 6i vs Ecopia EP150",
+        "What is the warranty period for this tyre?",
       ];
-    case "warranty_support":
+    case "maintenance_advice":
       return [
-        "What does the warranty cover?",
-        "How do I file a warranty claim?",
-        "What documents do I need?",
-        "How long does the claim process take?",
+        "How often should I balance and align my tyres?",
+        "Find an authorized Bridgestone service center",
+        "What is the recommended PSI for electric vehicles?",
       ];
-    case "product_inquiry":
+    case "appointment_booking":
       return [
-        "Compare with competitor products",
-        "Which vehicle is this best for?",
-        "Find a dealer with this in stock",
-        "What's the installation cost?",
-      ];
-    case "lead_generation":
-      return [
-        "Connect me with a dealer",
-        "Schedule a callback",
-        "Check availability in my area",
-        "Any current offers or discounts?",
+        "Confirm booking for tomorrow",
+        "Which stores have Sunday availability?",
+        "What services are included in fitment?",
       ];
     default:
       return [
-        "Tell me about Bridgestone products",
-        "Help me find the right tyre",
-        "Find dealers near me",
-        "What makes Bridgestone tyres special?",
+        "Find Bridgestone Select stores near Pune",
+        "Recommend tyres for my SUV",
+        "What is the Bridgestone warranty policy?",
       ];
   }
 }

@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useState, useMemo, useCallback } from "react";
 
 type BookingDetails = {
   dealerName: string;
@@ -29,40 +29,50 @@ export const ModalProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   const [isPartnerLoginOpen, setIsPartnerLoginOpen] = useState(false);
   const [isFleetDeskOpen, setIsFleetDeskOpen] = useState(false);
 
-  const openBooking = (details: BookingDetails) => {
+  const openBooking = useCallback((details: BookingDetails) => {
     setBookingDetails(details);
     setIsBookingOpen(true);
-  };
+  }, []);
 
-  const closeBooking = () => {
+  const closeBooking = useCallback(() => {
     setBookingDetails(null);
     setIsBookingOpen(false);
-  };
+  }, []);
 
-  const openPartnerLogin = () => setIsPartnerLoginOpen(true);
-  const closePartnerLogin = () => setIsPartnerLoginOpen(false);
+  const openPartnerLogin = useCallback(() => setIsPartnerLoginOpen(true), []);
+  const closePartnerLogin = useCallback(() => setIsPartnerLoginOpen(false), []);
 
-  const openFleetDesk = () => setIsFleetDeskOpen(true);
-  const closeFleetDesk = () => setIsFleetDeskOpen(false);
+  const openFleetDesk = useCallback(() => setIsFleetDeskOpen(true), []);
+  const closeFleetDesk = useCallback(() => setIsFleetDeskOpen(false), []);
 
-  return (
-    <ModalContext.Provider
-      value={{
-        bookingDetails,
-        isBookingOpen,
-        openBooking,
-        closeBooking,
-        isPartnerLoginOpen,
-        openPartnerLogin,
-        closePartnerLogin,
-        isFleetDeskOpen,
-        openFleetDesk,
-        closeFleetDesk,
-      }}
-    >
-      {children}
-    </ModalContext.Provider>
+  const value = useMemo(
+    () => ({
+      bookingDetails,
+      isBookingOpen,
+      openBooking,
+      closeBooking,
+      isPartnerLoginOpen,
+      openPartnerLogin,
+      closePartnerLogin,
+      isFleetDeskOpen,
+      openFleetDesk,
+      closeFleetDesk,
+    }),
+    [
+      bookingDetails,
+      isBookingOpen,
+      openBooking,
+      closeBooking,
+      isPartnerLoginOpen,
+      openPartnerLogin,
+      closePartnerLogin,
+      isFleetDeskOpen,
+      openFleetDesk,
+      closeFleetDesk,
+    ]
   );
+
+  return <ModalContext.Provider value={value}>{children}</ModalContext.Provider>;
 };
 
 export const useModals = () => {

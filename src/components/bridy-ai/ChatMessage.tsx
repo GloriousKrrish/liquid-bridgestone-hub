@@ -22,7 +22,7 @@ interface ChatMessageProps {
   onStreamComplete?: () => void;
 }
 
-export const ChatMessage: React.FC<ChatMessageProps> = ({
+export const ChatMessage: React.FC<ChatMessageProps> = React.memo(({
   message,
   isLatest = false,
   onRetry,
@@ -237,7 +237,7 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({
       </div>
     </div>
   );
-};
+});
 
 // Helper: Extract Tyre Recommendation Cards from text
 function extractTyreCards(text: string) {
