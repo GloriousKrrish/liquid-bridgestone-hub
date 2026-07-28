@@ -215,5 +215,19 @@
     "resolvedTo": "john-deere-5310-tractor-2024-4wd",
     "method": "learned",
     "confidenceScore": 0.92
+  },
+  {
+    "query": "Altroz",
+    "timestamp": "2026-07-28T10:24:59.808Z",
+    "resolvedTo": "tata-altroz-2024-xz-",
+    "method": "gemini_discovered",
+    "confidenceScore": 0.95
+  },
+  {
+    "query": "Tata Altroz",
+    "timestamp": "2026-07-28T10:24:59.999Z",
+    "resolvedTo": "tata-altroz-2024-xz-",
+    "method": "learned",
+    "confidenceScore": 0.95
   }
 ]

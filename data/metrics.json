@@ -1,6 +1,6 @@
 {
-  "totalVehiclesStored": 68,
-  "newVehiclesLearned": 6,
+  "totalVehiclesStored": 69,
+  "newVehiclesLearned": 7,
   "mostSearchedVehicles": [
     {
       "name": "Honda City (2022)",
@@ -11,20 +11,20 @@
       "count": 4
     },
     {
+      "name": "John Deere 5310 Tractor (2024)",
+      "count": 3
+    },
+    {
       "name": "Toyota Fortuner (2021)",
       "count": 2
     },
     {
       "name": "Land Rover Defender (2023)",
       "count": 2
-    },
-    {
-      "name": "Land Rover Defender (2024)",
-      "count": 2
     }
   ],
-  "recommendationCounts": 28,
-  "geminiDiscoverySuccessRate": 67,
-  "geminiCallsCount": 9,
-  "geminiSuccessesCount": 7
+  "recommendationCounts": 31,
+  "geminiDiscoverySuccessRate": 70,
+  "geminiCallsCount": 10,
+  "geminiSuccessesCount": 8
 }

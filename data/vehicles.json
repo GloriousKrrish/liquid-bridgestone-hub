@@ -1316,5 +1316,25 @@
     "isDiscovered": true,
     "discoveredAt": "2026-06-17T11:09:20.386Z",
     "searchCount": 3
+  },
+  {
+    "id": "tata-altroz-2024-xz-",
+    "manufacturer": "Tata",
+    "model": "Altroz",
+    "variant": "XZ+",
+    "year": "2024",
+    "vehicle_type": "Hatchback",
+    "vehicle_category": "Car",
+    "fuel_type": "Petrol",
+    "gross_weight": "1450 kg",
+    "rim_size": "16",
+    "oem_tyre_size": "195/55 R16",
+    "load_index": "87",
+    "speed_rating": "H",
+    "drive_type": "FWD",
+    "confidence": 0.95,
+    "isDiscovered": true,
+    "discoveredAt": "2026-07-28T10:24:59.795Z",
+    "searchCount": 2
   }
 ]

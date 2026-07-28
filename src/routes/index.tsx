@@ -28,19 +28,23 @@ export const Route = createFileRoute("/")({
   component: Index,
 });
 
-// 2. Premium 3D Tyre Container with Orbiting Value Labels
+// 2. Premium 3D Tyre Container with Value Labels & Orbital Rings
 interface Tyre3DContainerProps {
   TyreComponent: React.ComponentType | null;
   scrollY: number;
 }
 
-// Bridgestone core values with their accent colors and SVG icons
+// Bridgestone core values — each with fixed position, color, icon
 const BRAND_VALUES = [
   {
     label: "TRUST",
     color: "#D71920",
+    // Position of the label card relative to the extended container
+    style: { top: "8%", left: "2%" } as React.CSSProperties,
+    // SVG connector: from label → tyre edge (percentage of 100×100 viewBox)
+    line: { x1: 28, y1: 18, x2: 42, y2: 35 },
     icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-3.5 h-3.5">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
         <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
         <path d="m9 12 2 2 4-4"/>
       </svg>
@@ -49,8 +53,10 @@ const BRAND_VALUES = [
   {
     label: "INTEGRITY",
     color: "#00E5FF",
+    style: { top: "25%", right: "0%" } as React.CSSProperties,
+    line: { x1: 72, y1: 33, x2: 58, y2: 40 },
     icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-3.5 h-3.5">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
         <path d="M12 3 2 7l10 4 10-4-10-4z"/>
         <path d="m2 17 10 4 10-4"/>
         <path d="m2 12 10 4 10-4"/>
@@ -60,8 +66,10 @@ const BRAND_VALUES = [
   {
     label: "TRACE",
     color: "#FFD100",
+    style: { top: "50%", left: "0%" } as React.CSSProperties,
+    line: { x1: 25, y1: 55, x2: 40, y2: 50 },
     icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-3.5 h-3.5">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
         <circle cx="11" cy="11" r="8"/>
         <path d="m21 21-4.3-4.3"/>
       </svg>
@@ -70,8 +78,10 @@ const BRAND_VALUES = [
   {
     label: "QUALITY",
     color: "#22C55E",
+    style: { top: "58%", right: "3%" } as React.CSSProperties,
+    line: { x1: 70, y1: 63, x2: 57, y2: 55 },
     icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-3.5 h-3.5">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
         <circle cx="12" cy="8" r="6"/>
         <path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/>
       </svg>
@@ -80,8 +90,10 @@ const BRAND_VALUES = [
   {
     label: "TEAMWORK",
     color: "#A855F7",
+    style: { bottom: "5%", left: "18%" } as React.CSSProperties,
+    line: { x1: 38, y1: 80, x2: 47, y2: 62 },
     icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-3.5 h-3.5">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
         <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
         <circle cx="9" cy="7" r="4"/>
         <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
@@ -108,96 +120,134 @@ const Tyre3DContainer = React.memo(function Tyre3DContainer({
         transform: `scale(${tireScale})`,
         pointerEvents: tireOpacity > 0.1 ? "auto" : "none",
         transition: "opacity 0.3s ease-out, transform 0.3s ease-out",
+        overflow: "visible",
       }}
     >
-      {/* ─── Orbital Ring Glow 1 (outer) ─── */}
+      {/* ─── 3D Perspective Orbital Rings ─── */}
+      {/* Red ring — upper tilt */}
       <div
-        className="absolute inset-[-55%] rounded-full pointer-events-none"
+        className="absolute pointer-events-none"
         style={{
-          border: "1px solid rgba(215,25,32,0.12)",
-          boxShadow: "0 0 30px 2px rgba(215,25,32,0.06), inset 0 0 30px 2px rgba(215,25,32,0.04)",
-          animation: "orbitRingSpin 80s linear infinite",
+          inset: "-15%",
+          border: "1.5px solid rgba(215,25,32,0.35)",
+          borderRadius: "50%",
+          transform: "perspective(400px) rotateX(68deg) rotateZ(-20deg)",
+          boxShadow: "0 0 18px 2px rgba(215,25,32,0.12), inset 0 0 18px 2px rgba(215,25,32,0.06)",
+          animation: "orbitRingSpin 50s linear infinite",
         }}
       />
-      {/* ─── Orbital Ring Glow 2 (mid) ─── */}
+      {/* Cyan ring — mid tilt */}
       <div
-        className="absolute inset-[-35%] rounded-full pointer-events-none"
+        className="absolute pointer-events-none"
         style={{
-          border: "1px solid rgba(255,255,255,0.06)",
-          boxShadow: "0 0 20px 1px rgba(0,229,255,0.05), inset 0 0 20px 1px rgba(0,229,255,0.03)",
-          animation: "orbitRingSpin 60s linear infinite reverse",
+          inset: "-8%",
+          border: "1.5px solid rgba(0,229,255,0.25)",
+          borderRadius: "50%",
+          transform: "perspective(400px) rotateX(65deg) rotateZ(10deg)",
+          boxShadow: "0 0 14px 1px rgba(0,229,255,0.1), inset 0 0 14px 1px rgba(0,229,255,0.05)",
+          animation: "orbitRingSpin 45s linear infinite reverse",
+        }}
+      />
+      {/* Yellow ring — lower */}
+      <div
+        className="absolute pointer-events-none"
+        style={{
+          inset: "-20%",
+          border: "1px solid rgba(255,209,0,0.2)",
+          borderRadius: "50%",
+          transform: "perspective(400px) rotateX(72deg) rotateZ(25deg)",
+          boxShadow: "0 0 12px 1px rgba(255,209,0,0.08)",
+          animation: "orbitRingSpin 55s linear infinite",
+        }}
+      />
+      {/* Purple ring — bottom accent */}
+      <div
+        className="absolute pointer-events-none"
+        style={{
+          inset: "-5%",
+          border: "1px solid rgba(168,85,247,0.18)",
+          borderRadius: "50%",
+          transform: "perspective(400px) rotateX(60deg) rotateZ(-5deg)",
+          boxShadow: "0 0 10px 1px rgba(168,85,247,0.06)",
+          animation: "orbitRingSpin 65s linear infinite reverse",
         }}
       />
 
       {/* ─── Core Tyre Glow ─── */}
-      <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-[#D71920]/8 via-transparent to-[#00E5FF]/5 blur-[60px] pointer-events-none" />
+      <div className="absolute inset-[-5%] rounded-full bg-gradient-to-tr from-[#D71920]/10 via-transparent to-[#00E5FF]/5 blur-[50px] pointer-events-none" />
 
-      {/* ─── Orbiting Value Labels ─── */}
-      <div
-        className="absolute inset-[-55%] pointer-events-none"
-        style={{
-          animation: hoveredIdx !== null ? "none" : "orbitRingSpin 60s linear infinite",
-        }}
+      {/* ─── SVG Connector Lines ─── */}
+      <svg
+        className="absolute pointer-events-none"
+        viewBox="0 0 100 100"
+        preserveAspectRatio="none"
+        style={{ inset: "-55%", width: "210%", height: "210%", zIndex: 25 }}
       >
+        {BRAND_VALUES.map((val) => (
+          <line
+            key={`line-${val.label}`}
+            x1={`${val.line.x1}%`}
+            y1={`${val.line.y1}%`}
+            x2={`${val.line.x2}%`}
+            y2={`${val.line.y2}%`}
+            stroke={val.color}
+            strokeWidth="0.3"
+            opacity="0.5"
+          />
+        ))}
+      </svg>
+
+      {/* ─── Fixed-Position Value Labels ─── */}
+      <div className="absolute pointer-events-none" style={{ inset: "-55%", width: "210%", height: "210%", zIndex: 30 }}>
         {BRAND_VALUES.map((val, idx) => {
-          const angleDeg = (idx * 360) / BRAND_VALUES.length - 90;
           const isHovered = hoveredIdx === idx;
           return (
             <div
               key={val.label}
-              className="absolute top-1/2 left-1/2 pointer-events-auto"
-              style={{
-                transform: `rotate(${angleDeg}deg) translateX(min(48%, 130px)) rotate(${-angleDeg}deg)${hoveredIdx !== null && !isHovered ? "" : ""}`,
-                transformOrigin: "0 0",
-                zIndex: isHovered ? 40 : 30,
-                // Counter-rotate to undo parent orbit spin
-                animation: hoveredIdx !== null ? "none" : `orbitCounterSpin 60s linear infinite`,
-              }}
+              className="absolute pointer-events-auto"
+              style={val.style}
               onMouseEnter={() => setHoveredIdx(idx)}
               onMouseLeave={() => setHoveredIdx(null)}
             >
-              {/* Connector dot */}
-              <div
-                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full"
-                style={{
-                  width: isHovered ? 6 : 4,
-                  height: isHovered ? 6 : 4,
-                  backgroundColor: val.color,
-                  boxShadow: `0 0 ${isHovered ? 12 : 6}px ${val.color}80`,
-                  transition: "all 0.3s ease",
-                }}
-              />
+              {/* Pulsing connector dot */}
+              <div className="absolute -right-2 top-1/2 -translate-y-1/2">
+                <span
+                  className="absolute inline-flex h-2 w-2 rounded-full opacity-60 animate-ping"
+                  style={{ backgroundColor: val.color }}
+                />
+                <span
+                  className="relative inline-flex rounded-full h-2 w-2"
+                  style={{
+                    backgroundColor: val.color,
+                    boxShadow: `0 0 8px ${val.color}80`,
+                  }}
+                />
+              </div>
 
               {/* Glassmorphism label card */}
               <div
-                className="absolute whitespace-nowrap flex items-center gap-1.5 rounded-lg px-2 py-1 border cursor-default select-none"
+                className="flex items-center gap-2 rounded-xl px-3 py-1.5 border cursor-default select-none whitespace-nowrap"
                 style={{
-                  top: "50%",
-                  left: "calc(50% + 8px)",
-                  transform: `translateY(-50%) scale(${isHovered ? 1.08 : 1})`,
-                  background: "rgba(10,12,20,0.85)",
-                  backdropFilter: "blur(16px)",
-                  WebkitBackdropFilter: "blur(16px)",
-                  borderColor: isHovered ? `${val.color}40` : "rgba(255,255,255,0.08)",
+                  background: "rgba(8,10,18,0.88)",
+                  backdropFilter: "blur(20px)",
+                  WebkitBackdropFilter: "blur(20px)",
+                  borderColor: isHovered ? `${val.color}50` : "rgba(255,255,255,0.08)",
                   boxShadow: isHovered
-                    ? `0 0 20px ${val.color}20, 0 4px 24px rgba(0,0,0,0.5)`
-                    : "0 4px 16px rgba(0,0,0,0.4)",
+                    ? `0 0 24px ${val.color}25, 0 4px 20px rgba(0,0,0,0.6)`
+                    : "0 4px 16px rgba(0,0,0,0.5)",
+                  transform: `scale(${isHovered ? 1.06 : 1})`,
                   transition: "all 0.3s cubic-bezier(0.22, 1, 0.36, 1)",
                 }}
               >
-                {/* Icon with colored glow */}
                 <span
-                  className="flex items-center justify-center rounded-md p-0.5"
-                  style={{
-                    color: val.color,
-                    background: `${val.color}15`,
-                  }}
+                  className="flex items-center justify-center rounded-lg p-1"
+                  style={{ color: val.color, background: `${val.color}18` }}
                 >
                   {val.icon}
                 </span>
                 <span
-                  className="text-[8px] sm:text-[9px] font-bold uppercase tracking-widest"
-                  style={{ color: isHovered ? val.color : "#e5e7eb" }}
+                  className="text-[9px] sm:text-[10px] font-extrabold uppercase tracking-[0.15em]"
+                  style={{ color: isHovered ? val.color : "#f0f0f0" }}
                 >
                   {val.label}
                 </span>
@@ -224,19 +274,14 @@ const Tyre3DContainer = React.memo(function Tyre3DContainer({
         </div>
       )}
 
-      {/* ─── Keyframe Animations (injected via style tag) ─── */}
+      {/* ─── Keyframe Animations ─── */}
       <style>{`
         @keyframes orbitRingSpin {
-          from { transform: rotate(0deg); }
-          to { transform: rotate(360deg); }
-        }
-        @keyframes orbitCounterSpin {
-          from { transform: rotate(0deg) translateX(min(48%, 130px)) rotate(0deg); }
-          to { transform: rotate(-360deg) translateX(min(48%, 130px)) rotate(360deg); }
+          from { transform: perspective(400px) rotateX(var(--rx, 68deg)) rotateZ(var(--rz, 0deg)); }
+          to { transform: perspective(400px) rotateX(var(--rx, 68deg)) rotateZ(calc(var(--rz, 0deg) + 360deg)); }
         }
         @media (prefers-reduced-motion: reduce) {
-          [style*="orbitRingSpin"],
-          [style*="orbitCounterSpin"] {
+          .pointer-events-none[style*="orbitRingSpin"] {
             animation: none !important;
           }
         }
@@ -244,7 +289,6 @@ const Tyre3DContainer = React.memo(function Tyre3DContainer({
     </section>
   );
 });
-
 // 3. Controlled Search Input Form using dynamic database list
 interface VehicleSearchFormProps {
   initialValue: string;
