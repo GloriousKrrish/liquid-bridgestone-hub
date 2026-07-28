@@ -19,6 +19,14 @@ export interface RealDealer {
   category?: string;
 }
 
+// In-Memory Response Cache (10-minute TTL to minimize API latency and quota)
+interface CachedResult {
+  timestamp: number;
+  data: any;
+}
+const dealerDiscoveryCache = new Map<string, CachedResult>();
+const CACHE_TTL_MS = 10 * 60 * 1000; // 10 minutes
+
 /**
  * Haversine formula to calculate distance between two coordinates in kilometers
  */
@@ -42,7 +50,7 @@ function calculateHaversineDistance(
 }
 
 /**
- * Real-Time Dealer Discovery Server Function using Google Geocoding & Places APIs
+ * Real-Time Dealer Discovery Server Function with Parallel Processing & In-Memory TTL Caching
  */
 export const discoverRealTimeDealers = createServerFn({ method: "POST" })
   .inputValidator(
@@ -54,6 +62,15 @@ export const discoverRealTimeDealers = createServerFn({ method: "POST" })
     })
   )
   .handler(async ({ data }) => {
+    const cacheKey = `${data.locationQuery || ""}_${data.latitude || ""}_${data.longitude || ""}_${data.radiusMeters || ""}`.toLowerCase();
+    
+    // Return cached result if valid (< 10 mins)
+    const cached = dealerDiscoveryCache.get(cacheKey);
+    if (cached && Date.now() - cached.timestamp < CACHE_TTL_MS) {
+      console.log(`[Dealer Discovery Cache HIT] Returning cached response for key: "${cacheKey}"`);
+      return cached.data;
+    }
+
     const apiKey =
       process.env.GOOGLE_API_KEY ||
       process.env.VITE_LLM_API_KEY ||
@@ -120,7 +137,6 @@ export const discoverRealTimeDealers = createServerFn({ method: "POST" })
         const placesData = await placesRes.json();
 
         if (placesData.status === "OK" && placesData.results?.length > 0) {
-          // Filter places matching Bridgestone
           const bridgestonePlaces = placesData.results.filter((p: any) =>
             p.name.toLowerCase().includes("bridgestone")
           );
@@ -130,7 +146,6 @@ export const discoverRealTimeDealers = createServerFn({ method: "POST" })
             console.log(`[Dealer Discovery] Found ${rawPlaces.length} Bridgestone dealers at ${radius / 1000}km radius`);
             break;
           } else {
-            // Keep all results if none explicitly named Bridgestone
             rawPlaces = placesData.results;
             break;
           }
@@ -140,7 +155,7 @@ export const discoverRealTimeDealers = createServerFn({ method: "POST" })
       }
     }
 
-    // ── 3. NON-BRIDGESTONE RETAILER FALLBACK (Requirement 8) ──
+    // ── 3. NON-BRIDGESTONE RETAILER FALLBACK ──
     if (rawPlaces.length === 0) {
       console.warn(`[Dealer Discovery] No Bridgestone dealers found within 50km. Fallback to general tyre retailers.`);
       isBridgestoneSearch = false;
@@ -159,18 +174,19 @@ export const discoverRealTimeDealers = createServerFn({ method: "POST" })
       }
     }
 
-    // If still no places from Google API (e.g. invalid location or API key restricted), construct un-mocked real query result object
     if (rawPlaces.length === 0) {
-      return {
+      const emptyResult = {
         success: false,
         error: "NO_DEALERS_FOUND",
         message: `No active tyre dealers found near "${locationName}". Please try a larger city or nearby pincode.`,
         searchLocation: locationName,
         dealers: [],
       };
+      dealerDiscoveryCache.set(cacheKey, { timestamp: Date.now(), data: emptyResult });
+      return emptyResult;
     }
 
-    // ── 4. MAP PLACES TO REAL DEALER STRUCTURE ──
+    // ── 4. PARALLELIZED MAP & DETAILS FETCH (Promise.all) ──
     const dealers: RealDealer[] = await Promise.all(
       rawPlaces.slice(0, 6).map(async (place: any) => {
         const placeLat = place.geometry?.location?.lat || targetLat;
@@ -182,7 +198,6 @@ export const discoverRealTimeDealers = createServerFn({ method: "POST" })
           place.name
         )}&query_place_id=${place.place_id}`;
 
-        // Fetch Phone Number & Website via Place Details API if key permits
         let phoneNumber: string | undefined = undefined;
         let website: string | undefined = undefined;
 
@@ -218,7 +233,7 @@ export const discoverRealTimeDealers = createServerFn({ method: "POST" })
       })
     );
 
-    return {
+    const finalResult = {
       success: true,
       searchLocation: locationName,
       latitude: targetLat,
@@ -227,4 +242,9 @@ export const discoverRealTimeDealers = createServerFn({ method: "POST" })
       isBridgestoneOnly: isBridgestoneSearch,
       dealers,
     };
+
+    // Store in TTL cache
+    dealerDiscoveryCache.set(cacheKey, { timestamp: Date.now(), data: finalResult });
+
+    return finalResult;
   });
