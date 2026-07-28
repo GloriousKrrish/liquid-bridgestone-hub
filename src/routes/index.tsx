@@ -107,7 +107,7 @@ const Tyre3DContainer = React.memo(function Tyre3DContainer({
 
   return (
     <section
-      className="absolute bottom-[2%] right-[4%] z-20 w-[26%] h-[38%] min-w-[280px] min-h-[320px] flex flex-col items-center justify-center pointer-events-auto"
+      className="absolute bottom-[1%] right-[3%] z-20 w-[20%] h-[30%] min-w-[210px] min-h-[230px] flex flex-col items-center justify-center pointer-events-auto"
       style={{
         opacity: tireOpacity,
         transform: `scale(${tireScale})`,
@@ -174,7 +174,7 @@ const Tyre3DContainer = React.memo(function Tyre3DContainer({
         <path d="M 190 355 Q 190 315 190 270" stroke="#D4838F" strokeWidth="1.5" fill="none" opacity="0.75" filter="url(#glow-line)" />
       </svg>
 
-      {/* ─── Corporate Value Badge Cards ─── */}
+      {/* ─── Corporate Value Badge Cards with Imperial Blue Background ─── */}
       <div className="absolute inset-0 pointer-events-none z-30">
         {BRAND_VALUES.map((val, idx) => {
           const isHovered = hoveredIdx === idx;
@@ -186,30 +186,29 @@ const Tyre3DContainer = React.memo(function Tyre3DContainer({
               onMouseEnter={() => setHoveredIdx(idx)}
               onMouseLeave={() => setHoveredIdx(null)}
             >
-              {/* Glassmorphism label card with Golden-Brown-Pink theme */}
+              {/* Glassmorphism label card with Imperial Blue Background */}
               <div
-                className="flex items-center gap-1.5 rounded-xl px-3 py-1.5 border cursor-pointer select-none whitespace-nowrap"
+                className="flex items-center gap-1.5 rounded-xl px-3 py-1.5 border cursor-pointer select-none whitespace-nowrap shadow-md"
                 style={{
-                  background: "rgba(255, 253, 249, 0.95)",
+                  background: "rgba(0, 35, 102, 0.92)", // Imperial Blue BG
                   backdropFilter: "blur(16px)",
                   WebkitBackdropFilter: "blur(16px)",
-                  borderColor: isHovered ? val.color : "#E9E1D6",
+                  borderColor: isHovered ? "#C8A165" : "rgba(200, 161, 101, 0.4)",
                   boxShadow: isHovered
-                    ? `0 0 20px ${val.color}30, 0 4px 16px rgba(0,0,0,0.08)`
-                    : `0 2px 10px rgba(0,0,0,0.04)`,
+                    ? `0 0 20px rgba(0, 35, 102, 0.6), 0 4px 16px rgba(0,0,0,0.3)`
+                    : `0 2px 10px rgba(0, 35, 102, 0.25)`,
                   transform: `scale(${isHovered ? 1.08 : 1})`,
                   transition: "all 0.25s cubic-bezier(0.22, 1, 0.36, 1)",
                 }}
               >
                 <span
                   className="flex items-center justify-center rounded p-1"
-                  style={{ color: val.color, background: `${val.color}15` }}
+                  style={{ color: "#FFFFFF", background: "rgba(255, 255, 255, 0.15)" }}
                 >
                   {val.icon}
                 </span>
                 <span
-                  className="text-[10px] font-extrabold uppercase tracking-[0.14em]"
-                  style={{ color: isHovered ? val.color : "#002366" }}
+                  className="text-[10px] font-extrabold uppercase tracking-[0.14em] text-white"
                 >
                   {val.label}
                 </span>

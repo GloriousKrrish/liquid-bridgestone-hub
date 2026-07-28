@@ -55,7 +55,7 @@ function TireModel({ lastInteraction }: { lastInteraction: React.MutableRefObjec
     /* Outer group: sets the 3/4 view angle (standing tyre, angled toward camera) */
     <group rotation={[-Math.PI / 2 + 0.15, 0.4, 0.05]}>
       {/* Inner group: handles axle spin + float */}
-      <group ref={spinRef} scale={0.50}>
+      <group ref={spinRef} scale={0.38}>
         {/* Main rubber body */}
         <mesh castShadow receiveShadow material={rubberMat}>
           <torusGeometry args={[2, 0.85, 24, 48]} />
