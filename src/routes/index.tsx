@@ -28,84 +28,186 @@ export const Route = createFileRoute("/")({
   component: Index,
 });
 
-// 2. Decoupled and Isolated 3D Canvas Container Wrapper
+// 2. Premium 3D Tyre Container with Orbiting Value Labels
 interface Tyre3DContainerProps {
   TyreComponent: React.ComponentType | null;
   scrollY: number;
 }
 
+// Bridgestone core values with their accent colors and SVG icons
+const BRAND_VALUES = [
+  {
+    label: "TRUST",
+    color: "#D71920",
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-3.5 h-3.5">
+        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+        <path d="m9 12 2 2 4-4"/>
+      </svg>
+    ),
+  },
+  {
+    label: "INTEGRITY",
+    color: "#00E5FF",
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-3.5 h-3.5">
+        <path d="M12 3 2 7l10 4 10-4-10-4z"/>
+        <path d="m2 17 10 4 10-4"/>
+        <path d="m2 12 10 4 10-4"/>
+      </svg>
+    ),
+  },
+  {
+    label: "TRACE",
+    color: "#FFD100",
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-3.5 h-3.5">
+        <circle cx="11" cy="11" r="8"/>
+        <path d="m21 21-4.3-4.3"/>
+      </svg>
+    ),
+  },
+  {
+    label: "QUALITY",
+    color: "#22C55E",
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-3.5 h-3.5">
+        <circle cx="12" cy="8" r="6"/>
+        <path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/>
+      </svg>
+    ),
+  },
+  {
+    label: "TEAMWORK",
+    color: "#A855F7",
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-3.5 h-3.5">
+        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+        <circle cx="9" cy="7" r="4"/>
+        <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
+        <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+      </svg>
+    ),
+  },
+];
+
 const Tyre3DContainer = React.memo(function Tyre3DContainer({
   TyreComponent,
   scrollY,
 }: Tyre3DContainerProps) {
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      const x = (e.clientX / window.innerWidth - 0.5) * 40;
-      const y = (e.clientY / window.innerHeight - 0.5) * 40;
-      setMousePos({ x, y });
-    };
-    window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, []);
+  const [hoveredIdx, setHoveredIdx] = useState<number | null>(null);
 
   const tireOpacity = Math.max(0, 1 - scrollY / 300);
   const tireScale = Math.max(0.68, 1 - (scrollY / 300) * 0.32);
 
   return (
-    <section 
+    <section
       className="absolute bottom-[2%] right-[4.5%] z-20 w-[22%] h-[35%] flex flex-col items-center justify-center pointer-events-auto"
       style={{
         opacity: tireOpacity,
-        transform: `scale(${tireScale}) translate3d(${mousePos.x * 0.15}px, ${mousePos.y * 0.15}px, 0)`,
+        transform: `scale(${tireScale})`,
         pointerEvents: tireOpacity > 0.1 ? "auto" : "none",
-        transition: "opacity 0.25s cubic-bezier(0.22, 1, 0.36, 1), transform 0.15s cubic-bezier(0.22, 1, 0.36, 1)",
+        transition: "opacity 0.3s ease-out, transform 0.3s ease-out",
       }}
     >
-      {/* Internal core ring highlights */}
+      {/* ─── Orbital Ring Glow 1 (outer) ─── */}
       <div
-        className="absolute inset-0 rounded-full bg-gradient-to-tr from-[#D71920]/10 via-[#D71920]/5 to-transparent blur-[70px] pointer-events-none transition-transform duration-300 ease-out"
-        style={{ transform: `translate(${mousePos.x * 0.4}px, ${mousePos.y * 0.4}px)` }}
+        className="absolute inset-[-55%] rounded-full pointer-events-none"
+        style={{
+          border: "1px solid rgba(215,25,32,0.12)",
+          boxShadow: "0 0 30px 2px rgba(215,25,32,0.06), inset 0 0 30px 2px rgba(215,25,32,0.04)",
+          animation: "orbitRingSpin 80s linear infinite",
+        }}
+      />
+      {/* ─── Orbital Ring Glow 2 (mid) ─── */}
+      <div
+        className="absolute inset-[-35%] rounded-full pointer-events-none"
+        style={{
+          border: "1px solid rgba(255,255,255,0.06)",
+          boxShadow: "0 0 20px 1px rgba(0,229,255,0.05), inset 0 0 20px 1px rgba(0,229,255,0.03)",
+          animation: "orbitRingSpin 60s linear infinite reverse",
+        }}
       />
 
-      {/* 3D Tire Interactive Floating Projection Indicators */}
-      {/* 1. Structural Safety Indicator */}
-      <div className="absolute -left-4 top-[15%] z-30 flex items-center gap-2">
-        <div className="relative flex h-2 w-2">
-          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
-          <span className="relative inline-flex rounded-full h-2 w-2 bg-[#CC0000]"></span>
-        </div>
-        <div className="bg-slate-950/80 backdrop-blur-md border border-white/10 rounded-lg px-2 py-1 shadow-xl flex flex-col text-left">
-          <span className="text-[7px] uppercase tracking-wider text-[#D71920] font-bold">Indicator 01</span>
-          <span className="text-[9px] text-white font-bold whitespace-nowrap">Steel Belt</span>
-        </div>
+      {/* ─── Core Tyre Glow ─── */}
+      <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-[#D71920]/8 via-transparent to-[#00E5FF]/5 blur-[60px] pointer-events-none" />
+
+      {/* ─── Orbiting Value Labels ─── */}
+      <div
+        className="absolute inset-[-55%] pointer-events-none"
+        style={{
+          animation: hoveredIdx !== null ? "none" : "orbitRingSpin 60s linear infinite",
+        }}
+      >
+        {BRAND_VALUES.map((val, idx) => {
+          const angleDeg = (idx * 360) / BRAND_VALUES.length - 90;
+          const isHovered = hoveredIdx === idx;
+          return (
+            <div
+              key={val.label}
+              className="absolute top-1/2 left-1/2 pointer-events-auto"
+              style={{
+                transform: `rotate(${angleDeg}deg) translateX(min(48%, 130px)) rotate(${-angleDeg}deg)${hoveredIdx !== null && !isHovered ? "" : ""}`,
+                transformOrigin: "0 0",
+                zIndex: isHovered ? 40 : 30,
+                // Counter-rotate to undo parent orbit spin
+                animation: hoveredIdx !== null ? "none" : `orbitCounterSpin 60s linear infinite`,
+              }}
+              onMouseEnter={() => setHoveredIdx(idx)}
+              onMouseLeave={() => setHoveredIdx(null)}
+            >
+              {/* Connector dot */}
+              <div
+                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full"
+                style={{
+                  width: isHovered ? 6 : 4,
+                  height: isHovered ? 6 : 4,
+                  backgroundColor: val.color,
+                  boxShadow: `0 0 ${isHovered ? 12 : 6}px ${val.color}80`,
+                  transition: "all 0.3s ease",
+                }}
+              />
+
+              {/* Glassmorphism label card */}
+              <div
+                className="absolute whitespace-nowrap flex items-center gap-1.5 rounded-lg px-2 py-1 border cursor-default select-none"
+                style={{
+                  top: "50%",
+                  left: "calc(50% + 8px)",
+                  transform: `translateY(-50%) scale(${isHovered ? 1.08 : 1})`,
+                  background: "rgba(10,12,20,0.85)",
+                  backdropFilter: "blur(16px)",
+                  WebkitBackdropFilter: "blur(16px)",
+                  borderColor: isHovered ? `${val.color}40` : "rgba(255,255,255,0.08)",
+                  boxShadow: isHovered
+                    ? `0 0 20px ${val.color}20, 0 4px 24px rgba(0,0,0,0.5)`
+                    : "0 4px 16px rgba(0,0,0,0.4)",
+                  transition: "all 0.3s cubic-bezier(0.22, 1, 0.36, 1)",
+                }}
+              >
+                {/* Icon with colored glow */}
+                <span
+                  className="flex items-center justify-center rounded-md p-0.5"
+                  style={{
+                    color: val.color,
+                    background: `${val.color}15`,
+                  }}
+                >
+                  {val.icon}
+                </span>
+                <span
+                  className="text-[8px] sm:text-[9px] font-bold uppercase tracking-widest"
+                  style={{ color: isHovered ? val.color : "#e5e7eb" }}
+                >
+                  {val.label}
+                </span>
+              </div>
+            </div>
+          );
+        })}
       </div>
 
-      {/* 2. Wet-Grip Performance Indicator */}
-      <div className="absolute -right-4 top-[40%] z-30 flex items-center gap-2">
-        <div className="bg-slate-950/80 backdrop-blur-md border border-white/10 rounded-lg px-2 py-1 shadow-xl flex flex-col text-right order-first">
-          <span className="text-[7px] uppercase tracking-wider text-[#B3B3B3] font-bold">Indicator 02</span>
-          <span className="text-[9px] text-white font-bold whitespace-nowrap">Hydro-Channels</span>
-        </div>
-        <div className="relative flex h-2 w-2">
-          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white/40 opacity-75"></span>
-          <span className="relative inline-flex rounded-full h-2 w-2 bg-[#B3B3B3]"></span>
-        </div>
-      </div>
-
-      {/* 3. Nanotech Compound Indicator */}
-      <div className="absolute left-0 bottom-[15%] z-30 flex items-center gap-2">
-        <div className="relative flex h-2 w-2">
-          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#FFD100] opacity-75"></span>
-          <span className="relative inline-flex rounded-full h-2 w-2 bg-[#FFD100]"></span>
-        </div>
-        <div className="bg-slate-950/80 backdrop-blur-md border border-white/10 rounded-lg px-2 py-1 shadow-xl flex flex-col text-left">
-          <span className="text-[7px] uppercase tracking-wider text-[#FFD100] font-bold">Indicator 03</span>
-          <span className="text-[9px] text-white font-bold whitespace-nowrap">Silica Comp.</span>
-        </div>
-      </div>
-
+      {/* ─── 3D Tyre Canvas ─── */}
       {TyreComponent ? (
         <Suspense
           fallback={
@@ -121,6 +223,24 @@ const Tyre3DContainer = React.memo(function Tyre3DContainer({
           <Loader2 className="animate-spin text-[#D71920]" size={32} />
         </div>
       )}
+
+      {/* ─── Keyframe Animations (injected via style tag) ─── */}
+      <style>{`
+        @keyframes orbitRingSpin {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(360deg); }
+        }
+        @keyframes orbitCounterSpin {
+          from { transform: rotate(0deg) translateX(min(48%, 130px)) rotate(0deg); }
+          to { transform: rotate(-360deg) translateX(min(48%, 130px)) rotate(360deg); }
+        }
+        @media (prefers-reduced-motion: reduce) {
+          [style*="orbitRingSpin"],
+          [style*="orbitCounterSpin"] {
+            animation: none !important;
+          }
+        }
+      `}</style>
     </section>
   );
 });
