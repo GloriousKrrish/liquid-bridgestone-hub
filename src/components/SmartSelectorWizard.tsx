@@ -538,25 +538,25 @@ export function SmartSelectorWizard({
 
               {/* Autocomplete Suggestions Box */}
               {showSearchDropdown && vehicleSuggestions.length > 0 && (
-                <div className="absolute left-0 right-0 mt-2 z-50 shadow-[0_12px_40px_rgba(0,0,0,0.5)] bg-[#10121F]/95 backdrop-blur-2xl border border-white/10 rounded-2xl p-2 max-h-60 overflow-y-auto suggestions-list">
+                <div className="absolute left-0 right-0 mt-2 z-50 shadow-[0_12px_40px_rgba(170,145,110,0.25)] bg-white/98 backdrop-blur-2xl border border-[#C4A67A]/30 rounded-2xl p-2 max-h-60 overflow-y-auto suggestions-list">
                   {vehicleSuggestions.map((v, index) => (
                     <button
                       key={v.record.id}
                       onClick={() => handleSelectVehicleRecord(v.record)}
                       className={`w-full text-left px-3 py-2.5 rounded-xl transition-all flex items-center justify-between text-xs cursor-pointer ${
                         index === focusedSuggestionIndex
-                           ? "bg-[#D71920] text-white"
-                           : "text-white/70 hover:text-white hover:bg-white/5"
+                          ? "bg-[#E60012] text-white"
+                          : "text-[#2A2A2A] hover:bg-[#F5EFE6]"
                       }`}
                     >
                       <div>
                         <span className="font-bold">{v.key}</span>
-                        <span className="text-[9px] text-white/40 block">OEM Spec Size: {v.record.oem_tyre_size}</span>
+                        <span className="text-[9px] text-[#666666] block font-medium">OEM Spec Size: {v.record.oem_tyre_size}</span>
                       </div>
                       <span className={`text-[9px] uppercase font-extrabold px-2 py-0.5 rounded ${
                         index === focusedSuggestionIndex
                           ? "bg-white/20 text-white"
-                          : "text-[#D71920] bg-[#D71920]/10 border border-[#D71920]/20"
+                          : "text-[#9B6B43] bg-[#9B6B43]/15 border border-[#9B6B43]/20"
                       }`}>
                         {v.record.vehicle_category}
                       </span>
@@ -571,87 +571,87 @@ export function SmartSelectorWizard({
               <div className="space-y-4 animate-in fade-in duration-300">
                 <div className="grid grid-cols-3 gap-3">
                   <div>
-                    <label className="text-[9px] uppercase tracking-widest text-slate-400 font-bold block mb-1.5">
+                    <label className="text-[9px] uppercase tracking-widest text-[#8C8C8C] font-bold block mb-1.5">
                       Model Year
                     </label>
                     <div className="relative">
                       <select
                         value={selectedYear}
                         onChange={(e) => handleYearChange(e.target.value)}
-                        className="w-full bg-white/5 border border-white/10 rounded-xl px-2.5 py-2.5 text-xs text-white outline-none cursor-pointer hover:bg-white/10 transition-colors appearance-none"
+                        className="w-full bg-[#F5EFE6] border border-[#C4A67A]/30 rounded-xl px-2.5 py-2.5 text-xs text-[#2A2A2A] font-semibold outline-none cursor-pointer hover:border-[#C8A165] transition-colors appearance-none"
                       >
                         {availableYears.map((yr) => (
-                          <option key={yr} value={yr} className="bg-[#121422]">
+                          <option key={yr} value={yr} className="bg-white text-[#2A2A2A]">
                             {yr}
                           </option>
                         ))}
                       </select>
-                      <ChevronDown size={14} className="absolute right-2.5 top-3.5 text-white/40 pointer-events-none" />
+                      <ChevronDown size={14} className="absolute right-2.5 top-3.5 text-[#9B6B43] pointer-events-none" />
                     </div>
                   </div>
 
                   <div>
-                    <label className="text-[9px] uppercase tracking-widest text-slate-400 font-bold block mb-1.5">
+                    <label className="text-[9px] uppercase tracking-widest text-[#8C8C8C] font-bold block mb-1.5">
                       Variant / Trim
                     </label>
                     <div className="relative">
                       <select
                         value={selectedSubmodel}
                         onChange={(e) => handleSubmodelChange(e.target.value)}
-                        className="w-full bg-white/5 border border-white/10 rounded-xl px-2.5 py-2.5 text-xs text-white outline-none cursor-pointer hover:bg-white/10 transition-colors appearance-none"
+                        className="w-full bg-[#F5EFE6] border border-[#C4A67A]/30 rounded-xl px-2.5 py-2.5 text-xs text-[#2A2A2A] font-semibold outline-none cursor-pointer hover:border-[#C8A165] transition-colors appearance-none"
                       >
                         {availableSubmodels.map((submod) => (
-                          <option key={submod} value={submod} className="bg-[#121422]">
+                          <option key={submod} value={submod} className="bg-white text-[#2A2A2A]">
                             {submod}
                           </option>
                         ))}
                       </select>
-                      <ChevronDown size={14} className="absolute right-2.5 top-3.5 text-white/40 pointer-events-none" />
+                      <ChevronDown size={14} className="absolute right-2.5 top-3.5 text-[#9B6B43] pointer-events-none" />
                     </div>
                   </div>
 
                   <div>
-                    <label className="text-[9px] uppercase tracking-widest text-slate-400 font-bold block mb-1.5">
+                    <label className="text-[9px] uppercase tracking-widest text-[#8C8C8C] font-bold block mb-1.5">
                       Rim Size
                     </label>
                     <div className="relative">
                       <select
                         value={selectedRimSize}
                         onChange={(e) => handleRimChange(e.target.value)}
-                        className="w-full bg-white/5 border border-white/10 rounded-xl px-2.5 py-2.5 text-xs text-white outline-none cursor-pointer hover:bg-white/10 transition-colors appearance-none"
+                        className="w-full bg-[#F5EFE6] border border-[#C4A67A]/30 rounded-xl px-2.5 py-2.5 text-xs text-[#2A2A2A] font-semibold outline-none cursor-pointer hover:border-[#C8A165] transition-colors appearance-none"
                       >
                         {availableRimSizes.map((rim) => (
-                          <option key={rim} value={rim} className="bg-[#121422]">
+                          <option key={rim} value={rim} className="bg-white text-[#2A2A2A]">
                             {rim}" OEM
                           </option>
                         ))}
                       </select>
-                      <ChevronDown size={14} className="absolute right-2.5 top-3.5 text-white/40 pointer-events-none" />
+                      <ChevronDown size={14} className="absolute right-2.5 top-3.5 text-[#9B6B43] pointer-events-none" />
                     </div>
                   </div>
                 </div>
 
                 {/* Detected OEM Specifications Metadata */}
-                <div className="bg-[#D71920]/5 border border-[#D71920]/20 rounded-2xl p-4 flex flex-col gap-2 mt-2">
-                  <span className="text-[9px] uppercase tracking-widest text-[#D71920] font-extrabold flex items-center gap-1">
+                <div className="bg-[#F5EFE6] border border-[#C4A67A]/30 rounded-2xl p-4 flex flex-col gap-2 mt-2 shadow-xs">
+                  <span className="text-[9px] uppercase tracking-widest text-[#9B6B43] font-extrabold flex items-center gap-1">
                     <Info size={11} /> Live Specifications Panel
                   </span>
-                  <div className="grid grid-cols-2 gap-y-2 gap-x-4 text-[11px] text-slate-300">
-                    <div>Vehicle Name: <span className="text-white font-bold">{selectedVehicle.manufacturer} {selectedVehicle.model}</span></div>
-                    <div>Category: <span className="text-white font-bold">{selectedVehicle.vehicle_type}</span></div>
-                    <div>Factory Tyre Size: <span className="text-white font-bold">{selectedVehicle.oem_tyre_size}</span></div>
-                    <div>Approved Rim Diameter: <span className="text-white font-bold">{selectedRimSize || selectedVehicle.rim_size}"</span></div>
-                    <div>OEM Load Index: <span className="text-white font-bold">{selectedVehicle.load_index}</span></div>
-                    <div>OEM Speed Rating: <span className="text-white font-bold">{selectedVehicle.speed_rating}</span></div>
-                    <div>Fuel / Drive Mode: <span className="text-white font-bold">{selectedVehicle.fuel_type} ({selectedVehicle.drive_type})</span></div>
-                    <div>Gross Weight: <span className="text-white font-bold">{selectedVehicle.gross_weight}</span></div>
+                  <div className="grid grid-cols-2 gap-y-2 gap-x-4 text-[11px] text-[#666666]">
+                    <div>Vehicle Name: <span className="text-[#2A2A2A] font-bold">{selectedVehicle.manufacturer} {selectedVehicle.model}</span></div>
+                    <div>Category: <span className="text-[#2A2A2A] font-bold">{selectedVehicle.vehicle_type}</span></div>
+                    <div>Factory Tyre Size: <span className="text-[#2A2A2A] font-bold">{selectedVehicle.oem_tyre_size}</span></div>
+                    <div>Approved Rim Diameter: <span className="text-[#2A2A2A] font-bold">{selectedRimSize || selectedVehicle.rim_size}"</span></div>
+                    <div>OEM Load Index: <span className="text-[#2A2A2A] font-bold">{selectedVehicle.load_index}</span></div>
+                    <div>OEM Speed Rating: <span className="text-[#2A2A2A] font-bold">{selectedVehicle.speed_rating}</span></div>
+                    <div>Fuel / Drive Mode: <span className="text-[#2A2A2A] font-bold">{selectedVehicle.fuel_type} ({selectedVehicle.drive_type})</span></div>
+                    <div>Gross Weight: <span className="text-[#2A2A2A] font-bold">{selectedVehicle.gross_weight}</span></div>
                     
-                    <div className="col-span-2 pt-1 border-t border-white/5 flex items-center justify-between">
-                      <span>AI Discovery Status:</span>
+                    <div className="col-span-2 pt-1 border-t border-[#C4A67A]/20 flex items-center justify-between">
+                      <span className="font-medium text-[#666666]">AI Discovery Status:</span>
                       <span className={`font-bold px-2 py-0.5 rounded text-[10px] ${
                         selectedVehicle.isDiscovered 
-                          ? "bg-purple-500/20 text-purple-400 border border-purple-500/30"
-                          : "bg-emerald-500/20 text-emerald-400 border border-emerald-500/30"
+                          ? "bg-[#9B6B43]/15 text-[#9B6B43] border border-[#9B6B43]/30"
+                          : "bg-[#5B8C5A]/15 text-[#3B663A] border border-[#5B8C5A]/30"
                       }`}>
                         {selectedVehicle.isDiscovered 
                           ? `AI Learned (${Math.round(selectedVehicle.confidence * 100)}% Confidence)`
@@ -663,7 +663,7 @@ export function SmartSelectorWizard({
                 </div>
               </div>
             ) : (
-              <div className="text-center py-6 border border-white/5 bg-white/[0.01] rounded-2xl text-white/40 text-xs">
+              <div className="text-center py-6 border border-[#C4A67A]/20 bg-[#F5EFE6]/50 rounded-2xl text-[#8C8C8C] text-xs font-medium">
                 Select a vehicle to unlock year, variant and load parameters.
               </div>
             )}
@@ -671,26 +671,33 @@ export function SmartSelectorWizard({
 
           {/* factor customizers */}
           {selectedVehicle && (
-            <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-6 shadow-2xl space-y-5 animate-in slide-in-from-bottom-5 duration-300">
-              <span className="text-[10px] uppercase tracking-widest text-[#D71920] font-extrabold flex items-center gap-1.5">
+            <div 
+              className="rounded-[24px] border border-[#C4A67A]/30 p-6 shadow-[0_10px_30px_rgba(170,145,110,0.12)] space-y-5 animate-in slide-in-from-bottom-5 duration-300"
+              style={{
+                background: "rgba(255, 250, 245, 0.82)",
+                backdropFilter: "blur(18px)",
+                WebkitBackdropFilter: "blur(18px)",
+              }}
+            >
+              <span className="text-[10px] uppercase tracking-widest text-[#9B6B43] font-extrabold flex items-center gap-1.5">
                 <SlidersHorizontal size={12} />
                 Usage & Priority Factors
               </span>
 
               {/* Usage Terrain Profile */}
               <div>
-                <label className="text-[9px] uppercase tracking-widest text-slate-400 font-bold block mb-2">
+                <label className="text-[9px] uppercase tracking-widest text-[#8C8C8C] font-bold block mb-2">
                   Usage Type / Terrain
                 </label>
-                <div className="grid grid-cols-3 gap-2 p-1 bg-white/5 rounded-xl border border-white/10">
+                <div className="grid grid-cols-3 gap-2 p-1 bg-[#F5EFE6] rounded-xl border border-[#C4A67A]/25">
                   {(["Urban", "Highway", "Off-Road"] as const).map((t) => (
                     <button
                       key={t}
                       onClick={() => updateParams({ terrain: t })}
                       className={`py-2 text-[10px] font-bold uppercase tracking-wider rounded-lg transition-all cursor-pointer ${
                         terrain === t
-                          ? "bg-[#D71920] text-white shadow-md"
-                          : "text-white/60 hover:text-white hover:bg-white/5"
+                          ? "bg-[#E60012] text-white shadow-sm"
+                          : "text-[#666666] hover:text-[#2A2A2A] hover:bg-white/80"
                       }`}
                     >
                       {t}
@@ -701,10 +708,10 @@ export function SmartSelectorWizard({
 
               {/* Road Conditions */}
               <div>
-                <label className="text-[9px] uppercase tracking-widest text-slate-400 font-bold block mb-2">
+                <label className="text-[9px] uppercase tracking-widest text-[#8C8C8C] font-bold block mb-2">
                   Primary Road Conditions
                 </label>
-                <div className="grid grid-cols-3 gap-2 p-1 bg-white/5 rounded-xl border border-white/10">
+                <div className="grid grid-cols-3 gap-2 p-1 bg-[#F5EFE6] rounded-xl border border-[#C4A67A]/25">
                   {[
                     { val: "Smooth", label: "Smooth" },
                     { val: "Broken", label: "Potholes" },
@@ -715,8 +722,8 @@ export function SmartSelectorWizard({
                       onClick={() => updateParams({ roadCondition: rc.val as any })}
                       className={`py-2 text-[10px] font-bold uppercase tracking-wider rounded-lg transition-all cursor-pointer ${
                         roadCondition === rc.val
-                          ? "bg-[#D71920] text-white shadow-md"
-                          : "text-white/60 hover:text-white hover:bg-white/5"
+                          ? "bg-[#E60012] text-white shadow-sm"
+                          : "text-[#666666] hover:text-[#2A2A2A] hover:bg-white/80"
                       }`}
                     >
                       {rc.label}
@@ -741,8 +748,8 @@ export function SmartSelectorWizard({
                         onClick={() => updateParams({ loadRequirement: l.val as any })}
                         className={`py-1.5 text-[9px] font-bold uppercase tracking-wider rounded-lg transition-all cursor-pointer ${
                           loadRequirement === l.val
-                            ? "bg-[#D71920] text-white shadow-md"
-                            : "text-white/60 hover:text-white hover:bg-white/5"
+                            ? "bg-[#E60012] text-white shadow-sm"
+                            : "text-[#666666] hover:text-[#2A2A2A] hover:bg-white/80"
                         }`}
                       >
                         {l.label}
@@ -753,22 +760,22 @@ export function SmartSelectorWizard({
 
                 {/* Performance Priorities */}
                 <div>
-                  <label className="text-[9px] uppercase tracking-widest text-slate-400 font-bold block mb-2">
+                  <label className="text-[9px] uppercase tracking-widest text-[#8C8C8C] font-bold block mb-2">
                     Performance Priority
                   </label>
                   <div className="relative">
                     <select
                       value={priority}
                       onChange={(e) => updateParams({ priority: e.target.value as any })}
-                      className="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-[10px] text-white outline-none cursor-pointer hover:bg-white/10 transition-colors appearance-none font-bold uppercase tracking-wider"
+                      className="w-full bg-[#F5EFE6] border border-[#C4A67A]/30 rounded-xl px-3 py-2 text-[10px] text-[#2A2A2A] font-bold uppercase tracking-wider outline-none cursor-pointer hover:border-[#C8A165] transition-colors appearance-none"
                     >
-                      <option value="Comfort" className="bg-[#121422]">Comfort & Silence</option>
-                      <option value="Toughness" className="bg-[#121422]">Durability</option>
-                      <option value="Efficiency" className="bg-[#121422]">EV / Fuel Eco</option>
-                      <option value="Sport" className="bg-[#121422]">Sport Cornering</option>
-                      <option value="Commercial" className="bg-[#121422]">Heavy Load Fleet</option>
+                      <option value="Comfort" className="bg-white text-[#2A2A2A]">Comfort & Silence</option>
+                      <option value="Toughness" className="bg-white text-[#2A2A2A]">Durability</option>
+                      <option value="Efficiency" className="bg-white text-[#2A2A2A]">EV / Fuel Eco</option>
+                      <option value="Sport" className="bg-white text-[#2A2A2A]">Sport Cornering</option>
+                      <option value="Commercial" className="bg-white text-[#2A2A2A]">Heavy Load Fleet</option>
                     </select>
-                    <ChevronDown size={12} className="absolute right-3 top-2.5 text-white/40 pointer-events-none" />
+                    <ChevronDown size={12} className="absolute right-3 top-2.5 text-[#9B6B43] pointer-events-none" />
                   </div>
                 </div>
               </div>
@@ -779,10 +786,17 @@ export function SmartSelectorWizard({
         {/* RIGHT COLUMN: Live recommendations (renders top 3 options) */}
         <div className="lg:col-span-7">
           {loadingRecs ? (
-            <div className="h-full min-h-[300px] bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-8 flex flex-col items-center justify-center text-center text-white/40 shadow-2xl">
-              <Loader2 className="animate-spin text-[#D71920] mb-4" size={48} strokeWidth={1.5} />
-              <h3 className="text-lg font-bold text-white mb-2">Analyzing Tyre Compatibility Vectors...</h3>
-              <p className="text-xs max-w-sm leading-relaxed text-slate-300/60">
+            <div 
+              className="h-full min-h-[300px] rounded-[24px] border border-[#C4A67A]/30 p-8 flex flex-col items-center justify-center text-center shadow-[0_10px_30px_rgba(170,145,110,0.12)]"
+              style={{
+                background: "rgba(255, 250, 245, 0.82)",
+                backdropFilter: "blur(18px)",
+                WebkitBackdropFilter: "blur(18px)",
+              }}
+            >
+              <Loader2 className="animate-spin text-[#E60012] mb-4" size={44} strokeWidth={1.75} />
+              <h3 className="text-lg font-bold text-[#2A2A2A] mb-2">Analyzing Tyre Compatibility Vectors...</h3>
+              <p className="text-xs max-w-sm leading-relaxed text-[#666666] font-medium">
                 Evaluating load index ratings, width profiles, speed ratings, and compound durability mapping.
               </p>
             </div>

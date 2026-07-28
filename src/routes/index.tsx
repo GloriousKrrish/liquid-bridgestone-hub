@@ -316,8 +316,8 @@ const VehicleSearchForm = React.memo(function VehicleSearchForm({
           }}
           className="relative flex items-center"
         >
-          <div className="relative w-full flex items-center bg-white border border-[#E9E1D6] rounded-2xl shadow-sm focus-within:border-[#E60012] focus-within:ring-2 focus-within:ring-[#E60012]/10 transition-all duration-200">
-            <Search className="absolute left-4 text-[#8A8A8A]" size={18} />
+          <div className="relative w-full flex items-center bg-[rgba(255,250,245,0.88)] backdrop-blur-xl border border-[#C4A67A]/30 rounded-2xl shadow-[0_10px_30px_rgba(170,145,110,0.12)] focus-within:border-[#C8A165] focus-within:ring-2 focus-within:ring-[#C8A165]/20 transition-all duration-200">
+            <Search className="absolute left-4 text-[#9B6B43]" size={18} />
             <input
               type="text"
               value={value}
@@ -327,11 +327,11 @@ const VehicleSearchForm = React.memo(function VehicleSearchForm({
               }}
               onFocus={() => setShowDropdown(true)}
               placeholder="Search vehicle model (e.g. Creta, Fortuner, Nexon EV)..."
-              className="w-full pl-11 pr-24 py-3.5 bg-transparent border-none outline-none text-sm text-[#222222] placeholder:text-[#8A8A8A] font-medium"
+              className="w-full pl-11 pr-24 py-3.5 bg-transparent border-none outline-none text-sm text-[#2A2A2A] placeholder:text-[#8C8C8C] font-semibold"
             />
             <button
               type="submit"
-              className="absolute right-2 px-4 py-2 bg-[#E60012] hover:bg-[#C9A35D] text-white text-xs font-bold uppercase tracking-wider rounded-xl transition-all duration-200 shadow-sm cursor-pointer"
+              className="absolute right-2 px-4 py-2 bg-[#E60012] hover:bg-[#C8A165] text-white text-xs font-bold uppercase tracking-wider rounded-xl transition-all duration-200 shadow-xs cursor-pointer"
             >
               Search
             </button>
@@ -339,8 +339,8 @@ const VehicleSearchForm = React.memo(function VehicleSearchForm({
         </form>
 
         {showDropdown && filteredSuggestions.length > 0 && (
-          <div className="absolute top-full left-0 right-0 mt-2 bg-white border border-[#E9E1D6] rounded-2xl shadow-xl overflow-hidden z-50 p-2 animate-in fade-in slide-in-from-top-2 duration-150">
-            <div className="px-3 py-1.5 text-[10px] uppercase tracking-wider text-[#8A8A8A] font-bold">
+          <div className="absolute top-full left-0 right-0 mt-2 bg-white/98 backdrop-blur-2xl border border-[#C4A67A]/30 rounded-2xl shadow-[0_12px_40px_rgba(170,145,110,0.2)] overflow-hidden z-50 p-2 animate-in fade-in slide-in-from-top-2 duration-150">
+            <div className="px-3 py-1.5 text-[10px] uppercase tracking-wider text-[#8C8C8C] font-bold">
               Suggested Vehicles
             </div>
             {filteredSuggestions.map((item) => (
@@ -348,10 +348,10 @@ const VehicleSearchForm = React.memo(function VehicleSearchForm({
                 key={item.name}
                 type="button"
                 onClick={() => handleSelect(item.name)}
-                className="w-full text-left px-3 py-2.5 hover:bg-[#F5F1EB] rounded-xl transition-colors flex items-center justify-between text-xs text-[#444444] hover:text-[#222222] cursor-pointer font-medium"
+                className="w-full text-left px-3 py-2.5 hover:bg-[#F5EFE6] rounded-xl transition-colors flex items-center justify-between text-xs text-[#2A2A2A] cursor-pointer font-semibold"
               >
-                <span className="font-semibold">{item.name}</span>
-                <span className="text-[10px] uppercase tracking-wider text-[#E60012] font-bold bg-[#E60012]/10 px-2 py-0.5 rounded border border-[#E60012]/15">
+                <span className="font-bold">{item.name}</span>
+                <span className="text-[10px] uppercase tracking-wider text-[#9B6B43] font-extrabold bg-[#9B6B43]/15 px-2 py-0.5 rounded border border-[#9B6B43]/20">
                   {item.category}
                 </span>
               </button>
@@ -555,7 +555,7 @@ function Index() {
               onClick={() => setWizardOpen((v) => !v)}
               aria-expanded={wizardOpen}
               aria-label="Toggle Live Recommendation Dashboard"
-              className="rounded-full px-8 py-3 text-xs text-[#222222] bg-white hover:bg-[#F5F1EB] tracking-widest uppercase font-bold text-center mx-auto block max-w-sm mt-4 border border-[#E9E1D6] shadow-sm transition-all duration-150 cursor-pointer focus-visible:ring-2 focus-visible:ring-[#E60012] focus-visible:outline-none"
+              className="rounded-full px-8 py-3 text-xs text-[#2A2A2A] bg-[rgba(255,250,245,0.92)] hover:bg-white tracking-widest uppercase font-extrabold text-center mx-auto block max-w-sm mt-4 border border-[#C4A67A]/35 hover:border-[#C8A165] shadow-[0_4px_16px_rgba(170,145,110,0.12)] hover:shadow-[0_8px_24px_rgba(170,145,110,0.2)] hover:scale-[1.01] transition-all duration-200 cursor-pointer focus-visible:ring-2 focus-visible:ring-[#E60012] focus-visible:outline-none"
             >
               {wizardOpen ? "Hide Live Recommendation Dashboard" : "Show Live Recommendation Dashboard"}
             </button>
