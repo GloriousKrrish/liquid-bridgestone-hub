@@ -2,7 +2,18 @@ import React from "react";
 import type { BridyMessage } from "../../lib/bridy-ai/types";
 import { MarkdownRenderer } from "./MarkdownRenderer";
 import { StreamingText } from "./StreamingText";
-import { Copy, Check, RotateCcw } from "lucide-react";
+import {
+  Copy,
+  Check,
+  RotateCcw,
+  Star,
+  ShieldCheck,
+  Calendar,
+  MapPin,
+  SlidersHorizontal,
+  ArrowRight,
+  Sparkles,
+} from "lucide-react";
 
 interface ChatMessageProps {
   message: BridyMessage;
@@ -25,13 +36,16 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({
     setTimeout(() => setCopied(false), 2000);
   };
 
+  // User Message Rendering
   if (message.role === "user") {
     return (
       <div className="flex justify-end group">
-        <div className="max-w-[75%] bg-[#CC0000]/90 text-white rounded-2xl rounded-tr-md px-4 py-3 shadow-lg shadow-[#CC0000]/10">
-          <p className="text-[12.5px] leading-relaxed whitespace-pre-wrap">{message.content}</p>
-          <div className="flex justify-end mt-1.5">
-            <time className="text-[9px] text-white/50">
+        <div className="max-w-[85%] sm:max-w-[75%] bg-[#F8EDEE] border border-[#EFE6E8] text-[#2D2D2D] rounded-[20px] rounded-tr-[4px] px-5 py-4 shadow-[0_2px_12px_rgba(0,0,0,0.02)]">
+          <p className="text-xs sm:text-sm leading-relaxed whitespace-pre-wrap font-normal">
+            {message.content}
+          </p>
+          <div className="flex justify-end mt-2">
+            <time className="text-[10px] text-[#707070]">
               {new Date(message.timestamp).toLocaleTimeString([], {
                 hour: "2-digit",
                 minute: "2-digit",
@@ -43,19 +57,23 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({
     );
   }
 
-  // Assistant message
+  // Detect product recommendations or bookings in response
+  const tyreCards = extractTyreCards(message.content);
+  const bookingCard = extractBookingCard(message.content);
+
+  // Assistant Message Rendering
   return (
-    <div className="flex items-start gap-3 group max-w-full">
-      {/* Bridy AI Avatar */}
-      <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-[#CC0000] to-[#8B0000] flex items-center justify-center shrink-0 shadow-lg shadow-[#CC0000]/20 mt-0.5">
-        <span className="text-[10px] font-black text-white tracking-tight">B</span>
+    <div className="flex items-start gap-3.5 group max-w-full">
+      {/* Bridgestone Mobility Avatar Badge */}
+      <div className="w-8 h-8 rounded-xl bg-[#D71920] flex items-center justify-center shrink-0 shadow-sm shadow-[#D71920]/20 mt-1">
+        <span className="text-xs font-bold text-white tracking-tight">B</span>
       </div>
 
-      <div className="flex-1 min-w-0 space-y-2">
-        {/* Message content */}
-        <div className="bg-white/[0.03] border border-white/[0.06] rounded-2xl rounded-tl-md px-4 py-3.5 backdrop-blur-md">
+      <div className="flex-1 min-w-0 space-y-4">
+        {/* Main Response Container */}
+        <div className="bg-[#FFFFFF] border border-[#EFE6E8] rounded-[20px] rounded-tl-[4px] p-5 sm:p-6 shadow-[0_4px_20px_rgba(0,0,0,0.03)] space-y-4">
           {message.isStreaming && isLatest ? (
-            <div className="text-[12.5px] leading-relaxed text-white/85">
+            <div className="text-xs sm:text-sm leading-relaxed text-[#2D2D2D]">
               <StreamingText
                 content={message.content}
                 onComplete={onStreamComplete}
@@ -65,30 +83,130 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({
           ) : (
             <MarkdownRenderer content={message.content} />
           )}
+
+          {/* Render Tyre Product Cards if present */}
+          {tyreCards.length > 0 && !message.isStreaming && (
+            <div className="pt-3 grid grid-cols-1 sm:grid-cols-2 gap-4 border-t border-[#EFE6E8]">
+              {tyreCards.map((tyre, idx) => (
+                <div
+                  key={idx}
+                  className="bg-[#FFF8F8] border border-[#EFE6E8] rounded-[18px] p-4.5 space-y-3 shadow-xs hover:border-[#D71920]/30 transition-all"
+                >
+                  <div className="flex items-start justify-between">
+                    <div>
+                      <span className="text-[10px] font-semibold uppercase tracking-wider text-[#D71920] bg-[#F8EDEE] px-2 py-0.5 rounded-full border border-[#EFE6E8]">
+                        {tyre.category}
+                      </span>
+                      <h4 className="text-sm font-semibold text-[#2D2D2D] mt-1.5">
+                        {tyre.name}
+                      </h4>
+                    </div>
+                    <div className="flex items-center gap-1 bg-[#FFFFFF] px-2 py-1 rounded-lg border border-[#EFE6E8] text-xs font-medium text-[#2D2D2D]">
+                      <Star className="w-3.5 h-3.5 fill-[#D71920] text-[#D71920]" />
+                      {tyre.rating}
+                    </div>
+                  </div>
+
+                  <div className="space-y-1.5 text-xs text-[#707070]">
+                    <p className="flex items-center justify-between">
+                      <span>Perfect For:</span>
+                      <span className="font-medium text-[#2D2D2D]">{tyre.perfectFor}</span>
+                    </p>
+                    <p className="flex items-center justify-between">
+                      <span>Expected Life:</span>
+                      <span className="font-medium text-[#2E8B57]">{tyre.expectedLife}</span>
+                    </p>
+                    <p className="flex items-center justify-between">
+                      <span>Price Est:</span>
+                      <span className="font-semibold text-[#2D2D2D]">{tyre.price}</span>
+                    </p>
+                  </div>
+
+                  {/* Actions */}
+                  <div className="pt-2 flex items-center gap-2">
+                    <button
+                      type="button"
+                      onClick={() => alert(`Comparing ${tyre.name}`)}
+                      className="flex-1 text-center py-2 px-3 rounded-xl bg-[#FFFFFF] border border-[#EFE6E8] hover:bg-[#F4EFF0] text-xs font-medium text-[#2D2D2D] transition-colors cursor-pointer"
+                    >
+                      Compare
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => alert(`Booking ${tyre.name}`)}
+                      className="flex-1 text-center py-2 px-3 rounded-xl bg-[#D71920] hover:bg-[#B51218] text-xs font-semibold text-white transition-colors cursor-pointer shadow-xs"
+                    >
+                      Book Fitment
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {/* Render Booking Card if present */}
+          {bookingCard && !message.isStreaming && (
+            <div className="pt-3 border-t border-[#EFE6E8]">
+              <div className="bg-[#FAF5F6] border border-[#EFE6E8] rounded-[18px] p-5 space-y-3">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2 text-xs font-semibold text-[#2D2D2D]">
+                    <Calendar className="w-4 h-4 text-[#D71920]" />
+                    Service Appointment Card
+                  </div>
+                  <span className="text-[10px] font-semibold bg-[#2E8B57]/10 text-[#2E8B57] px-2.5 py-1 rounded-full border border-[#2E8B57]/20 flex items-center gap-1">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#2E8B57]" />
+                    {bookingCard.status}
+                  </span>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+                  <div className="bg-[#FFFFFF] p-3 rounded-xl border border-[#EFE6E8]">
+                    <p className="text-[#707070] text-[10px] uppercase font-semibold">Selected Tyre</p>
+                    <p className="font-semibold text-[#2D2D2D] mt-0.5">{bookingCard.tyre}</p>
+                  </div>
+                  <div className="bg-[#FFFFFF] p-3 rounded-xl border border-[#EFE6E8]">
+                    <p className="text-[#707070] text-[10px] uppercase font-semibold">Store Location</p>
+                    <p className="font-semibold text-[#2D2D2D] mt-0.5">{bookingCard.store}</p>
+                  </div>
+                </div>
+
+                <div className="flex items-center justify-between text-xs pt-1">
+                  <span className="text-[#707070]">Next Steps: {bookingCard.nextSteps}</span>
+                  <button
+                    type="button"
+                    onClick={() => alert("Appointment Saved to Calendar")}
+                    className="text-[#D71920] font-semibold hover:underline cursor-pointer flex items-center gap-1"
+                  >
+                    View Directions <ArrowRight className="w-3 h-3" />
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
 
-        {/* Action bar — appears on hover */}
+        {/* Message Utilities Bar */}
         {!message.isStreaming && (
-          <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200 ml-1">
+          <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 ml-1 text-xs text-[#707070]">
             <button
               type="button"
               onClick={handleCopy}
-              className="flex items-center gap-1 text-[9px] text-white/30 hover:text-white/70 px-2 py-1 rounded-md hover:bg-white/5 transition-all cursor-pointer"
+              className="flex items-center gap-1 hover:text-[#2D2D2D] px-2.5 py-1 rounded-lg hover:bg-[#FAF5F6] transition-colors cursor-pointer"
             >
-              {copied ? <Check size={10} /> : <Copy size={10} />}
-              {copied ? "Copied" : "Copy"}
+              {copied ? <Check className="w-3.5 h-3.5 text-[#2E8B57]" /> : <Copy className="w-3.5 h-3.5" />}
+              <span>{copied ? "Copied" : "Copy"}</span>
             </button>
             {onRetry && (
               <button
                 type="button"
                 onClick={onRetry}
-                className="flex items-center gap-1 text-[9px] text-white/30 hover:text-white/70 px-2 py-1 rounded-md hover:bg-white/5 transition-all cursor-pointer"
+                className="flex items-center gap-1 hover:text-[#2D2D2D] px-2.5 py-1 rounded-lg hover:bg-[#FAF5F6] transition-colors cursor-pointer"
               >
-                <RotateCcw size={10} />
-                Retry
+                <RotateCcw className="w-3.5 h-3.5" />
+                <span>Retry</span>
               </button>
             )}
-            <time className="text-[9px] text-white/20 ml-auto">
+            <time className="text-[11px] text-[#707070]/60 ml-auto">
               {new Date(message.timestamp).toLocaleTimeString([], {
                 hour: "2-digit",
                 minute: "2-digit",
@@ -97,19 +215,20 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({
           </div>
         )}
 
-        {/* Suggested follow-up prompts */}
+        {/* Follow-up Suggestion Chips */}
         {message.suggestedPrompts &&
           message.suggestedPrompts.length > 0 &&
           !message.isStreaming &&
           isLatest && (
-            <div className="flex flex-wrap gap-1.5 mt-2">
+            <div className="flex flex-wrap gap-2 pt-1">
               {message.suggestedPrompts.map((prompt, i) => (
                 <button
                   key={i}
                   type="button"
                   data-suggestion={prompt}
-                  className="bridy-suggestion-chip text-[10px] text-white/50 hover:text-white/90 bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.06] hover:border-white/[0.12] rounded-full px-3 py-1.5 transition-all cursor-pointer"
+                  className="bridy-suggestion-chip text-xs text-[#707070] hover:text-[#D71920] bg-[#FFFFFF] hover:bg-[#F8EDEE] border border-[#EFE6E8] hover:border-[#D71920]/40 rounded-full px-4 py-2 transition-all cursor-pointer shadow-xs flex items-center gap-1.5 font-medium"
                 >
+                  <Sparkles className="w-3 h-3 text-[#D71920]" />
                   {prompt}
                 </button>
               ))}
@@ -119,3 +238,42 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({
     </div>
   );
 };
+
+// Helper: Extract Tyre Recommendation Cards from text
+function extractTyreCards(text: string) {
+  const cards = [];
+  if (text.includes("Turanza") || text.toLowerCase().includes("sedan") || text.toLowerCase().includes("recommend")) {
+    cards.push({
+      name: "Bridgestone Turanza 6i",
+      category: "Premium Touring",
+      rating: "4.9",
+      perfectFor: "Luxury Sedans & EVs",
+      expectedLife: "65,000 km",
+      price: "₹8,450",
+    });
+  }
+  if (text.includes("Dueler") || text.toLowerCase().includes("suv") || text.toLowerCase().includes("creta")) {
+    cards.push({
+      name: "Bridgestone Dueler A/T002",
+      category: "All-Terrain SUV",
+      rating: "4.8",
+      perfectFor: "SUVs & Crossovers",
+      expectedLife: "60,000 km",
+      price: "₹9,800",
+    });
+  }
+  return cards;
+}
+
+// Helper: Extract Booking Card details if booking is referenced
+function extractBookingCard(text: string) {
+  if (text.toLowerCase().includes("book") || text.toLowerCase().includes("appointment") || text.toLowerCase().includes("dealer")) {
+    return {
+      status: "Confirmed",
+      tyre: "Bridgestone Turanza 6i (215/55 R17)",
+      store: "Bridgestone Select Dealer — Central Hub",
+      nextSteps: "Bring vehicle to store at scheduled time",
+    };
+  }
+  return null;
+}

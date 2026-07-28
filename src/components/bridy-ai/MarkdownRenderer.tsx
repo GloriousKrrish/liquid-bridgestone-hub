@@ -6,8 +6,7 @@ interface MarkdownRendererProps {
 }
 
 /**
- * Lightweight Markdown renderer for Bridy AI responses.
- * Supports: bold, italic, code, code blocks, headers, lists, tables, links, line breaks.
+ * Premium Light-Mode Markdown renderer for Bridy AI concierge responses.
  */
 export const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({
   content,
@@ -16,7 +15,7 @@ export const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({
   const elements = parseMarkdown(content);
 
   return (
-    <div className={`bridy-markdown space-y-2 ${className}`}>
+    <div className={`bridy-markdown space-y-3 text-[#2D2D2D] ${className}`}>
       {elements}
     </div>
   );
@@ -44,12 +43,12 @@ function parseMarkdown(text: string): React.ReactNode[] {
       elements.push(
         <div key={key++} className="relative group my-3">
           {lang && (
-            <div className="absolute top-0 right-0 px-2 py-0.5 text-[9px] uppercase tracking-wider text-white/40 bg-white/5 rounded-bl-md font-mono">
+            <div className="absolute top-0 right-0 px-2.5 py-1 text-[10px] uppercase tracking-wider text-[#707070] bg-[#FAF5F6] rounded-bl-lg font-mono border-b border-l border-[#EFE6E8]">
               {lang}
             </div>
           )}
-          <pre className="bg-black/30 border border-white/10 rounded-lg p-3 overflow-x-auto text-[11px] leading-relaxed">
-            <code className="text-emerald-300 font-mono">{codeLines.join("\n")}</code>
+          <pre className="bg-[#FAF5F6] border border-[#EFE6E8] rounded-xl p-4 overflow-x-auto text-xs leading-relaxed">
+            <code className="text-[#2D2D2D] font-mono">{codeLines.join("\n")}</code>
           </pre>
         </div>
       );
@@ -61,15 +60,13 @@ function parseMarkdown(text: string): React.ReactNode[] {
       const tableRows: string[][] = [];
       let headers: string[] = [];
       
-      // Parse header row
       headers = line
         .split("|")
         .map((c) => c.trim())
         .filter(Boolean);
-      i++; // skip separator row
+      i++; // skip separator
       i++;
       
-      // Parse body rows
       while (i < lines.length && lines[i].includes("|")) {
         const cells = lines[i]
           .split("|")
@@ -80,14 +77,14 @@ function parseMarkdown(text: string): React.ReactNode[] {
       }
 
       elements.push(
-        <div key={key++} className="my-3 overflow-x-auto rounded-lg border border-white/10">
-          <table className="w-full text-[11px]">
+        <div key={key++} className="my-4 overflow-x-auto rounded-[16px] border border-[#EFE6E8] bg-[#FFFFFF] shadow-sm">
+          <table className="w-full text-xs">
             <thead>
-              <tr className="bg-white/5 border-b border-white/10">
+              <tr className="bg-[#FAF5F6] border-b border-[#EFE6E8]">
                 {headers.map((h, hi) => (
                   <th
                     key={hi}
-                    className="px-3 py-2 text-left font-bold text-white/80 uppercase tracking-wider text-[10px]"
+                    className="px-4 py-3 text-left font-semibold text-[#2D2D2D] uppercase tracking-wider text-[10px]"
                   >
                     {renderInline(h)}
                   </th>
@@ -98,10 +95,10 @@ function parseMarkdown(text: string): React.ReactNode[] {
               {tableRows.map((row, ri) => (
                 <tr
                   key={ri}
-                  className="border-b border-white/5 hover:bg-white/5 transition-colors"
+                  className="border-b border-[#EFE6E8] hover:bg-[#FAF5F6]/50 transition-colors"
                 >
                   {row.map((cell, ci) => (
-                    <td key={ci} className="px-3 py-2 text-white/70">
+                    <td key={ci} className="px-4.5 py-3 text-[#2D2D2D] leading-relaxed">
                       {renderInline(cell)}
                     </td>
                   ))}
@@ -117,7 +114,7 @@ function parseMarkdown(text: string): React.ReactNode[] {
     // Headers
     if (line.startsWith("### ")) {
       elements.push(
-        <h4 key={key++} className="text-[13px] font-bold text-white mt-3 mb-1">
+        <h4 key={key++} className="text-sm font-semibold text-[#2D2D2D] mt-4 mb-1.5 tracking-tight">
           {renderInline(line.slice(4))}
         </h4>
       );
@@ -126,7 +123,7 @@ function parseMarkdown(text: string): React.ReactNode[] {
     }
     if (line.startsWith("## ")) {
       elements.push(
-        <h3 key={key++} className="text-sm font-bold text-white mt-3 mb-1">
+        <h3 key={key++} className="text-base font-semibold text-[#2D2D2D] mt-4 mb-2 tracking-tight">
           {renderInline(line.slice(3))}
         </h3>
       );
@@ -135,7 +132,7 @@ function parseMarkdown(text: string): React.ReactNode[] {
     }
     if (line.startsWith("# ")) {
       elements.push(
-        <h2 key={key++} className="text-[15px] font-bold text-white mt-3 mb-1">
+        <h2 key={key++} className="text-lg font-semibold text-[#2D2D2D] mt-4 mb-2 tracking-tight">
           {renderInline(line.slice(2))}
         </h2>
       );
@@ -151,10 +148,10 @@ function parseMarkdown(text: string): React.ReactNode[] {
         i++;
       }
       elements.push(
-        <ul key={key++} className="space-y-1 ml-1">
+        <ul key={key++} className="space-y-1.5 my-2">
           {listItems.map((item, li) => (
-            <li key={li} className="flex gap-2 text-white/80 text-[12px] leading-relaxed">
-              <span className="w-1 h-1 rounded-full bg-[#CC0000] mt-[7px] shrink-0" />
+            <li key={li} className="flex items-start gap-2.5 text-[#2D2D2D] text-xs sm:text-sm leading-relaxed">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#D71920] mt-2 shrink-0" />
               <span>{renderInline(item)}</span>
             </li>
           ))}
@@ -171,10 +168,10 @@ function parseMarkdown(text: string): React.ReactNode[] {
         i++;
       }
       elements.push(
-        <ol key={key++} className="space-y-1 ml-1">
+        <ol key={key++} className="space-y-1.5 my-2">
           {listItems.map((item, li) => (
-            <li key={li} className="flex gap-2 text-white/80 text-[12px] leading-relaxed">
-              <span className="text-[#CC0000] font-bold text-[11px] mt-[1px] shrink-0 w-4 text-right">
+            <li key={li} className="flex items-start gap-2.5 text-[#2D2D2D] text-xs sm:text-sm leading-relaxed">
+              <span className="text-[#D71920] font-semibold text-xs mt-0.5 shrink-0 w-4 text-right">
                 {li + 1}.
               </span>
               <span>{renderInline(item)}</span>
@@ -188,7 +185,7 @@ function parseMarkdown(text: string): React.ReactNode[] {
     // Horizontal rule
     if (line.match(/^---+$/)) {
       elements.push(
-        <hr key={key++} className="border-white/10 my-3" />
+        <hr key={key++} className="border-[#EFE6E8] my-4" />
       );
       i++;
       continue;
@@ -202,7 +199,7 @@ function parseMarkdown(text: string): React.ReactNode[] {
 
     // Regular paragraph
     elements.push(
-      <p key={key++} className="text-white/80 text-[12px] leading-relaxed">
+      <p key={key++} className="text-[#2D2D2D] text-xs sm:text-sm leading-relaxed font-normal">
         {renderInline(line)}
       </p>
     );
@@ -212,57 +209,47 @@ function parseMarkdown(text: string): React.ReactNode[] {
   return elements;
 }
 
-/**
- * Render inline markdown: bold, italic, code, links
- */
 function renderInline(text: string): React.ReactNode {
-  // Process inline elements with regex
   const parts: React.ReactNode[] = [];
-  // Pattern: **bold**, *italic*, `code`, [text](url)
   const regex = /(\*\*.*?\*\*)|(\*.*?\*)|(`[^`]+`)|(\[([^\]]+)\]\(([^)]+)\))/g;
   let lastIndex = 0;
   let match;
   let partKey = 0;
 
   while ((match = regex.exec(text)) !== null) {
-    // Add text before match
     if (match.index > lastIndex) {
       parts.push(text.slice(lastIndex, match.index));
     }
 
     if (match[1]) {
-      // Bold
       parts.push(
-        <strong key={partKey++} className="text-white font-semibold">
+        <strong key={partKey++} className="text-[#2D2D2D] font-semibold">
           {match[1].slice(2, -2)}
         </strong>
       );
     } else if (match[2]) {
-      // Italic
       parts.push(
-        <em key={partKey++} className="italic text-white/90">
+        <em key={partKey++} className="italic text-[#707070]">
           {match[2].slice(1, -1)}
         </em>
       );
     } else if (match[3]) {
-      // Inline code
       parts.push(
         <code
           key={partKey++}
-          className="bg-white/10 text-emerald-300 px-1.5 py-0.5 rounded text-[11px] font-mono"
+          className="bg-[#F8EDEE] text-[#D71920] px-1.5 py-0.5 rounded text-xs font-mono border border-[#EFE6E8]"
         >
           {match[3].slice(1, -1)}
         </code>
       );
     } else if (match[4]) {
-      // Link
       parts.push(
         <a
           key={partKey++}
           href={match[6]}
           target="_blank"
           rel="noopener noreferrer"
-          className="text-[#00E5FF] hover:text-[#00E5FF]/80 underline underline-offset-2 transition-colors"
+          className="text-[#D71920] hover:underline underline-offset-2 font-medium transition-colors"
         >
           {match[5]}
         </a>
@@ -272,7 +259,6 @@ function renderInline(text: string): React.ReactNode {
     lastIndex = match.index + match[0].length;
   }
 
-  // Add remaining text
   if (lastIndex < text.length) {
     parts.push(text.slice(lastIndex));
   }

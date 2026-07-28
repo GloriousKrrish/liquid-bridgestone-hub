@@ -33,3 +33,5 @@ dist-ssr
 .vercel
 /BSID VIDEO.mp4
 .env
+
+.vercel

@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useEffect } from "react";
-import { Menu, ArrowLeft } from "lucide-react";
+import { Menu, ArrowLeft, ShieldCheck } from "lucide-react";
 import { Link } from "@tanstack/react-router";
-import type { BridyMessage, Conversation } from "../../lib/bridy-ai/types";
+import type { Conversation } from "../../lib/bridy-ai/types";
 import {
   loadConversations,
   saveConversations,
@@ -84,11 +84,10 @@ export function BridyAIWorkspace() {
       }
 
       // Add user message
-      const { conversation: withUser, message: userMsg } =
-        addMessageToConversation(conv, {
-          role: "user",
-          content: message.trim(),
-        });
+      const { conversation: withUser } = addMessageToConversation(conv, {
+        role: "user",
+        content: message.trim(),
+      });
 
       // Update local state right away
       const stateWithUser = currentConversations.map((c) => (c.id === withUser.id ? withUser : c));
@@ -100,7 +99,7 @@ export function BridyAIWorkspace() {
       const currentRequestNum = requestCount + 1;
       setRequestCount(currentRequestNum);
 
-      console.log(`[Bridy Chat UI] Triggering single LLM call. Message: "${message.trim()}"`);
+      console.log(`[Bridy Chat UI] Triggering LLM call. Message: "${message.trim()}"`);
 
       try {
         let replyText = "";
@@ -128,9 +127,9 @@ export function BridyAIWorkspace() {
           // Handle error
           const errorContent =
             result.error === "NO_API_KEY"
-              ? "⚠️ **API Key Required** — Bridy AI needs a valid `VITE_LLM_API_KEY` environment variable to connect to Google Gemini. Please configure this in your `.env` file and in Vercel Environment Variables.\n\nIn the meantime, I can share Bridgestone product information from our built-in catalog. Try asking about **Turanza 6i**, **Dueler A/T002**, or **Ecopia EP150**."
+              ? "API Key Required — Birdy AI needs a valid `VITE_LLM_API_KEY` environment variable to connect to Google Gemini. Please configure this in your `.env` file.\n\nIn the meantime, I can share Bridgestone product information from our built-in catalog. Try asking about **Turanza 6i**, **Dueler A/T002**, or **Ecopia EP150**."
               : (result.message && (result.message.includes("429") || result.message.includes("RESOURCE_EXHAUSTED")))
-                ? "⚠️ **AI Service Busy (Quota Exceeded)** — The configured API key has exceeded its daily or per-minute request limit (429 Resource Exhausted).\n\nTo restore full service, please verify your API billing plan or supply a different key. In the meantime, I can still share Bridgestone product information from our built-in local catalog. Try asking about **Turanza 6i**, **Dueler A/T002**, or **Ecopia EP150**."
+                ? "AI Service Busy (Quota Exceeded) — The configured API key has exceeded its rate limit (429 Resource Exhausted).\n\nIn the meantime, I can still share Bridgestone product information from our built-in catalog. Try asking about **Turanza 6i**, **Dueler A/T002**, or **Ecopia EP150**."
                 : `I encountered an error: ${result.message || "Unknown error"}. Please try again.`;
 
           const { conversation: withError } = addMessageToConversation(
@@ -191,7 +190,6 @@ export function BridyAIWorkspace() {
   // ── Handle stream complete ──
   const handleStreamComplete = useCallback(() => {
     setIsStreaming(false);
-    // Remove streaming flag from the last message
     setConversations((prev) => {
       const updated = prev.map((c) => {
         if (c.id !== activeConversationId) return c;
@@ -252,7 +250,7 @@ export function BridyAIWorkspace() {
   );
 
   return (
-    <div className="flex h-screen bg-[#080a12] text-white overflow-hidden">
+    <div className="flex h-screen bg-[#FFFDFC] text-[#2D2D2D] overflow-hidden font-sans">
       {/* Sidebar */}
       <ChatSidebar
         conversations={conversations}
@@ -264,48 +262,52 @@ export function BridyAIWorkspace() {
         onClose={() => setIsSidebarOpen(false)}
       />
 
-      {/* Main Chat Area */}
-      <div className="flex-1 flex flex-col min-w-0">
-        {/* Top bar */}
-        <header className="h-12 border-b border-white/[0.06] bg-[#0a0c14]/80 backdrop-blur-xl flex items-center px-4 gap-3 shrink-0">
+      {/* Main Mobility Assistant Workspace */}
+      <div className="flex-1 flex flex-col min-w-0 bg-[#FFFDFC]">
+        {/* Top Header Navigation */}
+        <header className="h-14 border-b border-[#EFE6E8] bg-[#FFFFFF] flex items-center px-4 sm:px-6 gap-3 shrink-0 shadow-xs">
           <button
             type="button"
             onClick={() => setIsSidebarOpen(true)}
-            className="lg:hidden text-white/40 hover:text-white p-1 rounded-md hover:bg-white/5 transition-all cursor-pointer"
+            className="lg:hidden text-[#707070] hover:text-[#2D2D2D] p-1.5 rounded-lg hover:bg-[#FAF5F6] transition-colors cursor-pointer"
             aria-label="Open sidebar"
           >
-            <Menu size={18} />
+            <Menu className="w-5 h-5" />
           </button>
 
           <Link
             to="/"
-            className="text-white/30 hover:text-white/60 p-1 rounded-md hover:bg-white/5 transition-all"
+            className="text-[#707070] hover:text-[#2D2D2D] p-1.5 rounded-lg hover:bg-[#FAF5F6] transition-colors"
+            title="Return to Bridgestone Hub"
           >
-            <ArrowLeft size={16} />
+            <ArrowLeft className="w-5 h-5" />
           </Link>
 
-          <div className="flex items-center gap-2">
-            <div className="w-5 h-5 rounded-md bg-gradient-to-br from-[#CC0000] to-[#8B0000] flex items-center justify-center">
-              <span className="text-[8px] font-black text-white">B</span>
+          <div className="flex items-center gap-2.5">
+            <div className="w-6 h-6 rounded-lg bg-[#D71920] flex items-center justify-center shadow-xs">
+              <span className="text-[10px] font-bold text-white">B</span>
             </div>
-            <h2 className="text-[12px] font-semibold text-white/70 truncate">
-              {activeConversation?.title || "Bridy AI"}
-            </h2>
+            <div>
+              <h2 className="text-xs sm:text-sm font-semibold text-[#2D2D2D] truncate">
+                {activeConversation?.title || "Bridgestone Mobility Assistant"}
+              </h2>
+            </div>
           </div>
 
-          {/* Status indicator */}
-          <div className="ml-auto flex items-center gap-1.5">
-            <span className="relative flex h-1.5 w-1.5">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-              <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500" />
+          {/* Status Indicator */}
+          <div className="ml-auto flex items-center gap-2 bg-[#FAF5F6] border border-[#EFE6E8] px-3 py-1 rounded-full">
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#2E8B57] opacity-75" />
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-[#2E8B57]" />
             </span>
-            <span className="text-[9px] text-white/30 uppercase tracking-wider font-semibold hidden sm:inline">
-              Online
+            <span className="text-[11px] text-[#2D2D2D] font-medium hidden sm:inline">
+              Concierge Online
             </span>
+            <ShieldCheck className="w-3.5 h-3.5 text-[#2E8B57] hidden sm:inline" />
           </div>
         </header>
 
-        {/* Messages or Welcome */}
+        {/* Messages / Welcome View */}
         {isWelcomeState ? (
           <WelcomeScreen onPromptSelect={handleWelcomePrompt} />
         ) : (
@@ -318,7 +320,7 @@ export function BridyAIWorkspace() {
           />
         )}
 
-        {/* Input bar */}
+        {/* Input Bar */}
         <ChatInput
           onSend={handleSend}
           isDisabled={isTyping}

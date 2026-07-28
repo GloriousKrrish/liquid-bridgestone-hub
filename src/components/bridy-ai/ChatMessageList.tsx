@@ -48,14 +48,14 @@ export const ChatMessageList: React.FC<ChatMessageListProps> = ({
   return (
     <div
       ref={scrollRef}
-      className="flex-1 overflow-y-auto overflow-x-hidden px-4 sm:px-6 lg:px-8 py-6 space-y-5"
+      className="flex-1 overflow-y-auto overflow-x-hidden px-4 sm:px-6 lg:px-8 py-6 space-y-6 bg-[#FFFDFC]"
       style={{
         scrollbarWidth: "thin",
-        scrollbarColor: "rgba(255,255,255,0.08) transparent",
+        scrollbarColor: "#EFE6E8 transparent",
       }}
     >
       {/* Conversation center-constrain */}
-      <div className="max-w-3xl mx-auto space-y-5">
+      <div className="max-w-3xl mx-auto space-y-6">
         {messages.map((msg, index) => (
           <ChatMessage
             key={msg.id}
@@ -76,7 +76,7 @@ export const ChatMessageList: React.FC<ChatMessageListProps> = ({
 
         {isTyping && <TypingIndicator />}
 
-        <div ref={bottomRef} className="h-1" />
+        <div ref={bottomRef} className="h-2" />
       </div>
     </div>
   );
