@@ -7,7 +7,6 @@ export default defineConfig({
   },
   nitro: {
     preset: "vercel",
-    compressPublicAssets: true,
   },
   vite: {
     build: {

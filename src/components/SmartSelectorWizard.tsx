@@ -481,9 +481,10 @@ export function SmartSelectorWizard({
           <div 
             className="rounded-[24px] border border-[#C4A67A]/30 p-6 relative overflow-hidden shadow-[0_10px_30px_rgba(170,145,110,0.12)] transition-all duration-300 hover:border-[#C8A165]"
             style={{
-              background: "rgba(255, 250, 245, 0.82)",
-              backdropFilter: "blur(18px)",
-              WebkitBackdropFilter: "blur(18px)",
+              background: "rgba(255, 255, 255, 0.94)",
+              backdropFilter: "blur(20px)",
+              WebkitBackdropFilter: "blur(20px)",
+              border: "1px solid #E9E1D6",
             }}
           >
             <div className="absolute -left-20 -top-20 w-40 h-40 bg-[#E8C8CF]/30 blur-[50px] rounded-full pointer-events-none" />
@@ -632,25 +633,25 @@ export function SmartSelectorWizard({
                 </div>
 
                 {/* Detected OEM Specifications Metadata */}
-                <div className="bg-[#F5EFE6] border border-[#C4A67A]/30 rounded-2xl p-4 flex flex-col gap-2 mt-2 shadow-xs">
-                  <span className="text-[9px] uppercase tracking-widest text-[#9B6B43] font-extrabold flex items-center gap-1">
-                    <Info size={11} /> Live Specifications Panel
+                <div className="bg-[#FAF7F2] border border-[#E9E1D6] rounded-2xl p-4 flex flex-col gap-2.5 mt-2 shadow-xs">
+                  <span className="text-[10px] uppercase tracking-widest text-[#9B6B43] font-black flex items-center gap-1.5">
+                    <Info size={13} className="text-[#C9A35D]" /> Live Specifications Panel
                   </span>
-                  <div className="grid grid-cols-2 gap-y-2 gap-x-4 text-[11px] text-[#666666]">
-                    <div>Vehicle Name: <span className="text-[#2A2A2A] font-bold">{selectedVehicle.manufacturer} {selectedVehicle.model}</span></div>
-                    <div>Category: <span className="text-[#2A2A2A] font-bold">{selectedVehicle.vehicle_type}</span></div>
-                    <div>Factory Tyre Size: <span className="text-[#2A2A2A] font-bold">{selectedVehicle.oem_tyre_size}</span></div>
-                    <div>Approved Rim Diameter: <span className="text-[#2A2A2A] font-bold">{selectedRimSize || selectedVehicle.rim_size}"</span></div>
-                    <div>OEM Load Index: <span className="text-[#2A2A2A] font-bold">{selectedVehicle.load_index}</span></div>
-                    <div>OEM Speed Rating: <span className="text-[#2A2A2A] font-bold">{selectedVehicle.speed_rating}</span></div>
-                    <div>Fuel / Drive Mode: <span className="text-[#2A2A2A] font-bold">{selectedVehicle.fuel_type} ({selectedVehicle.drive_type})</span></div>
-                    <div>Gross Weight: <span className="text-[#2A2A2A] font-bold">{selectedVehicle.gross_weight}</span></div>
+                  <div className="grid grid-cols-2 gap-y-2.5 gap-x-4 text-[11px] text-[#555555]">
+                    <div>Vehicle Name: <span className="text-[#1C1917] font-bold block">{selectedVehicle.manufacturer} {selectedVehicle.model}</span></div>
+                    <div>Category: <span className="text-[#1C1917] font-bold block">{selectedVehicle.vehicle_type}</span></div>
+                    <div>Factory Tyre Size: <span className="text-[#1C1917] font-bold block">{selectedVehicle.oem_tyre_size}</span></div>
+                    <div>Approved Rim Diameter: <span className="text-[#1C1917] font-bold block">{selectedRimSize || selectedVehicle.rim_size}"</span></div>
+                    <div>OEM Load Index: <span className="text-[#1C1917] font-bold block">{selectedVehicle.load_index}</span></div>
+                    <div>OEM Speed Rating: <span className="text-[#1C1917] font-bold block">{selectedVehicle.speed_rating}</span></div>
+                    <div>Fuel / Drive Mode: <span className="text-[#1C1917] font-bold block">{selectedVehicle.fuel_type} ({selectedVehicle.drive_type})</span></div>
+                    <div>Gross Weight: <span className="text-[#1C1917] font-bold block">{selectedVehicle.gross_weight}</span></div>
                     
-                    <div className="col-span-2 pt-1 border-t border-[#C4A67A]/20 flex items-center justify-between">
-                      <span className="font-medium text-[#666666]">AI Discovery Status:</span>
-                      <span className={`font-bold px-2 py-0.5 rounded text-[10px] ${
+                    <div className="col-span-2 pt-2 border-t border-[#E9E1D6] flex items-center justify-between">
+                      <span className="font-semibold text-[#555555]">AI Discovery Status:</span>
+                      <span className={`font-bold px-2.5 py-1 rounded-full text-[10px] ${
                         selectedVehicle.isDiscovered 
-                          ? "bg-[#9B6B43]/15 text-[#9B6B43] border border-[#9B6B43]/30"
+                          ? "bg-[#C9A35D]/15 text-[#9B6B43] border border-[#C9A35D]/30"
                           : "bg-[#5B8C5A]/15 text-[#3B663A] border border-[#5B8C5A]/30"
                       }`}>
                         {selectedVehicle.isDiscovered 

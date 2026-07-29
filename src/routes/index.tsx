@@ -476,8 +476,30 @@ function Index() {
     window.open(url, "_blank", "noopener,noreferrer");
   };
 
+  // Intersection Observer single-trigger scroll reveal engine
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    const targets = document.querySelectorAll(".scroll-reveal");
+    targets.forEach((el) => observer.observe(el));
+
+    return () => observer.disconnect();
+  }, [wizardOpen]);
+
   return (
-    <div className="min-h-screen bg-[#FCFAF6] text-[#222222] overflow-x-hidden relative font-sans selection:bg-[#E60012] selection:text-white flex flex-col">
+    <div className="min-h-screen bg-[#FCFAF6] text-[#1C1917] overflow-x-hidden relative font-sans selection:bg-[#E60012] selection:text-white flex flex-col">
+      {/* Ambient Luxury Warm Radial Mesh Spotlight */}
+      <div className="fixed inset-0 pointer-events-none z-0 bg-[radial-gradient(1200px_circle_at_50%_0%,rgba(201,163,93,0.08),transparent_60%)]" />
       
       {/* Bridgestone Corporate Navigation Header */}
       <BridgestoneNav />
@@ -573,12 +595,12 @@ function Index() {
         <ProductGrid />
 
         {/* AUTOMOTIVE SHOWCASE LAYOUT (LUXURY PEARL WHITE CARDS) */}
-        <section className="w-full mt-20 border-t border-[#E9E1D6] pt-16">
+        <section className="w-full mt-20 border-t border-[#E9E1D6] pt-16 scroll-reveal">
           <div className="text-center mb-10">
-            <span className="text-[10px] uppercase tracking-widest text-[#E60012] font-bold bg-[#E60012]/10 px-3 py-1 rounded-full border border-[#E60012]/15">
+            <span className="text-[10px] uppercase tracking-widest text-[#E60012] font-bold bg-[#E60012]/10 px-3.5 py-1.5 rounded-full border border-[#E60012]/20">
               Showcase & Services
             </span>
-            <h2 className="text-[#222222] font-bold tracking-tight text-3xl md:text-4xl mt-3 leading-tight">
+            <h2 className="text-[#1C1917] font-bold tracking-tight text-3xl md:text-4xl mt-3 leading-tight">
               Tailored Solutions for <em className="italic text-[#666666] font-normal">Every Journey</em>.
             </h2>
             <p className="text-[#666666] text-xs md:text-sm max-w-xl mx-auto mt-2 font-medium">
@@ -586,7 +608,7 @@ function Index() {
             </p>
           </div>
 
-          <div className="w-full max-w-[92vw] mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch mt-12">
+          <div className="w-full max-w-[94vw] mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch mt-12">
             {SHOWCASE_CATEGORIES.map((category) => (
               <div
                 key={category.id}
@@ -600,19 +622,20 @@ function Index() {
                   }
                 }}
                 aria-label={`Explore ${category.title} range`}
-                className="rounded-[20px] overflow-hidden border border-[#C4A67A]/30 shadow-[0_10px_30px_rgba(170,145,110,0.12)] hover:shadow-[0_15px_35px_rgba(170,145,110,0.22)] hover:border-[#C8A165] hover:scale-[1.01] transition-all duration-250 ease-out flex flex-col justify-between group relative cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E60012] select-none"
+                className="product-card-3d rounded-[20px] overflow-hidden border border-[#E9E1D6] hover:border-[#C9A35D]/60 flex flex-col justify-between group relative cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E60012] select-none"
                 style={{
-                  background: "rgba(255, 250, 245, 0.82)",
-                  backdropFilter: "blur(18px)",
-                  WebkitBackdropFilter: "blur(18px)",
+                  background: "rgba(255, 255, 255, 0.94)",
+                  backdropFilter: "blur(20px)",
+                  WebkitBackdropFilter: "blur(20px)",
                 }}
               >
-                <div className="absolute -right-20 -top-20 w-40 h-40 bg-[#E8C8CF]/30 blur-[50px] rounded-full group-hover:scale-110 transition-transform duration-300 pointer-events-none" />
-                <div className="w-full h-48 bg-[#F5EFE6] relative overflow-hidden">
+                <div className="shine-effect" />
+                <div className="absolute -right-20 -top-20 w-40 h-40 bg-[#C9A35D]/15 blur-[50px] rounded-full group-hover:scale-125 transition-transform duration-500 pointer-events-none" />
+                <div className="w-full h-52 bg-[#FAF7F2] relative overflow-hidden">
                   <img
                     src={category.image}
                     alt={category.alt}
-                    className="w-full h-full object-cover object-center transition-transform duration-300 group-hover:scale-[1.03]"
+                    className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-[1.05]"
                     loading="lazy"
                   />
                 </div>

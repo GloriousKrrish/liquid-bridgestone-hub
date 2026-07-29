@@ -163,10 +163,10 @@ export const InteractiveTyre3D = memo(function InteractiveTyre3D() {
         gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
         style={{ background: "transparent" }}
       >
-        <ambientLight intensity={0.5} />
-        <directionalLight position={[5, 8, 5]} intensity={1.6} castShadow shadow-mapSize={[512, 512]} shadow-bias={-0.0001} />
-        <directionalLight position={[-4, 2, -4]} intensity={0.5} color="#B0C4DE" />
-        <spotLight position={[0, 8, 2]} angle={0.3} penumbra={1} intensity={2} castShadow color="#ffffff" shadow-mapSize={[512, 512]} />
+        <ambientLight intensity={0.6} />
+        <directionalLight position={[5, 8, 5]} intensity={1.8} color="#FFFDF9" castShadow shadow-mapSize={[1024, 1024]} shadow-bias={-0.0001} />
+        <directionalLight position={[-4, 2, -4]} intensity={0.7} color="#E8D3A7" />
+        <spotLight position={[0, 8, 2]} angle={0.35} penumbra={1} intensity={2.2} color="#FFFFFF" castShadow shadow-mapSize={[1024, 1024]} />
 
         <Suspense fallback={null}>
           <TireModel lastInteraction={lastInteraction} />

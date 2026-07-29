@@ -235,17 +235,121 @@
 
 /* Enterprise Surface Utilities */
 @utility surface-elevated {
-  background: #1A1A1A;
-  border: 1px solid #2A2A2A;
+  background: #FFFFFF;
+  border: 1px solid #E9E1D6;
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.05);
 }
 @utility surface-interactive {
-  background: #1A1A1A;
-  border: 1px solid #2A2A2A;
-  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  background: #FFFFFF;
+  border: 1px solid #E9E1D6;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 
   &:hover {
-    border-color: #D71920;
-    box-shadow: 0 0 0 1px rgba(215, 25, 32, 0.15);
+    border-color: #C9A35D;
+    box-shadow: 0 16px 36px -12px rgba(201, 163, 93, 0.18);
   }
 }
+
+/* ========================================
+   WORLD-CLASS CARDS & MICROINTERACTIONS
+   ======================================== */
+.product-card-container {
+  perspective: 1000px;
+}
+
+.product-card-3d {
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid #E9E1D6;
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.04), 0 20px 40px -15px rgba(201, 163, 93, 0.06);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease, border-color 0.3s ease, background-color 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  will-change: transform, box-shadow;
+}
+
+.product-card-3d::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 20px;
+  background: radial-gradient(600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(201, 163, 93, 0.12), transparent 40%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.product-card-3d:hover::after {
+  opacity: 1;
+}
+
+.product-card-3d:hover {
+  border-color: rgba(201, 163, 93, 0.5);
+  box-shadow: 0 20px 45px -12px rgba(0, 0, 0, 0.08), 0 0 25px 0 rgba(201, 163, 93, 0.18);
+}
+
+/* Sweep shine animation */
+@keyframes card-shine-sweep {
+  0% { transform: translateX(-100%) rotate(25deg); opacity: 0; }
+  30% { opacity: 0.6; }
+  100% { transform: translateX(200%) rotate(25deg); opacity: 0; }
+}
+
+.shine-effect {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.8), transparent);
+  pointer-events: none;
+  z-index: 3;
+}
+
+.product-card-3d:hover .shine-effect {
+  animation: card-shine-sweep 0.75s ease-out forwards;
+}
+
+/* Float & Rotate Tyre Animations */
+@keyframes float-tyre {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-6px) rotate(1.5deg); }
+}
+
+.animate-float-tyre {
+  animation: float-tyre 4.5s ease-in-out infinite;
+  will-change: transform;
+}
+
+/* Scroll Reveal Engine */
+.scroll-reveal {
+  opacity: 0;
+  transform: translate3d(0, 24px, 0);
+  transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1), transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.scroll-reveal.is-visible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .product-card-3d {
+    transition: none !important;
+  }
+  .animate-float-tyre {
+    animation: none !important;
+  }
+  .scroll-reveal {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
+
 
