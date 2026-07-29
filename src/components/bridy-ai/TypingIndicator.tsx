@@ -5,7 +5,7 @@ export const TypingIndicator: React.FC = () => {
     <div className="flex items-start gap-3.5 max-w-[85%]">
       {/* Bridgestone Avatar */}
       <div className="w-9 h-9 shrink-0 flex items-center justify-center">
-        <img src="/bridgestone-logo.png" alt="Bridgestone" className="w-full h-full object-contain" draggable={false} />
+        <img src="/bridgestone-logo-photoroom.png" alt="Bridgestone" className="w-full h-full object-contain" draggable={false} />
       </div>
 
       {/* Typing Bubble */}

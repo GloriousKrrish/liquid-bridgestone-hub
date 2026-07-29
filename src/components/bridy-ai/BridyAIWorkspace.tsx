@@ -285,7 +285,7 @@ export function BridyAIWorkspace() {
 
             <div className="flex items-center gap-2.5">
             <div className="w-8 h-8 flex items-center justify-center">
-              <img src="/bridgestone-logo.png" alt="Bridgestone" className="w-full h-full object-contain" draggable={false} />
+              <img src="/bridgestone-logo-photoroom.png" alt="Bridgestone" className="w-full h-full object-contain" draggable={false} />
             </div>
             <div>
               <h2 className="text-xs sm:text-sm font-semibold text-[#2D2D2D] truncate">

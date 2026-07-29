@@ -156,7 +156,7 @@ function BridyFAB() {
       className="fixed bottom-6 right-6 z-[200] w-16 h-16 rounded-full flex items-center justify-center shadow-2xl shadow-[#D71920]/40 transition-all duration-300 hover:scale-110 hover:shadow-[0_12px_40px_rgba(215,25,32,0.55)] cursor-pointer border-2 border-[#D71920]/60 hover:border-[#D71920] bg-white"
     >
       <img
-        src="/bridgestone-logo.png"
+        src="/bridgestone-logo-photoroom.png"
         alt="Bridgestone Birdy AI"
         className="w-[85%] h-[85%] object-contain"
         draggable={false}
