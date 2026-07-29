@@ -1,4 +1,4 @@
-import React, { useMemo, useState, useEffect, useRef } from "react";
+import React, { useMemo, useState, useEffect, useRef, useDeferredValue } from "react";
 import {
   Search,
   Sparkles,
@@ -131,10 +131,12 @@ export function SmartSelectorWizard({
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  const deferredSearchQuery = useDeferredValue(searchQuery);
+
   // Filter vehicle suggestions based on query
   const vehicleSuggestions = useMemo(() => {
-    if (!searchQuery.trim()) return [];
-    const query = searchQuery.trim().toLowerCase();
+    if (!deferredSearchQuery.trim()) return [];
+    const query = deferredSearchQuery.trim().toLowerCase();
     const queryParts = query.split(/\s+/);
 
     return allVehicles
@@ -150,7 +152,7 @@ export function SmartSelectorWizard({
       // Deduplicate suggestions by manufacturer + model name
       .filter((value, index, self) => self.findIndex(t => t.key === value.key) === index)
       .slice(0, 8);
-  }, [searchQuery, allVehicles]);
+  }, [deferredSearchQuery, allVehicles]);
 
   // Handle vehicle selection
   const handleSelectVehicleRecord = (vehicle: VehicleRecord) => {

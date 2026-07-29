@@ -278,5 +278,33 @@
     "resolvedTo": "tata-sierra-1997-standard-turbo",
     "method": "learned",
     "confidenceScore": 0.92
+  },
+  {
+    "query": "grand vitara",
+    "timestamp": "2026-07-29T05:04:44.063Z",
+    "resolvedTo": "suzuki-grand-vitara-2023-alpha",
+    "method": "gemini_discovered",
+    "confidenceScore": 0.95
+  },
+  {
+    "query": "Suzuki Grand Vitara",
+    "timestamp": "2026-07-29T05:04:44.297Z",
+    "resolvedTo": "suzuki-grand-vitara-2023-alpha",
+    "method": "learned",
+    "confidenceScore": 0.95
+  },
+  {
+    "query": "breeza",
+    "timestamp": "2026-07-29T05:07:28.886Z",
+    "resolvedTo": "maruti-suzuki-brezza-2024-zxi",
+    "method": "gemini_discovered",
+    "confidenceScore": 0.98
+  },
+  {
+    "query": "breeza",
+    "timestamp": "2026-07-29T05:08:15.647Z",
+    "resolvedTo": "maruti-suzuki-brezza-2024-zxi",
+    "method": "gemini_discovered",
+    "confidenceScore": 0.98
   }
 ]

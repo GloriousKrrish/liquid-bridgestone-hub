@@ -425,9 +425,10 @@ function Index() {
 
   useEffect(() => {
     let ticking = false;
+    let rafId: number | null = null;
     const handleScroll = () => {
       if (!ticking) {
-        requestAnimationFrame(() => {
+        rafId = requestAnimationFrame(() => {
           setScrollY(window.scrollY);
           ticking = false;
         });
@@ -435,7 +436,10 @@ function Index() {
       }
     };
     window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      if (rafId !== null) cancelAnimationFrame(rafId);
+    };
   }, []);
 
   // Load 3D tyre component client side once

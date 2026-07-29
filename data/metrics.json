@@ -1,6 +1,6 @@
 {
-  "totalVehiclesStored": 71,
-  "newVehiclesLearned": 9,
+  "totalVehiclesStored": 74,
+  "newVehiclesLearned": 12,
   "mostSearchedVehicles": [
     {
       "name": "Honda City (2022)",
@@ -19,12 +19,12 @@
       "count": 3
     },
     {
-      "name": "Land Rover Defender (2023)",
-      "count": 2
+      "name": "Tata Sierra (1997)",
+      "count": 3
     }
   ],
-  "recommendationCounts": 38,
-  "geminiDiscoverySuccessRate": 64,
-  "geminiCallsCount": 14,
-  "geminiSuccessesCount": 10
+  "recommendationCounts": 43,
+  "geminiDiscoverySuccessRate": 71,
+  "geminiCallsCount": 17,
+  "geminiSuccessesCount": 13
 }

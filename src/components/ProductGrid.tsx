@@ -1,4 +1,4 @@
-import { useState, useMemo, useRef, useCallback, memo } from "react";
+import { useState, useMemo, useRef, useCallback, memo, useDeferredValue } from "react";
 import {
   Shield,
   Gauge,
@@ -169,6 +169,8 @@ const LuxuryProductCard = memo(({ product }: { product: Product }) => {
             <img
               src={meta.image}
               alt={product.name}
+              loading="lazy"
+              decoding="async"
               className="h-32 object-contain filter drop-shadow-[0_12px_20px_rgba(0,0,0,0.18)] animate-float-tyre transition-transform duration-500 group-hover:scale-105"
             />
             {/* Dynamic Tyre Ground Contact Shadow */}
@@ -266,6 +268,7 @@ const LuxuryProductCard = memo(({ product }: { product: Product }) => {
 
 export function ProductGrid() {
   const [searchQuery, setSearchQuery] = useState("");
+  const deferredSearchQuery = useDeferredValue(searchQuery);
   const [activeCategory, setActiveCategory] = useState<"All" | "Car" | "SUV" | "Truck/Bus">("All");
 
   const filteredProducts = useMemo(() => {
@@ -273,7 +276,7 @@ export function ProductGrid() {
       const matchesCategory =
         activeCategory === "All" || product.vehicleCategory === activeCategory;
 
-      const searchLower = searchQuery.toLowerCase();
+      const searchLower = deferredSearchQuery.toLowerCase();
       const matchesSearch =
         product.name.toLowerCase().includes(searchLower) ||
         product.subSegment.toLowerCase().includes(searchLower) ||
@@ -285,7 +288,7 @@ export function ProductGrid() {
 
       return matchesCategory && matchesSearch;
     });
-  }, [searchQuery, activeCategory]);
+  }, [deferredSearchQuery, activeCategory]);
 
   return (
     <section className="w-full px-0 py-16 relative z-10 scroll-reveal">
