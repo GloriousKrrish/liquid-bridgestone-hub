@@ -26,6 +26,7 @@ import {
 } from "@/lib/bridgestone-data";
 import { searchVehicle, getRecommendations, getAllVehicles } from "@/lib/api/vehicle.functions";
 import type { VehicleRecord } from "@/lib/vehicle-db";
+import { PremiumTyrePreview } from "./PremiumTyrePreview";
 
 // Type definition for rendering compatibility
 interface MappedTyreProfile {
@@ -883,7 +884,7 @@ export function SmartSelectorWizard({
 
                         {/* Right part: animated transparent video preview and price */}
                         <div className="md:col-span-4 flex flex-col items-center justify-center text-center gap-4 bg-[#F5EFE6]/70 border border-[#C4A67A]/25 rounded-2xl p-4">
-                          <AnimatedTyrePreview seriesName={primary.seriesName} />
+                          <PremiumTyrePreview variant="primary" seriesName={primary.seriesName} />
                           <div>
                             <span className="text-[9px] uppercase tracking-widest text-[#8C8C8C] font-bold block">
                               Estimated Price
@@ -962,20 +963,25 @@ export function SmartSelectorWizard({
                             className="bg-[#F5EFE6]/80 border border-[#C4A67A]/28 hover:border-[#C8A165] hover:shadow-[0_10px_25px_rgba(170,145,110,0.15)] rounded-2xl p-4 flex flex-col justify-between transition-all duration-250 animate-in fade-in"
                           >
                             <div className="space-y-3">
-                              <div className="flex justify-between items-center">
-                                <span className="text-[8px] uppercase font-bold text-[#9B6B43] bg-[#C8A165]/15 border border-[#C8A165]/30 px-2 py-0.5 rounded">
-                                  Rank #{index + 2} Alternative
-                                </span>
-                                <span className="text-[9px] font-bold text-[#3B663A] bg-[#5B8C5A]/15 px-2 py-0.5 rounded">
-                                  {alt.displayScore}% Score
-                                </span>
-                              </div>
+                              <div className="flex items-start justify-between gap-3">
+                                <div className="space-y-2 flex-1 min-w-0">
+                                  <div className="flex justify-between items-center">
+                                    <span className="text-[8px] uppercase font-bold text-[#9B6B43] bg-[#C8A165]/15 border border-[#C8A165]/30 px-2 py-0.5 rounded">
+                                      Rank #{index + 2} Alternative
+                                    </span>
+                                    <span className="text-[9px] font-bold text-[#3B663A] bg-[#5B8C5A]/15 px-2 py-0.5 rounded">
+                                      {alt.displayScore}% Score
+                                    </span>
+                                  </div>
 
-                              <div>
-                                <h4 className="text-sm font-bold text-[#2A2A2A] truncate">{alt.seriesName}</h4>
-                                <span className="text-[9px] text-[#9B6B43] font-bold block mt-0.5">
-                                  {alt.sizeString}
-                                </span>
+                                  <div>
+                                    <h4 className="text-sm font-bold text-[#2A2A2A] truncate">{alt.seriesName}</h4>
+                                    <span className="text-[9px] text-[#9B6B43] font-bold block mt-0.5">
+                                      {alt.sizeString}
+                                    </span>
+                                  </div>
+                                </div>
+                                <PremiumTyrePreview variant="alternative" seriesName={alt.seriesName} />
                               </div>
 
                               <p className="text-[10px] text-[#666666] leading-relaxed line-clamp-2">

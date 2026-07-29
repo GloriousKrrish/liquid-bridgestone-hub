@@ -15,6 +15,7 @@ import {
   Sparkle
 } from "lucide-react";
 import { PRODUCT_CATALOG, type Product } from "@/lib/bridgestone-data";
+import { PremiumTyrePreview } from "./PremiumTyrePreview";
 
 const PRODUCT_METADATA: Record<
   string,
@@ -164,17 +165,9 @@ const LuxuryProductCard = memo(({ product }: { product: Product }) => {
             </span>
           </div>
 
-          {/* Floating Product Image Visual */}
-          <div className="relative my-4 py-2 flex items-center justify-center overflow-hidden rounded-2xl bg-gradient-to-b from-[#FAF7F2]/80 to-[#F5F1EB]/40 border border-[#E9E1D6]/60 group-hover:border-[#C9A35D]/30 transition-all">
-            <img
-              src={meta.image}
-              alt={product.name}
-              loading="lazy"
-              decoding="async"
-              className="h-32 object-contain filter drop-shadow-[0_12px_20px_rgba(0,0,0,0.18)] animate-float-tyre transition-transform duration-500 group-hover:scale-105"
-            />
-            {/* Dynamic Tyre Ground Contact Shadow */}
-            <div className="absolute bottom-2 w-28 h-3 bg-black/15 blur-md rounded-full transform group-hover:scale-110 transition-transform duration-500 pointer-events-none" />
+          {/* Floating Premium Animated Tyre Preview */}
+          <div className="relative my-4 py-2 flex items-center justify-center">
+            <PremiumTyrePreview variant="compact" seriesName={product.name} />
           </div>
 
           {/* Taglines and Target Vehicles */}
