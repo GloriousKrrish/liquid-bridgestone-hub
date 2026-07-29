@@ -153,31 +153,14 @@ function BridyFAB() {
     <Link
       to="/bridy-ai"
       aria-label="Open Bridy AI"
-      className="fixed bottom-6 right-6 z-[200] w-16 h-16 rounded-full flex items-center justify-center shadow-[0_8px_32px_rgba(215,25,32,0.45)] transition-all duration-300 hover:scale-110 hover:shadow-[0_12px_40px_rgba(215,25,32,0.6)] cursor-pointer group"
-      style={{ background: "linear-gradient(135deg, #1a0000 0%, #2d0508 50%, #1a0000 100%)" }}
+      className="fixed bottom-6 right-6 z-[200] w-16 h-16 rounded-full flex items-center justify-center shadow-2xl shadow-[#D71920]/40 transition-all duration-300 hover:scale-110 hover:shadow-[0_12px_40px_rgba(215,25,32,0.55)] cursor-pointer border-2 border-[#D71920]/60 hover:border-[#D71920] bg-white"
     >
-      {/* Outer red ring glow */}
-      <div className="absolute inset-0 rounded-full border-2 border-[#D71920]/70 group-hover:border-[#D71920] transition-colors duration-300" />
-      {/* Hover glow ring */}
-      <div className="absolute inset-0 rounded-full bg-[#D71920]/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-      {/* Bridgestone Logo — full, uncropped, centered */}
       <img
         src="/bridgestone-logo.png"
         alt="Bridgestone Birdy AI"
-        className="relative z-10 w-[82%] h-[82%] object-contain select-none"
+        className="w-[85%] h-[85%] object-contain"
         draggable={false}
       />
-      {/* AI sparkle badge */}
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="12"
-        height="12"
-        viewBox="0 0 24 24"
-        fill="currentColor"
-        className="absolute top-0.5 right-0.5 z-20 text-[#D71920] animate-pulse drop-shadow-md"
-      >
-        <path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/>
-      </svg>
     </Link>
   );
 }

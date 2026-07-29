@@ -3,9 +3,9 @@ import React from "react";
 export const TypingIndicator: React.FC = () => {
   return (
     <div className="flex items-start gap-3.5 max-w-[85%]">
-      {/* Avatar */}
-      <div className="w-9 h-9 rounded-full shrink-0 flex items-center justify-center bg-[#0f0203] shadow-md shadow-[#D71920]/20 border border-[#D71920]/30">
-        <img src="/bridgestone-logo.png" alt="Bridgestone" className="w-[80%] h-[80%] object-contain select-none" draggable={false} />
+      {/* Bridgestone Avatar */}
+      <div className="w-9 h-9 shrink-0 flex items-center justify-center">
+        <img src="/bridgestone-logo.png" alt="Bridgestone" className="w-full h-full object-contain" draggable={false} />
       </div>
 
       {/* Typing Bubble */}
