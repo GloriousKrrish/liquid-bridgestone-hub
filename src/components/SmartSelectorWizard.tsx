@@ -881,9 +881,9 @@ export function SmartSelectorWizard({
                           </div>
                         </div>
 
-                        {/* Right part: vector tread illustration and price */}
+                        {/* Right part: animated transparent video preview and price */}
                         <div className="md:col-span-4 flex flex-col items-center justify-center text-center gap-4 bg-[#F5EFE6]/70 border border-[#C4A67A]/25 rounded-2xl p-4">
-                          <TyreTreadIllustration type={patternType} />
+                          <AnimatedTyrePreview />
                           <div>
                             <span className="text-[9px] uppercase tracking-widest text-[#8C8C8C] font-bold block">
                               Estimated Price
@@ -1056,92 +1056,45 @@ export function SmartSelectorWizard({
   );
 }
 
-// Custom SVG Tread Pattern Illustrations to replace tyre images dynamically
-function TyreTreadIllustration({ type }: { type: string }) {
+// Premium Animated Tyre Preview replacing static tread/image preview
+function AnimatedTyrePreview() {
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    const handleVisibility = () => {
+      if (document.hidden) {
+        videoRef.current?.pause();
+      } else {
+        videoRef.current?.play().catch(() => {});
+      }
+    };
+    document.addEventListener("visibilitychange", handleVisibility);
+    return () => document.removeEventListener("visibilitychange", handleVisibility);
+  }, []);
+
   return (
-    <div className="w-20 h-28 relative rounded-xl border border-white/10 bg-[#08080C] overflow-hidden shadow-inner group">
-      <div className="absolute inset-y-0 left-0 w-1 bg-[#1A1A24] z-10" />
-      <div className="absolute inset-y-0 right-0 w-1 bg-[#1A1A24] z-10" />
+    <div className="w-24 h-28 relative flex flex-col items-center justify-center group overflow-hidden">
+      {/* Subtle Champagne Radial Glow Behind Tyre */}
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(201,163,93,0.22),transparent_70%)] pointer-events-none rounded-full blur-[8px]" />
 
-      <div className="w-full h-full flex flex-col justify-around py-2 animate-[pulse_3s_infinite]">
-        {type === "touring" && (
-          <svg className="w-full h-full px-2" viewBox="0 0 100 120" fill="none" stroke="currentColor">
-            <line x1="20" y1="0" x2="20" y2="120" strokeWidth="4" className="text-white/30" />
-            <line x1="40" y1="0" x2="40" y2="120" strokeWidth="2" className="text-[#D71920]/40" />
-            <line x1="60" y1="0" x2="60" y2="120" strokeWidth="2" className="text-[#D71920]/40" />
-            <line x1="80" y1="0" x2="80" y2="120" strokeWidth="4" className="text-white/30" />
-            {[10, 30, 50, 70, 90, 110].map((y) => (
-              <path key={y} d={`M 20 ${y} Q 30 ${y - 5} 40 ${y} M 60 ${y} Q 70 ${y + 5} 80 ${y}`} strokeWidth="2" className="text-white/20" />
-            ))}
-          </svg>
-        )}
-
-        {type === "all-terrain" && (
-          <svg className="w-full h-full px-1.5" viewBox="0 0 100 120" fill="none">
-            {[10, 35, 60, 85, 110].map((y, idx) => (
-              <g key={y} className="text-slate-400/30">
-                <rect x={idx % 2 === 0 ? "10" : "25"} y={y} width="25" height="15" rx="3" fill="currentColor" />
-                <rect x={idx % 2 === 0 ? "65" : "50"} y={y} width="25" height="15" rx="3" fill="currentColor" />
-                <rect x={idx % 2 === 0 ? "42" : "15"} y={y + 8} width="16" height="5" rx="1" fill="#D71920/40" />
-              </g>
-            ))}
-          </svg>
-        )}
-
-        {type === "durable" && (
-          <svg className="w-full h-full px-2" viewBox="0 0 100 120" fill="none" stroke="currentColor">
-            <line x1="30" y1="0" x2="30" y2="120" strokeWidth="5" className="text-white/40" />
-            <line x1="70" y1="0" x2="70" y2="120" strokeWidth="5" className="text-white/40" />
-            {[15, 40, 65, 90, 115].map((y) => (
-              <line key={y} x1="30" y1={y} x2="70" y2={y} strokeWidth="3" className="text-[#D71920]/40" />
-            ))}
-          </svg>
-        )}
-
-        {type === "eco" && (
-          <svg className="w-full h-full px-2" viewBox="0 0 100 120" fill="none" stroke="currentColor">
-            <line x1="15" y1="0" x2="15" y2="120" strokeWidth="2" className="text-white/20" />
-            <line x1="50" y1="0" x2="50" y2="120" strokeWidth="3.5" className="text-[#D71920]/30" strokeDasharray="6 4" />
-            <line x1="85" y1="0" x2="85" y2="120" strokeWidth="2" className="text-white/20" />
-            {[20, 50, 80, 110].map((y) => (
-              <path key={y} d={`M 15 ${y} Q 32.5 ${y + 5} 50 ${y} Q 67.5 ${y - 5} 85 ${y}`} strokeWidth="1.5" className="text-green-400/20" />
-            ))}
-          </svg>
-        )}
-
-        {type === "sport" && (
-          <svg className="w-full h-full px-2" viewBox="0 0 100 120" fill="none" stroke="currentColor">
-            <line x1="50" y1="0" x2="50" y2="120" strokeWidth="3" className="text-[#D71920]/40" />
-            {[10, 25, 40, 55, 70, 85, 100, 115].map((y) => (
-              <g key={y} className="text-white/25">
-                <line x1="15" y1={y} x2="40" y2={y + 10} strokeWidth="2.5" />
-                <line x1="85" y1={y} x2="60" y2={y + 10} strokeWidth="2.5" />
-              </g>
-            ))}
-          </svg>
-        )}
-
-        {type === "rib-commercial" && (
-          <svg className="w-full h-full px-2" viewBox="0 0 100 120" fill="none" stroke="currentColor">
-            <line x1="18" y1="0" x2="18" y2="120" strokeWidth="6" className="text-white/30" />
-            <line x1="38" y1="0" x2="38" y2="120" strokeWidth="5" className="text-white/25" />
-            <line x1="62" y1="0" x2="62" y2="120" strokeWidth="5" className="text-white/25" />
-            <line x1="82" y1="0" x2="82" y2="120" strokeWidth="6" className="text-white/30" />
-          </svg>
-        )}
-
-        {type === "tipper-block" && (
-          <svg className="w-full h-full px-1" viewBox="0 0 100 120" fill="none">
-            {[5, 30, 55, 80, 105].map((y, idx) => (
-              <g key={y} className="text-slate-500/40">
-                <rect x={idx % 2 === 0 ? "5" : "20"} y={y} width="30" height="20" rx="4" fill="currentColor" />
-                <rect x={idx % 2 === 0 ? "65" : "50"} y={y} width="30" height="20" rx="4" fill="currentColor" />
-                <rect x={idx % 2 === 0 ? "40" : "10"} y={y + 6} width="20" height="8" rx="2" fill="#D71920" fillOpacity="0.25" />
-              </g>
-            ))}
-          </svg>
-        )}
+      {/* Floating Animated Video Container occupying 80-90% area */}
+      <div className="w-full h-[85%] relative flex items-center justify-center transform-gpu animate-[float-tyre_3.5s_easeInOut_infinite]">
+        <video
+          ref={videoRef}
+          src="/can_u_plz_animate_this.mp4"
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="w-full h-full object-contain pointer-events-none filter drop-shadow-[0_8px_16px_rgba(0,0,0,0.25)] transition-all duration-300"
+          style={{
+            mixBlendMode: "multiply",
+          }}
+        />
       </div>
+
+      {/* Soft Contact Shadow Beneath Tyre */}
+      <div className="w-14 h-1.5 bg-black/20 rounded-full blur-[3px] mx-auto mt-0.5 animate-[pulse_3.5s_infinite] pointer-events-none" />
     </div>
   );
 }
