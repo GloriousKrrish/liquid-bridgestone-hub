@@ -189,11 +189,6 @@ export function BridgestoneNav() {
       )}
 
       <nav className="fixed top-0 left-0 w-full z-50 bg-[#FCFAF6]/90 backdrop-blur-md border-b border-[#E9E1D6] transition-colors duration-300 px-4 sm:px-6 py-4" aria-label="Main navigation">
-        <img
-          src="/bridgestone-global-logo.png"
-          alt="Bridgestone Global Logo"
-          className="absolute top-4 left-8 z-50 h-10 w-auto object-contain option mix-blend-multiply opacity-80 pointer-events-none hidden xl:block"
-        />
         <div className="max-w-5xl mx-auto relative">
           <div className="bg-white/90 backdrop-blur-md rounded-full px-6 sm:px-8 py-3.5 flex items-center justify-between relative z-[100] border border-[#E9E1D6] shadow-sm">
             {/* Brand */}

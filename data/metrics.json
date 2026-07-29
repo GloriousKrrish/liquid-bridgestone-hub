@@ -1,6 +1,6 @@
 {
-  "totalVehiclesStored": 74,
-  "newVehiclesLearned": 12,
+  "totalVehiclesStored": 76,
+  "newVehiclesLearned": 14,
   "mostSearchedVehicles": [
     {
       "name": "Honda City (2022)",
@@ -11,20 +11,20 @@
       "count": 4
     },
     {
+      "name": "Tata Sierra (1997)",
+      "count": 4
+    },
+    {
       "name": "Toyota Fortuner (2021)",
       "count": 3
     },
     {
       "name": "John Deere 5310 Tractor (2024)",
       "count": 3
-    },
-    {
-      "name": "Tata Sierra (1997)",
-      "count": 3
     }
   ],
-  "recommendationCounts": 43,
-  "geminiDiscoverySuccessRate": 71,
-  "geminiCallsCount": 17,
-  "geminiSuccessesCount": 13
+  "recommendationCounts": 48,
+  "geminiDiscoverySuccessRate": 75,
+  "geminiCallsCount": 20,
+  "geminiSuccessesCount": 16
 }

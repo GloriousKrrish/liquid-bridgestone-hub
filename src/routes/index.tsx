@@ -509,28 +509,21 @@ function Index() {
       <BridgestoneNav />
 
       {/* 1. IMMERSIVE HERO SHOWCASE WRAPPER */}
-      <div className="fixed inset-0 w-full h-full z-0 bg-[#FCFAF6] overflow-hidden pointer-events-none flex items-center justify-center">
-        <div className="relative aspect-[16/9] w-full max-w-full max-h-full">
-          <video 
-            src="/hero-background.mp4" 
-            autoPlay 
-            loop 
-            muted 
-            playsInline 
-            className="w-full h-full object-cover mix-blend-normal opacity-90 filter-none"
-          />
-          
-          {/* Reconstruct background: Seamless Gemini Watermark Removal Patch */}
-          <div 
-            className="absolute bottom-[11.2%] right-[8.6%] w-[4.2%] h-[6.5%] bg-[#b8bcc4] blur-[5px] rounded-full opacity-95 mix-blend-normal"
-            style={{
-              boxShadow: '0 0 10px 5px #b8bcc4',
-            }}
-          />
+      <div className="fixed inset-0 w-full h-full z-0 bg-[#FCFAF6] overflow-hidden pointer-events-none">
+        <video 
+          src="/hero-background.mp4" 
+          autoPlay 
+          loop 
+          muted 
+          playsInline 
+          className="w-full h-full object-cover mix-blend-normal opacity-90 filter-none"
+        />
+        
+        {/* Subtle Contrast Light Vignette */}
+        <div className="absolute inset-0 bg-gradient-to-b from-white/30 via-transparent to-white/50 pointer-events-none" />
 
-          {/* 2. 3D INTERACTIVE TIRE */}
-          <Tyre3DContainer TyreComponent={TyreComponent} scrollY={scrollY} />
-        </div>
+        {/* 2. 3D INTERACTIVE TIRE */}
+        <Tyre3DContainer TyreComponent={TyreComponent} scrollY={scrollY} />
       </div>
 
       {/* Scrolling Hero Header Area */}

@@ -306,5 +306,40 @@
     "resolvedTo": "maruti-suzuki-brezza-2024-zxi",
     "method": "gemini_discovered",
     "confidenceScore": 0.98
+  },
+  {
+    "query": "ford ecosport",
+    "timestamp": "2026-07-29T05:08:46.923Z",
+    "resolvedTo": "ford-ecosport-2021-titanium",
+    "method": "gemini_discovered",
+    "confidenceScore": 0.95
+  },
+  {
+    "query": "Ford EcoSport",
+    "timestamp": "2026-07-29T05:08:47.368Z",
+    "resolvedTo": "ford-ecosport-2021-titanium",
+    "method": "learned",
+    "confidenceScore": 0.95
+  },
+  {
+    "query": "tata siera",
+    "timestamp": "2026-07-29T05:09:32.748Z",
+    "resolvedTo": "tata-sierra-2000-turbo",
+    "method": "gemini_discovered",
+    "confidenceScore": 0.95
+  },
+  {
+    "query": "Tata Sierra",
+    "timestamp": "2026-07-29T05:09:33.024Z",
+    "resolvedTo": "tata-sierra-1997-standard-turbo",
+    "method": "learned",
+    "confidenceScore": 0.92
+  },
+  {
+    "query": "tata-sierra-2026-standard-turbo",
+    "timestamp": "2026-07-29T05:09:57.106Z",
+    "resolvedTo": "tata-sierra-2026-standard-turbo",
+    "method": "gemini_discovered",
+    "confidenceScore": 0.85
   }
 ]
