@@ -65,8 +65,8 @@ export const ChatMessage: React.FC<ChatMessageProps> = React.memo(({
   return (
     <div className="flex items-start gap-3.5 group max-w-full">
       {/* Bridgestone Mobility Avatar Badge */}
-      <div className="w-8 h-8 rounded-xl bg-white border border-[#EFE6E8] flex items-center justify-center shrink-0 shadow-sm mt-1 overflow-hidden p-0.5">
-        <img src="/bridgestone-logo.png" alt="Bridgestone" className="w-full h-full object-contain" />
+      <div className="w-9 h-9 rounded-full shrink-0 mt-1 flex items-center justify-center bg-[#0f0203] shadow-md shadow-[#D71920]/20 border border-[#D71920]/30">
+        <img src="/bridgestone-logo.png" alt="Bridgestone" className="w-[80%] h-[80%] object-contain select-none" draggable={false} />
       </div>
 
       <div className="flex-1 min-w-0 space-y-4">
