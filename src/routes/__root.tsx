@@ -157,8 +157,8 @@ function BridyFAB() {
     >
       <div className="w-full h-full rounded-full bg-slate-950/90 backdrop-blur-xl flex items-center justify-center relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-tr from-[#D71920]/20 via-[#D71920]/20 to-[#FF007A]/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-        <div className="relative flex items-center justify-center text-white">
-          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="relative z-10"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>
+        <div className="relative flex items-center justify-center">
+          <img src="/bridgestone-logo.png" alt="Bridgestone Birdy AI" className="w-8 h-8 object-contain drop-shadow-md" />
           <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="absolute -top-1.5 -right-1.5 text-[#D71920] animate-pulse"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/></svg>
         </div>
       </div>

@@ -97,8 +97,8 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = React.memo(({
         {/* Header Branding */}
         <div className="p-5 border-b border-[#EFE6E8] flex items-center justify-between bg-[#FFFFFF]">
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-xl bg-[#D71920] flex items-center justify-center shadow-sm shadow-[#D71920]/20">
-              <span className="text-sm font-bold text-white tracking-tight">B</span>
+            <div className="w-8 h-8 rounded-xl bg-white border border-[#EFE6E8] flex items-center justify-center shadow-sm overflow-hidden p-0.5">
+              <img src="/bridgestone-logo.png" alt="Bridgestone" className="w-full h-full object-contain" />
             </div>
             <div>
               <h2 className="text-xs font-semibold text-[#2D2D2D] tracking-wide">

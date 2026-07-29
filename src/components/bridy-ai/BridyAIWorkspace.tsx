@@ -283,9 +283,9 @@ export function BridyAIWorkspace() {
             <ArrowLeft className="w-5 h-5" />
           </Link>
 
-          <div className="flex items-center gap-2.5">
-            <div className="w-6 h-6 rounded-lg bg-[#D71920] flex items-center justify-center shadow-xs">
-              <span className="text-[10px] font-bold text-white">B</span>
+            <div className="flex items-center gap-2.5">
+            <div className="w-6 h-6 rounded-lg bg-white border border-[#EFE6E8] flex items-center justify-center shadow-xs overflow-hidden p-px">
+              <img src="/bridgestone-logo.png" alt="Bridgestone" className="w-full h-full object-contain" />
             </div>
             <div>
               <h2 className="text-xs sm:text-sm font-semibold text-[#2D2D2D] truncate">
