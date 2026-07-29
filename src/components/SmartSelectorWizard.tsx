@@ -1114,7 +1114,13 @@ function AnimatedTyrePreview({ seriesName }: { seriesName?: string }) {
   return (
     <div
       ref={containerRef}
-      className="w-28 h-32 sm:w-32 sm:h-36 relative flex flex-col items-center justify-center group cursor-pointer select-none rounded-2xl overflow-hidden p-2 transition-all duration-500 ease-out"
+      onMouseEnter={() => {
+        if (videoRef.current) videoRef.current.playbackRate = 1.35;
+      }}
+      onMouseLeave={() => {
+        if (videoRef.current) videoRef.current.playbackRate = 1.0;
+      }}
+      className="w-32 h-36 sm:w-40 sm:h-44 md:w-44 md:h-48 relative flex flex-col items-center justify-center group cursor-pointer select-none rounded-2xl overflow-hidden p-1 transition-all duration-500 ease-out"
     >
       <style>{`
         @keyframes floatShowroom {
@@ -1123,13 +1129,13 @@ function AnimatedTyrePreview({ seriesName }: { seriesName?: string }) {
         }
       `}</style>
 
-      {/* Showroom Warm Ivory & Champagne Radial Spotlight */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_45%,rgba(253,248,240,0.95)_0%,rgba(230,215,190,0.30)_50%,transparent_75%)] pointer-events-none transition-opacity duration-500 group-hover:opacity-100" />
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_35%,rgba(201,163,93,0.20)_0%,transparent_60%)] pointer-events-none transition-all duration-500 group-hover:scale-110 group-hover:opacity-100" />
+      {/* Showroom Warm Ivory & Gold Radial Spotlight */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_45%,rgba(254,250,245,0.98)_0%,rgba(235,222,200,0.42)_55%,transparent_82%)] pointer-events-none transition-opacity duration-500 group-hover:opacity-100" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_35%,rgba(201,163,93,0.25)_0%,transparent_65%)] pointer-events-none transition-all duration-500 group-hover:scale-110 group-hover:opacity-100" />
 
-      {/* Floating Animated Video Container */}
+      {/* Floating Animated Video Container occupying 85-90% area */}
       <div
-        className={`w-full h-[78%] relative flex items-center justify-center transform-gpu transition-all duration-350 ease-out ${
+        className={`w-[88%] h-[88%] relative flex items-center justify-center transform-gpu transition-all duration-350 ease-out ${
           isTransitioning
             ? "opacity-0 scale-95 rotate-2"
             : "opacity-100 scale-100 rotate-0 group-hover:scale-[1.03]"
@@ -1146,7 +1152,7 @@ function AnimatedTyrePreview({ seriesName }: { seriesName?: string }) {
           muted
           playsInline
           preload="auto"
-          className="w-full h-full object-contain pointer-events-none transform-gpu filter drop-shadow-[0_10px_18px_rgba(28,25,23,0.22)] group-hover:drop-shadow-[0_16px_28px_rgba(28,25,23,0.32)] group-hover:brightness-105 transition-all duration-500"
+          className="w-full h-full object-contain pointer-events-none transform-gpu filter drop-shadow-[0_12px_22px_rgba(28,25,23,0.25)] group-hover:drop-shadow-[0_20px_34px_rgba(28,25,23,0.38)] group-hover:brightness-105 transition-all duration-500"
           style={{
             mixBlendMode: "multiply",
           }}
@@ -1154,7 +1160,7 @@ function AnimatedTyrePreview({ seriesName }: { seriesName?: string }) {
       </div>
 
       {/* Soft Elliptical Ground Shadow */}
-      <div className="w-16 h-1.5 bg-[#1C1917]/22 rounded-full blur-[3.5px] mx-auto mt-1 transition-all duration-500 ease-out group-hover:w-20 group-hover:h-2 group-hover:bg-[#1C1917]/35 group-hover:blur-[5px] pointer-events-none" />
+      <div className="w-20 sm:w-24 h-2 bg-[#1C1917]/22 rounded-full blur-[4px] mx-auto mt-0.5 transition-all duration-500 ease-out group-hover:w-28 group-hover:h-2.5 group-hover:bg-[#1C1917]/35 group-hover:blur-[6px] pointer-events-none" />
     </div>
   );
 }
