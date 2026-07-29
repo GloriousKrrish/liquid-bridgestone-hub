@@ -2,6 +2,9 @@ import fs from "node:fs";
 import path from "node:path";
 import process from "node:process";
 import { VEHICLES, OEM_SPECIFICATIONS, type Vehicle, type OemSpec } from "./bridgestone-data";
+import { vehicleSearchCache } from "./cache/multi-tier-cache";
+import { lookupVehicleAlias } from "./search/alias-dictionary";
+import { calculateStringSimilarity, normalizeVehicleQuery } from "./search/fuzzy-engine";
 
 // Phase 1 - Normalized Database Specification
 export interface VehicleRecord {
@@ -289,22 +292,34 @@ function containsWord(source: string, word: string): boolean {
 }
 
 export function resolveVehicleSearch(query: string): VehicleRecord[] {
-  const db = loadVehicleDatabase();
   const cleanQuery = query.trim().toLowerCase();
-  
   if (!cleanQuery) return [];
 
-  // Check aliases first and expand the query if there's a match
+  // Stage 11 & Stage 1: Check LRU Cache for sub-10ms response
+  const cachedResult = vehicleSearchCache.get(cleanQuery);
+  if (cachedResult) {
+    return cachedResult;
+  }
+
+  const db = loadVehicleDatabase();
+
+  // Stage 3 & Stage 5: Lookup Automotive Alias & Normalize Query
+  const aliasMatch = lookupVehicleAlias(cleanQuery);
+  const normalized = normalizeVehicleQuery(cleanQuery);
+
   let expandedQueries = [cleanQuery];
+  if (aliasMatch) {
+    expandedQueries.push(`${aliasMatch.manufacturer} ${aliasMatch.model}`.toLowerCase());
+  }
+
+  // Include legacy alias dictionary
   for (const [alias, targets] of Object.entries(VEHICLE_ALIASES)) {
     if (cleanQuery.includes(alias) || alias.includes(cleanQuery)) {
       expandedQueries.push(...targets.map(t => t.toLowerCase()));
     }
   }
 
-  // Parse search query tokens
-  const queryTokens = cleanQuery.split(/\s+/).filter(Boolean);
-
+  // Stage 2, 4, 6: Multi-Stage Fuzzy & Token Matching Pipeline
   const scoredMatches = db.map((vehicle) => {
     let score = 0;
     const manufacturer = vehicle.manufacturer.toLowerCase();
@@ -313,30 +328,41 @@ export function resolveVehicleSearch(query: string): VehicleRecord[] {
     const year = vehicle.year.toLowerCase();
     const type = vehicle.vehicle_type.toLowerCase();
     const fullName = `${manufacturer} ${model}`.trim();
+    const fullSpecsName = `${manufacturer} ${model} ${variant}`.trim();
 
-    // Run scoring across all expanded query variants
+    // 1. Alias Direct Match Bonus
+    if (aliasMatch) {
+      if (manufacturer === aliasMatch.manufacturer.toLowerCase() && model === aliasMatch.model.toLowerCase()) {
+        score += 80;
+      }
+    }
+
+    // 2. Levenshtein Distance & String Similarity Check for Typos (e.g. "Cretta" -> "Creta", "Scropio" -> "Scorpio")
+    const modelSim = calculateStringSimilarity(cleanQuery, model);
+    const fullNameSim = calculateStringSimilarity(cleanQuery, fullName);
+    if (modelSim >= 0.75) score += Math.round(modelSim * 50);
+    if (fullNameSim >= 0.75) score += Math.round(fullNameSim * 60);
+
+    // 3. Multi-Query Token Match
     for (const eq of expandedQueries) {
       const eqTokens = eq.split(/\s+/).filter(Boolean);
       let eqScore = 0;
 
       for (const token of eqTokens) {
-        if (containsWord(manufacturer, token)) eqScore += 10;
-        if (containsWord(model, token)) eqScore += 15;
-        if (model === token) eqScore += 10; // Exact model name bonus
-        if (containsWord(variant, token)) eqScore += 8;
+        if (containsWord(manufacturer, token)) eqScore += 12;
+        if (containsWord(model, token)) eqScore += 18;
+        if (model === token) eqScore += 15;
+        if (containsWord(variant, token)) eqScore += 10;
         if (year === token) eqScore += 5;
-        if (containsWord(type, token)) eqScore += 2;
+        if (containsWord(type, token)) eqScore += 3;
       }
 
-      // Full name match
       if (fullName.includes(eq) || eq.includes(fullName)) {
-        eqScore += 20;
+        eqScore += 30;
       }
 
-      // Full specs name match
-      const fullSpecsName = `${manufacturer} ${model} ${variant}`.trim();
       if (fullSpecsName.includes(eq)) {
-        eqScore += 25;
+        eqScore += 35;
       }
 
       score = Math.max(score, eqScore);
@@ -345,9 +371,16 @@ export function resolveVehicleSearch(query: string): VehicleRecord[] {
     return { vehicle, score };
   });
 
-  // Filter with minimum score threshold of 35 to prevent low-quality matches
-  return scoredMatches
-    .filter((m) => m.score >= 35)
+  // Filter with minimum threshold of 25 to catch fuzzy matches while maintaining high quality
+  const results = scoredMatches
+    .filter((m) => m.score >= 25)
     .sort((a, b) => b.score - a.score)
     .map((m) => m.vehicle);
+
+  // Store in LRU cache for instant future lookups
+  if (results.length > 0) {
+    vehicleSearchCache.set(cleanQuery, results);
+  }
+
+  return results;
 }

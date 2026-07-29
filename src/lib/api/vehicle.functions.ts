@@ -2,6 +2,7 @@ import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import type { VehicleRecord } from "../vehicle-db";
 import { PRODUCT_CATALOG, SKU_CATALOG, type Product, type TyreSKU } from "../bridgestone-data";
+import { GeminiService } from "../ai/gemini-service";
 
 // Schema for Gemini Discovery response validation
 const discoveredVehicleSchema = z.object({
@@ -173,128 +174,32 @@ export const searchVehicle = createServerFn({ method: "POST" })
       };
     }
 
-    // Step 2: Not Found -> Trigger Gemini Vehicle Discovery Engine (Phase 2 & Phase 3)
-    console.log(`[Vehicle Search] Vehicle not found. Triggering Gemini AI Discovery for "${query}"...`);
-    const apiKey = process.env.VITE_LLM_API_KEY || "";
+    // Step 2: Not Found -> Trigger Gemini Vehicle Discovery Engine via centralized GeminiService
+    console.log(`[Vehicle Search] Vehicle not found in local DB. Triggering Gemini AI Discovery for "${query}"...`);
     
     // Increment metrics calls count
     const metrics = loadAdminMetrics();
     saveAdminMetrics({ geminiCallsCount: (metrics.geminiCallsCount || 0) + 1 });
 
-    if (!apiKey) {
-      console.warn("[Vehicle Search] Gemini API Key not configured.");
-      saveAuditLog({
-        query,
-        timestamp: new Date().toISOString(),
-        resolvedTo: null,
-        method: "not_found",
-        confidenceScore: 0,
-      });
-      return {
-        success: false,
-        error: "NO_API_KEY",
-        message: "API Key not configured. Unable to perform discovery.",
-        vehicles: [],
-      };
-    }
-
-    const systemPrompt = `You are a Global Vehicle Specification and Tyre Fitment Expert with encyclopedic knowledge of all vehicle types worldwide.
-Your task is to identify and extract exact OEM tyre specifications for the following vehicle search query: "${query}".
-
-CRITICAL RULES:
-1. If the vehicle search is fuzzy, abbreviated, or has aliases, resolve it to the correct official vehicle name. Examples:
-   - "Fortuner" → Toyota Fortuner
-   - "Creta" → Hyundai Creta
-   - "Range Rover" → Land Rover Range Rover
-   - "Defender" → Land Rover Defender
-   - "BE 6" → Mahindra BE 6
-   - "CAT Excavator" → Caterpillar 320 Excavator
-   - "JCB Backhoe" → JCB 3DX Backhoe Loader
-   - "John Deere Tractor" → John Deere 5310 Tractor
-   - "Actros" → Mercedes-Benz Actros
-   - "FH16" → Volvo FH16
-2. Provide specifications for the standard or most popular variant.
-3. For construction equipment and tractors, use the standard OEM tyre size format (e.g. "14.00 R20" for large equipment, "12.4 R28" for tractors).
-4. For passenger vehicles and SUVs, use standard metric format (e.g. "255/45 R19").
-
-Supported Vehicle Types: Hatchback, Sedan, SUV, Compact SUV, Full-Size SUV, MPV, Pickup Truck, Heavy Commercial Truck, Light Commercial Truck, Bus, Luxury Coach Bus, Construction Equipment, Agricultural Tractor, Off-Road 4x4, Luxury Sedan, Luxury SUV, Electric Vehicle, EV CUV, Sports Car.
-
-VEHICLE CATEGORY RULES:
-- Cars, Sedans, Hatchbacks, EVs → "Car"
-- SUVs, Crossovers, Off-Roaders → "SUV"
-- Trucks, Buses, Tippers, Tractors, Construction Equipment → "Truck/Bus"
-
-You MUST respond with a single, strict JSON object matching the schema. No markdown wrapping, no preamble, no explanations.
-
-Schema:
-{
-  "manufacturer": "Official Manufacturer Name (e.g. Tesla, Hyundai, Tata, Caterpillar, JCB, John Deere)",
-  "model": "Official Model Name (e.g. Model Y, Creta, Nexon EV, 320 Excavator, 3DX Backhoe Loader)",
-  "variant": "Typical variant/trim level (e.g. Long Range, SX, Creative+, Standard)",
-  "year": "Model year or representative year (e.g. 2024)",
-  "vehicle_type": "One of the supported vehicle types",
-  "vehicle_category": "One of: Car, SUV, Truck/Bus",
-  "fuel_type": "Petrol, Diesel, Electric, Hybrid, or CNG",
-  "gross_weight": "Estimated gross vehicle weight with units (e.g. 2400 kg, 18000 kg, 42000 kg)",
-  "rim_size": "Standard rim diameter in inches (e.g. 19, 20, 22.5, 24, 25)",
-  "oem_tyre_size": "Standard tyre sizing code (e.g. 255/45 R19, 11.00 R20, 14.00 R24, 23.5 R25)",
-  "load_index": "Load index number (e.g. 104, 150, 170)",
-  "speed_rating": "Speed rating letter (e.g. W, H, J, K, L)",
-  "drive_type": "FWD, RWD, AWD, or 4WD",
-  "confidence": 0.92
-}`;
-
     try {
-      let response: Response | null = null;
-      const attempts = 3;
-      let delay = 1000;
+      const { data: validatedData, meta } = await GeminiService.discoverVehicleSpec(query);
 
-      const modelsToTry = [
-        process.env.GEMINI_MODEL || "gemini-3.5-flash",
-        "gemini-2.5-flash",
-        "gemini-1.5-flash",
-      ];
-
-      for (const targetModel of modelsToTry) {
-        try {
-          response = await fetch(
-            `https://generativelanguage.googleapis.com/v1beta/models/${targetModel}:generateContent?key=${apiKey}`,
-            {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({
-                contents: [{ role: "user", parts: [{ text: `Identify the vehicle "${query}" and return its full OEM tyre specifications as JSON.` }] }],
-                systemInstruction: { parts: [{ text: systemPrompt }] },
-                generationConfig: {
-                  responseMimeType: "application/json",
-                  temperature: 0.1,
-                },
-              }),
-            }
-          );
-          if (response.ok) break;
-          console.warn(`[Gemini Discovery] Model ${targetModel} returned status ${response.status}. Retrying next tier...`);
-        } catch (err) {
-          console.warn(`[Gemini Discovery] Model ${targetModel} failed:`, err);
-        }
+      if (!validatedData) {
+        console.warn("[Vehicle Search] Gemini discovery failed or returned empty result.");
+        saveAuditLog({
+          query,
+          timestamp: new Date().toISOString(),
+          resolvedTo: null,
+          method: "not_found",
+          confidenceScore: 0,
+        });
+        return {
+          success: false,
+          error: "AI_DISCOVERY_FAILED",
+          message: "Unable to resolve vehicle specifications.",
+          vehicles: [],
+        };
       }
-
-      if (!response || !response.ok) {
-        throw new Error(`Gemini API returned status ${response ? response.status : "unknown"}`);
-      }
-
-      const resData = await response.json();
-      let rawJsonText = resData.candidates?.[0]?.content?.parts?.[0]?.text || "";
-      console.log(`[Gemini Discovery] Raw Response:`, rawJsonText);
-
-      // Strip any markdown wrappers if Gemini wraps in ```json ... ```
-      rawJsonText = rawJsonText.trim();
-      if (rawJsonText.startsWith("```")) {
-        rawJsonText = rawJsonText.replace(/^```(?:json)?\s*/, "").replace(/\s*```$/, "");
-      }
-
-      const parsedData = JSON.parse(rawJsonText.trim());
-      const validatedData = discoveredVehicleSchema.parse(parsedData);
 
       // Save success metric
       const freshMetrics = loadAdminMetrics();
@@ -319,7 +224,7 @@ Schema:
       if (existsIndex === -1) {
         db.push(newRecord);
         saveVehicleDatabase(db);
-        console.log(`[Vehicle Search] Successfully saved discovered vehicle "${newRecord.manufacturer} ${newRecord.model}" to database.`);
+        console.log(`[Vehicle Search] Successfully saved discovered vehicle "${newRecord.manufacturer} ${newRecord.model}" to database (Model used: ${meta.modelUsed}, Latency: ${meta.latencyMs}ms).`);
       } else {
         db[existsIndex].searchCount = (db[existsIndex].searchCount ?? 0) + 1;
         saveVehicleDatabase(db);
