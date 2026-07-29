@@ -883,7 +883,7 @@ export function SmartSelectorWizard({
 
                         {/* Right part: animated transparent video preview and price */}
                         <div className="md:col-span-4 flex flex-col items-center justify-center text-center gap-4 bg-[#F5EFE6]/70 border border-[#C4A67A]/25 rounded-2xl p-4">
-                          <AnimatedTyrePreview />
+                          <AnimatedTyrePreview seriesName={primary.seriesName} />
                           <div>
                             <span className="text-[9px] uppercase tracking-widest text-[#8C8C8C] font-bold block">
                               Estimated Price
@@ -1056,10 +1056,30 @@ export function SmartSelectorWizard({
   );
 }
 
-// Premium Animated Tyre Preview replacing static tread/image preview
-function AnimatedTyrePreview() {
+// Luxury Showroom Automotive Tyre Display Panel
+function AnimatedTyrePreview({ seriesName }: { seriesName?: string }) {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [isTransitioning, setIsTransitioning] = useState(false);
+  const prevSeriesRef = useRef(seriesName);
 
+  // Smooth transition on recommendation change
+  useEffect(() => {
+    if (prevSeriesRef.current !== seriesName) {
+      setIsTransitioning(true);
+      const timer = setTimeout(() => {
+        prevSeriesRef.current = seriesName;
+        setIsTransitioning(false);
+        if (videoRef.current) {
+          videoRef.current.currentTime = 0;
+          videoRef.current.play().catch(() => {});
+        }
+      }, 300);
+      return () => clearTimeout(timer);
+    }
+  }, [seriesName]);
+
+  // Tab visibility pause / resume
   useEffect(() => {
     const handleVisibility = () => {
       if (document.hidden) {
@@ -1072,13 +1092,52 @@ function AnimatedTyrePreview() {
     return () => document.removeEventListener("visibilitychange", handleVisibility);
   }, []);
 
-  return (
-    <div className="w-24 h-28 relative flex flex-col items-center justify-center group overflow-hidden">
-      {/* Subtle Champagne Radial Glow Behind Tyre */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(201,163,93,0.22),transparent_70%)] pointer-events-none rounded-full blur-[8px]" />
+  // IntersectionObserver for lazy playback
+  useEffect(() => {
+    if (!containerRef.current) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            videoRef.current?.play().catch(() => {});
+          } else {
+            videoRef.current?.pause();
+          }
+        });
+      },
+      { threshold: 0.2 }
+    );
+    observer.observe(containerRef.current);
+    return () => observer.disconnect();
+  }, []);
 
-      {/* Floating Animated Video Container occupying 80-90% area */}
-      <div className="w-full h-[85%] relative flex items-center justify-center transform-gpu animate-[float-tyre_3.5s_easeInOut_infinite]">
+  return (
+    <div
+      ref={containerRef}
+      className="w-28 h-32 sm:w-32 sm:h-36 relative flex flex-col items-center justify-center group cursor-pointer select-none rounded-2xl overflow-hidden p-2 transition-all duration-500 ease-out"
+    >
+      <style>{`
+        @keyframes floatShowroom {
+          0%, 100% { transform: translateY(0px); }
+          50% { transform: translateY(-3px); }
+        }
+      `}</style>
+
+      {/* Showroom Warm Ivory & Champagne Radial Spotlight */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_45%,rgba(253,248,240,0.95)_0%,rgba(230,215,190,0.30)_50%,transparent_75%)] pointer-events-none transition-opacity duration-500 group-hover:opacity-100" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_35%,rgba(201,163,93,0.20)_0%,transparent_60%)] pointer-events-none transition-all duration-500 group-hover:scale-110 group-hover:opacity-100" />
+
+      {/* Floating Animated Video Container */}
+      <div
+        className={`w-full h-[78%] relative flex items-center justify-center transform-gpu transition-all duration-350 ease-out ${
+          isTransitioning
+            ? "opacity-0 scale-95 rotate-2"
+            : "opacity-100 scale-100 rotate-0 group-hover:scale-[1.03]"
+        }`}
+        style={{
+          animation: isTransitioning ? "none" : "floatShowroom 4s ease-in-out infinite",
+        }}
+      >
         <video
           ref={videoRef}
           src="/can_u_plz_animate_this.mp4"
@@ -1086,15 +1145,16 @@ function AnimatedTyrePreview() {
           loop
           muted
           playsInline
-          className="w-full h-full object-contain pointer-events-none filter drop-shadow-[0_8px_16px_rgba(0,0,0,0.25)] transition-all duration-300"
+          preload="auto"
+          className="w-full h-full object-contain pointer-events-none transform-gpu filter drop-shadow-[0_10px_18px_rgba(28,25,23,0.22)] group-hover:drop-shadow-[0_16px_28px_rgba(28,25,23,0.32)] group-hover:brightness-105 transition-all duration-500"
           style={{
             mixBlendMode: "multiply",
           }}
         />
       </div>
 
-      {/* Soft Contact Shadow Beneath Tyre */}
-      <div className="w-14 h-1.5 bg-black/20 rounded-full blur-[3px] mx-auto mt-0.5 animate-[pulse_3.5s_infinite] pointer-events-none" />
+      {/* Soft Elliptical Ground Shadow */}
+      <div className="w-16 h-1.5 bg-[#1C1917]/22 rounded-full blur-[3.5px] mx-auto mt-1 transition-all duration-500 ease-out group-hover:w-20 group-hover:h-2 group-hover:bg-[#1C1917]/35 group-hover:blur-[5px] pointer-events-none" />
     </div>
   );
 }
