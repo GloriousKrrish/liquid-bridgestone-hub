@@ -341,5 +341,33 @@
     "resolvedTo": "tata-sierra-2026-standard-turbo",
     "method": "gemini_discovered",
     "confidenceScore": 0.85
+  },
+  {
+    "query": "venue",
+    "timestamp": "2026-07-29T05:50:28.090Z",
+    "resolvedTo": "hyundai-venue-2024-sx-1-2-petrol",
+    "method": "gemini_discovered",
+    "confidenceScore": 0.95
+  },
+  {
+    "query": "Hyundai Venue",
+    "timestamp": "2026-07-29T05:50:28.540Z",
+    "resolvedTo": "hyundai-venue-2024-sx-1-2-petrol",
+    "method": "learned",
+    "confidenceScore": 0.95
+  },
+  {
+    "query": "BMW I7",
+    "timestamp": "2026-07-29T05:51:08.656Z",
+    "resolvedTo": "bmw-i7-2024-xdrive60",
+    "method": "gemini_discovered",
+    "confidenceScore": 0.98
+  },
+  {
+    "query": "BMW i7",
+    "timestamp": "2026-07-29T05:51:12.137Z",
+    "resolvedTo": "bmw-i7-2024-xdrive60",
+    "method": "learned",
+    "confidenceScore": 0.98
   }
 ]

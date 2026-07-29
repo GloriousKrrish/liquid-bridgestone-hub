@@ -1,6 +1,6 @@
 {
-  "totalVehiclesStored": 76,
-  "newVehiclesLearned": 14,
+  "totalVehiclesStored": 78,
+  "newVehiclesLearned": 16,
   "mostSearchedVehicles": [
     {
       "name": "Honda City (2022)",
@@ -23,8 +23,8 @@
       "count": 3
     }
   ],
-  "recommendationCounts": 48,
-  "geminiDiscoverySuccessRate": 75,
-  "geminiCallsCount": 20,
-  "geminiSuccessesCount": 16
+  "recommendationCounts": 51,
+  "geminiDiscoverySuccessRate": 77,
+  "geminiCallsCount": 22,
+  "geminiSuccessesCount": 18
 }

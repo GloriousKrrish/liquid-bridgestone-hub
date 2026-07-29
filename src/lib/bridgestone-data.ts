@@ -73,7 +73,12 @@ export const VEHICLES: Vehicle[] = [
   { id: "hyundai-creta", manufacturer: "Hyundai", model: "Creta", category: "SUV", segment: "Compact SUV", weightClass: "Medium" },
   { id: "tata-nexon-ev", manufacturer: "Tata", model: "Nexon EV", category: "Car", segment: "EV CUV", weightClass: "Medium" },
   { id: "mahindra-thar", manufacturer: "Mahindra", model: "Thar", category: "SUV", segment: "Off-Road 4x4", weightClass: "Medium" },
+  { id: "mahindra-scorpio", manufacturer: "Mahindra", model: "Scorpio Classic", category: "SUV", segment: "Full-Size SUV", weightClass: "Medium" },
+  { id: "mahindra-scorpio-n", manufacturer: "Mahindra", model: "Scorpio-N", category: "SUV", segment: "Full-Size SUV", weightClass: "Medium" },
   { id: "toyota-fortuner", manufacturer: "Toyota", model: "Fortuner", category: "SUV", segment: "Full-Size SUV", weightClass: "Heavy Duty" },
+  { id: "toyota-hyryder", manufacturer: "Toyota", model: "Urban Cruiser Hyryder", category: "SUV", segment: "Compact SUV", weightClass: "Medium" },
+  { id: "suzuki-grand-vitara", manufacturer: "Maruti Suzuki", model: "Grand Vitara", category: "SUV", segment: "Compact SUV", weightClass: "Medium" },
+  { id: "bmw-x1", manufacturer: "BMW", model: "X1", category: "SUV", segment: "Compact SUV", weightClass: "Medium" },
   { id: "honda-city", manufacturer: "Honda", model: "City", category: "Car", segment: "Sedan", weightClass: "Medium" },
   { id: "maruti-swift", manufacturer: "Maruti Suzuki", model: "Swift", category: "Car", segment: "Hatchback", weightClass: "Lightweight" },
   { id: "tata-signa", manufacturer: "Tata", model: "Signa Cargo", category: "Truck/Bus", segment: "Heavy Commercial Truck", weightClass: "Heavy Duty" },
@@ -133,6 +138,17 @@ export const OEM_SPECIFICATIONS: OemSpec[] = [
   { vehicleId: "mahindra-thar", year: "2023", variant: "LX (Hard Top)", oemTyreSize: "255/65 R18", rimSize: "18", loadIndex: "111", speedRating: "T" },
   { vehicleId: "mahindra-thar", year: "2024", variant: "AX Opt (Convertible/Hard Top)", oemTyreSize: "245/75 R16", rimSize: "16", loadIndex: "111", speedRating: "S" },
   { vehicleId: "mahindra-thar", year: "2024", variant: "LX (Hard Top)", oemTyreSize: "255/65 R18", rimSize: "18", loadIndex: "111", speedRating: "T" },
+
+  // Mahindra Scorpio Classic & Scorpio-N
+  { vehicleId: "mahindra-scorpio", year: "2024", variant: "S / S11", oemTyreSize: "235/65 R17", rimSize: "17", loadIndex: "104", speedRating: "H" },
+  { vehicleId: "mahindra-scorpio-n", year: "2024", variant: "Z2 / Z4 / Z8", oemTyreSize: "245/65 R17", rimSize: "17", loadIndex: "107", speedRating: "H" },
+  { vehicleId: "mahindra-scorpio-n", year: "2024", variant: "Z8 L 4x4", oemTyreSize: "255/60 R18", rimSize: "18", loadIndex: "108", speedRating: "V" },
+
+  // Toyota Hyryder
+  { vehicleId: "toyota-hyryder", year: "2024", variant: "E / S / G / V Hybrid", oemTyreSize: "215/60 R17", rimSize: "17", loadIndex: "96", speedRating: "H" },
+
+  // BMW X1
+  { vehicleId: "bmw-x1", year: "2024", variant: "sDrive18i / sDrive20d M Sport", oemTyreSize: "225/55 R18", rimSize: "18", loadIndex: "98", speedRating: "V" },
 
   // Honda City
   { vehicleId: "honda-city", year: "2022", variant: "V / VX", oemTyreSize: "185/60 R15", rimSize: "15", loadIndex: "84", speedRating: "H" },
